@@ -19,7 +19,12 @@ const REMOTE_CATALOG: SkillInfo[] = [
   { name: 'laravel-clean-api', description: 'Laravel coding standards for modular, clean controllers and repositories', scope: 'Remote' },
   { name: 'typescript-esm', description: 'Strict TypeScript configuration with native ESM import resolutions', scope: 'Remote' },
   { name: 'python-data-science', description: 'Data Science stack settings for pandas, numpy, and Jupyter notebook optimizations', scope: 'Remote' },
-  { name: 'generic-clean-code', description: 'General software engineering guidelines focusing on DRY, SOLID, and TDD', scope: 'Remote' }
+  { name: 'generic-clean-code', description: 'General software engineering guidelines focusing on DRY, SOLID, and TDD', scope: 'Remote' },
+  { name: 'google-gemini-api-dev', description: 'Developing GenAI integrations using Google Gemini API and Vertex AI SDKs', scope: 'Remote' },
+  { name: 'supabase-postgres-best-practices', description: 'PostgreSQL schema design, constraints, and indexing standards for Supabase', scope: 'Remote' },
+  { name: 'stripe-best-practices', description: 'Building secure, idempotent payment workflows and webhooks integrations with Stripe', scope: 'Remote' },
+  { name: 'cloudflare-workers-dev', description: 'Deploying optimized serverless endpoints and edge caching using Cloudflare Workers', scope: 'Remote' },
+  { name: 'vercel-nextjs-optimization', description: 'Next.js rendering optimization (SSR/SSG), routing layout patterns, and core web vitals', scope: 'Remote' }
 ];
 
 const GLOBAL_SKILLS_DIR = path.join(os.homedir(), '.config', 'jagopakaiai-cli', 'skills');
