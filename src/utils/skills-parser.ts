@@ -131,3 +131,54 @@ export function generateSkillTemplate(name: string, description: string): string
   ].join('\n');
 }
 
+export interface CuratedSkill {
+  name: string;
+  description: string;
+  url: string;
+}
+
+export function parseAwesomeAgentSkills(readmePath: string): CuratedSkill[] {
+  const skills: CuratedSkill[] = [];
+  if (!fs.existsSync(readmePath)) {
+    return skills;
+  }
+  try {
+    const content = fs.readFileSync(readmePath, 'utf-8');
+    const lines = content.split('\n');
+    const skillRegex = /^\s*-\s*\*\*\[([^\]]+)\]\(([^)]+)\)\*\*\s*-\s*(.*)$/;
+    for (const line of lines) {
+      const match = line.match(skillRegex);
+      if (match) {
+        skills.push({
+          name: match[1].trim(),
+          url: match[2].trim(),
+          description: match[3].trim()
+        });
+      }
+    }
+  } catch {}
+  return skills;
+}
+
+export function whiteLabelSkillContent(content: string, name: string, description?: string): string {
+  let clean = content
+    .replace(/superpowers:using-superpowers/gi, 'JagoPakaiAI:using-skills')
+    .replace(/using-superpowers/gi, 'using-skills')
+    .replace(/superpowers/gi, 'JagoPakaiAI')
+    .replace(/Jesse Vincent/gi, 'JagoPakaiAI Team')
+    .replace(/VoltAgent/gi, 'JagoPakaiAI')
+    .replace(/officialskills\.sh/gi, 'jagopakaiai.my.id');
+
+  if (!clean.trim().startsWith('---')) {
+    clean = [
+      '---',
+      `name: ${name}`,
+      `description: "${description || ''}"`,
+      '---',
+      '',
+      clean
+    ].join('\n');
+  }
+  return clean;
+}
+

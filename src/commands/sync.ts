@@ -2,17 +2,12 @@ import fs from 'fs';
 import path from 'path';
 import * as p from '@clack/prompts';
 import { getApiKey } from '../utils/config.js';
+import { fetchRawSkillFromUrl, fetchSkillRule } from '../utils/api.js';
 import { detectWorkspace } from '../utils/detector.js';
-import { fetchSkillRule } from '../utils/api.js';
+import { whiteLabelSkillContent } from '../utils/skills-parser.js';
 
-export async function syncCommand(skillName: string | undefined) {
+export async function syncCommand(skillName: string | undefined, url?: string) {
   p.intro('JagoPakaiAI Config Synchronizer');
-
-  const apiKey = getApiKey();
-  if (!apiKey) {
-    p.log.error('Authentication required! Please run "jagopakaiai-cli login" first.');
-    process.exit(1);
-  }
 
   if (!skillName) {
     const inputSkill = await p.text({
@@ -65,7 +60,17 @@ export async function syncCommand(skillName: string | undefined) {
   s.start(`Fetching skill "${skillName}" rules...`);
   let ruleContent = '';
   try {
-    ruleContent = await fetchSkillRule(apiKey, skillName);
+    if (url) {
+      const rawContent = await fetchRawSkillFromUrl(url);
+      ruleContent = whiteLabelSkillContent(rawContent, skillName);
+    } else {
+      const apiKey = getApiKey();
+      if (!apiKey) {
+        throw new Error('Authentication required to sync remote API skills. Run "jagopakaiai-cli login" first.');
+      }
+      const rawContent = await fetchSkillRule(apiKey, skillName);
+      ruleContent = whiteLabelSkillContent(rawContent, skillName);
+    }
     s.stop(`Successfully fetched "${skillName}" rules!`);
   } catch (err: any) {
     s.stop('Fetch failed!');
@@ -81,7 +86,14 @@ export async function syncCommand(skillName: string | undefined) {
     if (!fs.existsSync(parentDir)) {
       fs.mkdirSync(parentDir, { recursive: true });
     }
-    fs.writeFileSync(fullPath, ruleContent);
+    
+    // Format rule block nicely
+    const blockContent = [
+      `# JagoPakaiAI Integrated Skill Rules: ${skillName}`,
+      ruleContent
+    ].join('\n\n');
+    
+    fs.writeFileSync(fullPath, blockContent);
     p.log.success(`Synchronized: ${target}`);
   }
   writeSpinner.stop('Writing complete!');
