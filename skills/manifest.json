@@ -1,0 +1,464 @@
+[
+  {
+    "name": "anthropics/pdf",
+    "description": "Extract text, create PDFs, and handle forms",
+    "url": "https://officialskills.sh/anthropics/skills/pdf",
+    "localPath": "playground\\scraped-skills\\anthropics-pdf\\SKILL.md"
+  },
+  {
+    "name": "anthropics/doc-coauthoring",
+    "description": "Collaborative document editing and co-authoring",
+    "url": "https://officialskills.sh/anthropics/skills/doc-coauthoring",
+    "localPath": "playground\\scraped-skills\\anthropics-doc-coauthoring\\SKILL.md"
+  },
+  {
+    "name": "anthropics/pptx",
+    "description": "Create, edit, and analyze PowerPoint presentations",
+    "url": "https://officialskills.sh/anthropics/skills/pptx",
+    "localPath": "playground\\scraped-skills\\anthropics-pptx\\SKILL.md"
+  },
+  {
+    "name": "anthropics/algorithmic-art",
+    "description": "Create generative art using p5.js with seeded randomness",
+    "url": "https://officialskills.sh/anthropics/skills/algorithmic-art",
+    "localPath": "playground\\scraped-skills\\anthropics-algorithmic-art\\SKILL.md"
+  },
+  {
+    "name": "anthropics/canvas-design",
+    "description": "Design visual art in PNG and PDF formats",
+    "url": "https://officialskills.sh/anthropics/skills/canvas-design",
+    "localPath": "playground\\scraped-skills\\anthropics-canvas-design\\SKILL.md"
+  },
+  {
+    "name": "anthropics/xlsx",
+    "description": "Create, edit, and analyze Excel spreadsheets",
+    "url": "https://officialskills.sh/anthropics/skills/xlsx",
+    "localPath": "playground\\scraped-skills\\anthropics-xlsx\\SKILL.md"
+  },
+  {
+    "name": "anthropics/frontend-design",
+    "description": "Frontend design and UI/UX development tools",
+    "url": "https://officialskills.sh/anthropics/skills/frontend-design",
+    "localPath": "playground\\scraped-skills\\anthropics-frontend-design\\SKILL.md"
+  },
+  {
+    "name": "anthropics/docx",
+    "description": "Create, edit, and analyze Word documents",
+    "url": "https://officialskills.sh/anthropics/skills/docx",
+    "localPath": "playground\\scraped-skills\\anthropics-docx\\SKILL.md"
+  },
+  {
+    "name": "anthropics/theme-factory",
+    "description": "Style artifacts with professional themes or generate custom themes",
+    "url": "https://officialskills.sh/anthropics/skills/theme-factory",
+    "localPath": "playground\\scraped-skills\\anthropics-theme-factory\\SKILL.md"
+  },
+  {
+    "name": "anthropics/slack-gif-creator",
+    "description": "Create animated GIFs optimized for Slack size constraints",
+    "url": "https://officialskills.sh/anthropics/skills/slack-gif-creator",
+    "localPath": "playground\\scraped-skills\\anthropics-slack-gif-creator\\SKILL.md"
+  },
+  {
+    "name": "anthropics/web-artifacts-builder",
+    "description": "Build complex claude.ai HTML artifacts with React and Tailwind",
+    "url": "https://officialskills.sh/anthropics/skills/web-artifacts-builder",
+    "localPath": "playground\\scraped-skills\\anthropics-web-artifacts-builder\\SKILL.md"
+  },
+  {
+    "name": "anthropics/mcp-builder",
+    "description": "Create MCP servers to integrate external APIs and services",
+    "url": "https://officialskills.sh/anthropics/skills/mcp-builder",
+    "localPath": "playground\\scraped-skills\\anthropics-mcp-builder\\SKILL.md"
+  },
+  {
+    "name": "anthropics/brand-guidelines",
+    "description": "Apply Anthropic's brand colors and typography to artifacts",
+    "url": "https://officialskills.sh/anthropics/skills/brand-guidelines",
+    "localPath": "playground\\scraped-skills\\anthropics-brand-guidelines\\SKILL.md"
+  },
+  {
+    "name": "anthropics/webapp-testing",
+    "description": "Test local web applications using Playwright",
+    "url": "https://officialskills.sh/anthropics/skills/webapp-testing",
+    "localPath": "playground\\scraped-skills\\anthropics-webapp-testing\\SKILL.md"
+  },
+  {
+    "name": "anthropics/internal-comms",
+    "description": "Write status reports, newsletters, and FAQs",
+    "url": "https://officialskills.sh/anthropics/skills/internal-comms",
+    "localPath": "playground\\scraped-skills\\anthropics-internal-comms\\SKILL.md"
+  },
+  {
+    "name": "anthropics/skill-creator",
+    "description": "Guide for creating skills that extend Claude's capabilities",
+    "url": "https://officialskills.sh/anthropics/skills/skill-creator",
+    "localPath": "playground\\scraped-skills\\anthropics-skill-creator\\SKILL.md"
+  },
+  {
+    "name": "voltagent/voltagent-best-practices",
+    "description": "Architecture and usage patterns for agents, workflows, memory, and servers",
+    "url": "https://officialskills.sh/voltagent/skills/voltagent-best-practices",
+    "localPath": "playground\\scraped-skills\\voltagent-voltagent-best-practices\\SKILL.md"
+  },
+  {
+    "name": "voltagent/create-voltagent",
+    "description": "Project setup guide with CLI and manual steps",
+    "url": "https://officialskills.sh/voltagent/skills/create-voltagent",
+    "localPath": "playground\\scraped-skills\\voltagent-create-voltagent\\SKILL.md"
+  },
+  {
+    "name": "voltagent/voltagent-core-reference",
+    "description": "Reference for the VoltAgent class options and lifecycle methods",
+    "url": "https://officialskills.sh/voltagent/skills/voltagent-core-reference",
+    "localPath": "playground\\scraped-skills\\voltagent-voltagent-core-reference\\SKILL.md"
+  },
+  {
+    "name": "voltagent/voltagent-docs-bundle",
+    "description": "Lookup embedded docs from @voltagent/core for version-matched documentation",
+    "url": "https://officialskills.sh/voltagent/skills/voltagent-docs-bundle",
+    "localPath": "playground\\scraped-skills\\voltagent-voltagent-docs-bundle\\SKILL.md"
+  },
+  {
+    "name": "composiohq/composio",
+    "description": "Connect AI agents to 1000+ external apps with managed authentication",
+    "url": "https://officialskills.sh/composiohq/skills/composio",
+    "localPath": "playground\\scraped-skills\\composiohq-composio\\SKILL.md"
+  },
+  {
+    "name": "google-gemini/gemini-api-dev",
+    "description": "Best practices for developing Gemini-powered apps using the Gemini API",
+    "url": "https://officialskills.sh/google-gemini/skills/gemini-api-dev",
+    "localPath": "playground\\scraped-skills\\google-gemini-gemini-api-dev\\SKILL.md"
+  },
+  {
+    "name": "google-gemini/gemini-live-api-dev",
+    "description": "Building real-time bidirectional streaming apps with the Gemini Live API",
+    "url": "https://officialskills.sh/google-gemini/skills/gemini-live-api-dev",
+    "localPath": "playground\\scraped-skills\\google-gemini-gemini-live-api-dev\\SKILL.md"
+  },
+  {
+    "name": "google-gemini/gemini-interactions-api",
+    "description": "Building apps with the Gemini Interactions API for text, chat, streaming, and image generation",
+    "url": "https://officialskills.sh/google-gemini/skills/gemini-interactions-api",
+    "localPath": "playground\\scraped-skills\\google-gemini-gemini-interactions-api\\SKILL.md"
+  },
+  {
+    "name": "stripe/stripe-best-practices",
+    "description": "Best practices for building Stripe integrations",
+    "url": "https://officialskills.sh/stripe/skills/stripe-best-practices",
+    "localPath": "playground\\scraped-skills\\stripe-stripe-best-practices\\SKILL.md"
+  },
+  {
+    "name": "callstackincubator/react-native-best-practices",
+    "description": "Performance optimization for React Native apps from Callstack",
+    "url": "https://officialskills.sh/callstackincubator/skills/react-native-best-practices",
+    "localPath": "playground\\scraped-skills\\callstackincubator-react-native-best-practices\\SKILL.md"
+  },
+  {
+    "name": "stripe/upgrade-stripe",
+    "description": "Upgrade Stripe SDK and API versions",
+    "url": "https://officialskills.sh/stripe/skills/upgrade-stripe",
+    "localPath": "playground\\scraped-skills\\stripe-upgrade-stripe\\SKILL.md"
+  },
+  {
+    "name": "trycourier/courier-skills",
+    "description": "Multi-channel notifications via email, SMS, push, and chat",
+    "url": "https://github.com/trycourier/courier-skills",
+    "localPath": "playground\\scraped-skills\\trycourier-courier-skills\\SKILL.md"
+  },
+  {
+    "name": "callstackincubator/github",
+    "description": "GitHub workflow patterns for PRs, code review, branching",
+    "url": "https://officialskills.sh/callstackincubator/skills/github",
+    "localPath": "playground\\scraped-skills\\callstackincubator-github\\SKILL.md"
+  },
+  {
+    "name": "better-auth/best-practices",
+    "description": "Best practices for Better Auth integration",
+    "url": "https://officialskills.sh/better-auth/skills/best-practices",
+    "localPath": "playground\\scraped-skills\\better-auth-best-practices\\SKILL.md"
+  },
+  {
+    "name": "callstackincubator/upgrading-react-native",
+    "description": "React Native upgrade workflow: templates, dependencies, and common pitfalls",
+    "url": "https://officialskills.sh/callstackincubator/skills/upgrading-react-native",
+    "localPath": "playground\\scraped-skills\\callstackincubator-upgrading-react-native\\SKILL.md"
+  },
+  {
+    "name": "better-auth/create-auth",
+    "description": "Create authentication setup with Better Auth",
+    "url": "https://officialskills.sh/better-auth/skills/create-auth",
+    "localPath": "playground\\scraped-skills\\better-auth-create-auth\\SKILL.md"
+  },
+  {
+    "name": "better-auth/organization",
+    "description": "Organization management with Better Auth",
+    "url": "https://officialskills.sh/better-auth/skills/organization",
+    "localPath": "playground\\scraped-skills\\better-auth-organization\\SKILL.md"
+  },
+  {
+    "name": "tinybirdco/tinybird-best-practices",
+    "description": "Tinybird project guidelines for datasources, pipes, endpoints, and SQL",
+    "url": "https://officialskills.sh/tinybirdco/skills/tinybird-best-practices",
+    "localPath": "playground\\scraped-skills\\tinybirdco-tinybird-best-practices\\SKILL.md"
+  },
+  {
+    "name": "better-auth/twoFactor",
+    "description": "Two-factor authentication with Better Auth",
+    "url": "https://officialskills.sh/better-auth/skills/twoFactor",
+    "localPath": "playground\\scraped-skills\\better-auth-twoFactor\\SKILL.md"
+  },
+  {
+    "name": "better-auth/emailAndPassword",
+    "description": "Email and password authentication with Better Auth",
+    "url": "https://officialskills.sh/better-auth/skills/emailAndPassword",
+    "localPath": "playground\\scraped-skills\\better-auth-emailAndPassword\\SKILL.md"
+  },
+  {
+    "name": "tinybirdco/tinybird-cli-guidelines",
+    "description": "Tinybird CLI usage guidelines and commands",
+    "url": "https://officialskills.sh/tinybirdco/skills/tinybird-cli-guidelines",
+    "localPath": "playground\\scraped-skills\\tinybirdco-tinybird-cli-guidelines\\SKILL.md"
+  },
+  {
+    "name": "tinybirdco/tinybird-python-sdk-guidelines",
+    "description": "Tinybird Python SDK usage guidelines",
+    "url": "https://officialskills.sh/tinybirdco/skills/tinybird-python-sdk-guidelines",
+    "localPath": "playground\\scraped-skills\\tinybirdco-tinybird-python-sdk-guidelines\\SKILL.md"
+  },
+  {
+    "name": "tinybirdco/tinybird-typescript-sdk-guidelines",
+    "description": "Tinybird TypeScript SDK usage guidelines",
+    "url": "https://officialskills.sh/tinybirdco/skills/tinybird-typescript-sdk-guidelines",
+    "localPath": "playground\\scraped-skills\\tinybirdco-tinybird-typescript-sdk-guidelines\\SKILL.md"
+  },
+  {
+    "name": "sanity-io/sanity-best-practices",
+    "description": "Best practices for Sanity Studio, GROQ queries, and content workflows",
+    "url": "https://officialskills.sh/sanity-io/skills/sanity-best-practices",
+    "localPath": "playground\\scraped-skills\\sanity-io-sanity-best-practices\\SKILL.md"
+  },
+  {
+    "name": "sanity-io/content-experimentation-best-practices",
+    "description": "Content A/B testing and experimentation workflows",
+    "url": "https://officialskills.sh/sanity-io/skills/content-experimentation-best-practices",
+    "localPath": "playground\\scraped-skills\\sanity-io-content-experimentation-best-practices\\SKILL.md"
+  },
+  {
+    "name": "sanity-io/seo-aeo-best-practices",
+    "description": "SEO and answer engine optimization patterns for content sites",
+    "url": "https://officialskills.sh/sanity-io/skills/seo-aeo-best-practices",
+    "localPath": "playground\\scraped-skills\\sanity-io-seo-aeo-best-practices\\SKILL.md"
+  },
+  {
+    "name": "sanity-io/content-modeling-best-practices",
+    "description": "Guidelines for designing scalable content models in Sanity",
+    "url": "https://officialskills.sh/sanity-io/skills/content-modeling-best-practices",
+    "localPath": "playground\\scraped-skills\\sanity-io-content-modeling-best-practices\\SKILL.md"
+  },
+  {
+    "name": "firecrawl/firecrawl-build",
+    "description": "Integrate Firecrawl into application code for web search, scraping, extraction, and browser interaction",
+    "url": "https://officialskills.sh/firecrawl/skills/firecrawl-build",
+    "localPath": "playground\\scraped-skills\\firecrawl-firecrawl-build\\SKILL.md"
+  },
+  {
+    "name": "firecrawl/firecrawl-build-interact",
+    "description": "Multi-step Firecrawl browser flows: clicks, form fills, pagination, and auth-aware navigation",
+    "url": "https://officialskills.sh/firecrawl/skills/firecrawl-build-interact",
+    "localPath": "playground\\scraped-skills\\firecrawl-firecrawl-build-interact\\SKILL.md"
+  },
+  {
+    "name": "firecrawl/firecrawl-build-scrape",
+    "description": "Integrate Firecrawl `/scrape` for single-page extraction from product code",
+    "url": "https://officialskills.sh/firecrawl/skills/firecrawl-build-scrape",
+    "localPath": "playground\\scraped-skills\\firecrawl-firecrawl-build-scrape\\SKILL.md"
+  },
+  {
+    "name": "firecrawl/firecrawl-build-onboarding",
+    "description": "Set up Firecrawl credentials and SDK in a project for the first integration",
+    "url": "https://officialskills.sh/firecrawl/skills/firecrawl-build-onboarding",
+    "localPath": "playground\\scraped-skills\\firecrawl-firecrawl-build-onboarding\\SKILL.md"
+  },
+  {
+    "name": "firecrawl/firecrawl-build-search",
+    "description": "Integrate Firecrawl `/search` for query-first discovery with optional content hydration",
+    "url": "https://officialskills.sh/firecrawl/skills/firecrawl-build-search",
+    "localPath": "playground\\scraped-skills\\firecrawl-firecrawl-build-search\\SKILL.md"
+  },
+  {
+    "name": "neondatabase/neon-postgres",
+    "description": "Best practices for Neon Serverless Postgres",
+    "url": "https://officialskills.sh/neondatabase/skills/neon-postgres",
+    "localPath": "playground\\scraped-skills\\neondatabase-neon-postgres\\SKILL.md"
+  },
+  {
+    "name": "neondatabase/neon-postgres-egress-optimizer",
+    "description": "Optimize Neon Postgres egress and data transfer",
+    "url": "https://officialskills.sh/neondatabase/skills/neon-postgres-egress-optimizer",
+    "localPath": "playground\\scraped-skills\\neondatabase-neon-postgres-egress-optimizer\\SKILL.md"
+  },
+  {
+    "name": "neondatabase/claimable-postgres",
+    "description": "Claimable Postgres database provisioning with Neon",
+    "url": "https://officialskills.sh/neondatabase/skills/claimable-postgres",
+    "localPath": "playground\\scraped-skills\\neondatabase-claimable-postgres\\SKILL.md"
+  },
+  {
+    "name": "clickhouse/chdb-sql",
+    "description": "In-process ClickHouse SQL engine for Python — query files, databases, and cloud storage without a server",
+    "url": "https://officialskills.sh/clickhouse/skills/chdb-sql",
+    "localPath": "playground\\scraped-skills\\clickhouse-chdb-sql\\SKILL.md"
+  },
+  {
+    "name": "clickhouse/chdb-datastore",
+    "description": "Drop-in pandas replacement with ClickHouse performance across 16+ data sources",
+    "url": "https://officialskills.sh/clickhouse/skills/chdb-datastore",
+    "localPath": "playground\\scraped-skills\\clickhouse-chdb-datastore\\SKILL.md"
+  },
+  {
+    "name": "clickhouse/clickhouse-architecture-advisor",
+    "description": "Design ClickHouse architectures and translate best practices into workload-specific decisions",
+    "url": "https://officialskills.sh/clickhouse/skills/clickhouse-architecture-advisor",
+    "localPath": "playground\\scraped-skills\\clickhouse-clickhouse-architecture-advisor\\SKILL.md"
+  },
+  {
+    "name": "clickhouse/clickhousectl-cloud-deploy",
+    "description": "Deploy to ClickHouse Cloud and migrate from local setups with clickhousectl",
+    "url": "https://officialskills.sh/clickhouse/skills/clickhousectl-cloud-deploy",
+    "localPath": "playground\\scraped-skills\\clickhouse-clickhousectl-cloud-deploy\\SKILL.md"
+  },
+  {
+    "name": "clickhouse/clickhousectl-local-dev",
+    "description": "Spin up a local ClickHouse development environment from zero with clickhousectl",
+    "url": "https://officialskills.sh/clickhouse/skills/clickhousectl-local-dev",
+    "localPath": "playground\\scraped-skills\\clickhouse-clickhousectl-local-dev\\SKILL.md"
+  },
+  {
+    "name": "remotion-dev/remotion",
+    "description": "Programmatic video creation with React",
+    "url": "https://officialskills.sh/remotion-dev/skills/remotion",
+    "localPath": "playground\\scraped-skills\\remotion-dev-remotion\\SKILL.md"
+  },
+  {
+    "name": "veniceai/venice-api-overview",
+    "description": "API basics, auth modes, pricing, and versioning",
+    "url": "https://github.com/veniceai/skills/tree/main/skills/venice-api-overview",
+    "localPath": "playground\\scraped-skills\\veniceai-venice-api-overview\\SKILL.md"
+  },
+  {
+    "name": "veniceai/venice-auth",
+    "description": "API keys and wallet-based Venice authentication",
+    "url": "https://github.com/veniceai/skills/tree/main/skills/venice-auth",
+    "localPath": "playground\\scraped-skills\\veniceai-venice-auth\\SKILL.md"
+  },
+  {
+    "name": "veniceai/venice-responses",
+    "description": "OpenAI-compatible Responses API for Venice",
+    "url": "https://github.com/veniceai/skills/tree/main/skills/venice-responses",
+    "localPath": "playground\\scraped-skills\\veniceai-venice-responses\\SKILL.md"
+  },
+  {
+    "name": "typefully/typefully",
+    "description": "Create, schedule, and publish social media content across X, LinkedIn, Threads, Bluesky, and Mastodon",
+    "url": "https://officialskills.sh/typefully/skills/typefully",
+    "localPath": "playground\\scraped-skills\\typefully-typefully\\SKILL.md"
+  },
+  {
+    "name": "veniceai/venice-chat",
+    "description": "Chat completions, multimodal inputs, tools, and streaming",
+    "url": "https://github.com/veniceai/skills/tree/main/skills/venice-chat",
+    "localPath": "playground\\scraped-skills\\veniceai-venice-chat\\SKILL.md"
+  },
+  {
+    "name": "veniceai/venice-embeddings",
+    "description": "Embeddings models, dimensions, and encoding formats",
+    "url": "https://github.com/veniceai/skills/tree/main/skills/venice-embeddings",
+    "localPath": "playground\\scraped-skills\\veniceai-venice-embeddings\\SKILL.md"
+  },
+  {
+    "name": "veniceai/venice-image-generate",
+    "description": "Image generation endpoints and available styles",
+    "url": "https://github.com/veniceai/skills/tree/main/skills/venice-image-generate",
+    "localPath": "playground\\scraped-skills\\veniceai-venice-image-generate\\SKILL.md"
+  },
+  {
+    "name": "veniceai/venice-image-edit",
+    "description": "Image edits, upscaling, and background removal",
+    "url": "https://github.com/veniceai/skills/tree/main/skills/venice-image-edit",
+    "localPath": "playground\\scraped-skills\\veniceai-venice-image-edit\\SKILL.md"
+  },
+  {
+    "name": "veniceai/venice-audio-music",
+    "description": "Music generation queueing, retrieval, and completion endpoints",
+    "url": "https://github.com/veniceai/skills/tree/main/skills/venice-audio-music",
+    "localPath": "playground\\scraped-skills\\veniceai-venice-audio-music\\SKILL.md"
+  },
+  {
+    "name": "veniceai/venice-audio-speech",
+    "description": "Text-to-speech models, voices, formats, and streaming",
+    "url": "https://github.com/veniceai/skills/tree/main/skills/venice-audio-speech",
+    "localPath": "playground\\scraped-skills\\veniceai-venice-audio-speech\\SKILL.md"
+  },
+  {
+    "name": "veniceai/venice-audio-transcription",
+    "description": "Audio transcription models and speech-to-text options",
+    "url": "https://github.com/veniceai/skills/tree/main/skills/venice-audio-transcription",
+    "localPath": "playground\\scraped-skills\\veniceai-venice-audio-transcription\\SKILL.md"
+  },
+  {
+    "name": "veniceai/venice-video",
+    "description": "Video generation and transcription workflows",
+    "url": "https://github.com/veniceai/skills/tree/main/skills/venice-video",
+    "localPath": "playground\\scraped-skills\\veniceai-venice-video\\SKILL.md"
+  },
+  {
+    "name": "veniceai/venice-models",
+    "description": "Model catalog, traits, and compatibility mappings",
+    "url": "https://github.com/veniceai/skills/tree/main/skills/venice-models",
+    "localPath": "playground\\scraped-skills\\veniceai-venice-models\\SKILL.md"
+  },
+  {
+    "name": "veniceai/venice-characters",
+    "description": "Character endpoints and `character_slug` usage",
+    "url": "https://github.com/veniceai/skills/tree/main/skills/venice-characters",
+    "localPath": "playground\\scraped-skills\\veniceai-venice-characters\\SKILL.md"
+  },
+  {
+    "name": "veniceai/venice-billing",
+    "description": "Balance, usage, and billing analytics endpoints",
+    "url": "https://github.com/veniceai/skills/tree/main/skills/venice-billing",
+    "localPath": "playground\\scraped-skills\\veniceai-venice-billing\\SKILL.md"
+  },
+  {
+    "name": "veniceai/venice-x402",
+    "description": "Wallet credits and x402 payments on Base",
+    "url": "https://github.com/veniceai/skills/tree/main/skills/venice-x402",
+    "localPath": "playground\\scraped-skills\\veniceai-venice-x402\\SKILL.md"
+  },
+  {
+    "name": "veniceai/venice-crypto-rpc",
+    "description": "JSON-RPC proxying for supported crypto networks",
+    "url": "https://github.com/veniceai/skills/tree/main/skills/venice-crypto-rpc",
+    "localPath": "playground\\scraped-skills\\veniceai-venice-crypto-rpc\\SKILL.md"
+  },
+  {
+    "name": "veniceai/venice-api-keys",
+    "description": "API key CRUD, rate limits, and Web3 keys",
+    "url": "https://github.com/veniceai/skills/tree/main/skills/venice-api-keys",
+    "localPath": "playground\\scraped-skills\\veniceai-venice-api-keys\\SKILL.md"
+  },
+  {
+    "name": "veniceai/venice-augment",
+    "description": "Search, scraping, and text parsing endpoints",
+    "url": "https://github.com/veniceai/skills/tree/main/skills/venice-augment",
+    "localPath": "playground\\scraped-skills\\veniceai-venice-augment\\SKILL.md"
+  },
+  {
+    "name": "veniceai/venice-errors",
+    "description": "Error handling, retries, and API status codes",
+    "url": "https://github.com/veniceai/skills/tree/main/skills/venice-errors",
+    "localPath": "playground\\scraped-skills\\veniceai-venice-errors\\SKILL.md"
+  }
+]
