@@ -1,10 +1,10 @@
 {
-  "name": "jagopakai",
+  "name": "jagopakaiai-cli",
   "version": "1.0.0",
   "description": "JagoPakaiAI CLI utility for managing AI agent rule configurations",
   "main": "dist/index.js",
   "bin": {
-    "jagopakai": "./dist/index.js"
+    "jagopakaiai-cli": "./dist/index.js"
   },
   "scripts": {
     "build": "node esbuild.config.js",

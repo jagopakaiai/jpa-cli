@@ -1,4 +1,4 @@
-# JagoPakaiAI CLI (`jagopakai`)
+# JagoPakaiAI CLI (`jagopakaiai-cli`)
 
 [![GitHub Release](https://img.shields.io/github/v/release/jagopakaiai/jagopakaiAI-cli?style=flat-square)](https://github.com/jagopakaiai/jagopakaiAI-cli/releases)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/jagopakaiai/jagopakaiAI-cli/release.yml?style=flat-square)](https://github.com/jagopakaiai/jagopakaiAI-cli/actions)
@@ -15,7 +15,7 @@ Synchronize custom and community-developed developer instructions (skills) direc
 - ⚙️ **Interactive Prompts**: Beautiful, styled prompts, spin indicators, and menus powered by `@clack/prompts`.
 - 🔍 **Auto-Environment Detection**: Intelligently scans the current workspace for Git repositories, active AI/Editor configuration files, and project stack languages (Node.js, Laravel/PHP, Python, Rust, Go).
 - 🔄 **Multi-Target Synchronization**: Sync single skill configurations to one or more rules files simultaneously (`.cursorrules`, `.claudecoderc`, `.github/copilot-instructions.md`).
-- 🔒 **Secure Local Config**: Saves your API keys securely inside your local machine profile folder (`~/.config/jagopakai/config.json`).
+- 🔒 **Secure Local Config**: Saves your API keys securely inside your local machine profile folder (`~/.config/jagopakaiai-cli/config.json`).
 - 📦 **Zero-Dependency Native Binaries**: Distributed as standalone executable binaries for macOS, Linux, and Windows.
 
 ---
@@ -49,7 +49,7 @@ jagopakaiAI-cli/
 ├── esbuild.config.js         # ESBuild configuration bundling TS into single CommonJS file
 ├── install.ps1               # Installer script for Windows / PowerShell
 ├── install.sh                # Installer script for macOS/Linux / Curl shell
-├── jagopakai.rb              # Homebrew Formula specification
+├── jagopakaiai-cli.rb        # Homebrew Formula specification
 ├── package.json              # Project manifests & dependencies configurations
 ├── tsconfig.json             # TypeScript compiler settings
 └── vitest.config.ts          # Testing configurations for Vitest
@@ -62,7 +62,7 @@ jagopakaiAI-cli/
 ### 1. Global Installation (via npm)
 You can install the CLI globally using `npm`:
 ```bash
-npm install -g jagopakai
+npm install -g jagopakaiai-cli
 ```
 
 ### 2. Standalone Binary Installers
@@ -82,27 +82,27 @@ irm https://raw.githubusercontent.com/jagopakaiai/jagopakaiAI-cli/main/install.p
 #### macOS (via Homebrew)
 Install using our tap recipe formula:
 ```bash
-brew install jagopakaiai/tap/jagopakai
+brew install jagopakaiai/tap/jagopakaiai-cli
 ```
 
 ---
 
 ## 💻 CLI Commands
 
-### 🔑 1. `jagopakai login`
+### 🔑 1. `jagopakaiai-cli login`
 Authenticates with your JagoPakaiAI credentials. You will be prompted to enter your API Key.
 ```bash
-jagopakai login
+jagopakaiai-cli login
 ```
 The key is securely written to your home directory:
-`~/.config/jagopakai/config.json`
+`~/.config/jagopakaiai-cli/config.json`
 
 ---
 
-### 🔍 2. `jagopakai detect`
+### 🔍 2. `jagopakaiai-cli detect`
 Scans the current workspace directory to audit the existing configurations and active project environment.
 ```bash
-jagopakai detect
+jagopakaiai-cli detect
 ```
 Example Output:
 ```text
@@ -122,15 +122,15 @@ Example Output:
 │                                                            │
 ├────────────────────────────────────────────────────────────╯
 │
-└  To sync rules, run: jagopakai sync <skill-name>
+└  To sync rules, run: jagopakaiai-cli sync <skill-name>
 ```
 
 ---
 
-### 🔄 3. `jagopakai sync [skill-name]`
+### 🔄 3. `jagopakaiai-cli sync [skill-name]`
 Synchronizes and writes custom editor instruction rules for the specified skill from the JagoPakaiAI API directly into your workspace.
 ```bash
-jagopakai sync laravel-clean-api
+jagopakaiai-cli sync laravel-clean-api
 ```
 - If multiple environments are detected (e.g. both Cursor and Claude Code settings are found), you will be interactively prompted to choose which rule files to write to.
 - It displays beautiful animated spinners and logs successful sync writes.

@@ -3,7 +3,7 @@ set -e
 
 OWNER="jagopakaiai"
 REPO="jagopakaiAI-cli"
-BINARY="jagopakai"
+BINARY="jagopakaiai-cli"
 
 OS=$(uname -s | tr '[:upper:]' '[:lower:]')
 ARCH=$(uname -m)

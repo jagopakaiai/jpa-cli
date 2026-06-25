@@ -6,7 +6,7 @@ import { syncCommand } from './commands/sync.js';
 const program = new Command();
 
 program
-  .name('jagopakai')
+  .name('jagopakaiai-cli')
   .description('JagoPakaiAI Command Line Interface rules synchronizer')
   .version('1.0.0');
 

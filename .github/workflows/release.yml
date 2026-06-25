@@ -29,17 +29,17 @@ jobs:
       - name: Package standalone binaries
         run: |
           npx pkg . --out-path bin --no-bytecode
-          mv bin/jagopakai-linux-x64 bin/jagopakai-linux
-          mv bin/jagopakai-win-x64.exe bin/jagopakai.exe
+          mv bin/jagopakaiai-cli-linux-x64 bin/jagopakaiai-cli-linux
+          mv bin/jagopakaiai-cli-win-x64.exe bin/jagopakaiai-cli.exe
 
       - name: Release and Attach Assets
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            bin/jagopakai-linux
-            bin/jagopakai-macos-x64
-            bin/jagopakai-macos-arm64
-            bin/jagopakai.exe
+            bin/jagopakaiai-cli-linux
+            bin/jagopakaiai-cli-macos-x64
+            bin/jagopakaiai-cli-macos-arm64
+            bin/jagopakaiai-cli.exe
             install.sh
             install.ps1
         env:

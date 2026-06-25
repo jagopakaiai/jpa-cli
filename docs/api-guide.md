@@ -1,6 +1,6 @@
 # JagoPakaiAI API Integration Guide
 
-This document outlines the API specifications that the `jagopakai` CLI consumes from the JagoPakaiAI remote server.
+This document outlines the API specifications that the `jagopakaiai-cli` CLI consumes from the JagoPakaiAI remote server.
 
 ---
 

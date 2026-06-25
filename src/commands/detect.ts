@@ -12,7 +12,7 @@ export async function detectCommand() {
   s.stop('Scan complete!');
 
   const apiKey = getApiKey();
-  const apiKeyStatus = apiKey ? 'Active (Key Saved)' : 'Missing (Use "jagopakai login" to authenticate)';
+  const apiKeyStatus = apiKey ? 'Active (Key Saved)' : 'Missing (Use "jagopakaiai-cli login" to authenticate)';
 
   const details = [
     `Workspace: ${currentDir}`,
@@ -25,5 +25,5 @@ export async function detectCommand() {
   ].join('\n');
 
   p.note(details, 'Audit Summary');
-  p.outro('To sync rules, run: jagopakai sync <skill-name>');
+  p.outro('To sync rules, run: jagopakaiai-cli sync <skill-name>');
 }

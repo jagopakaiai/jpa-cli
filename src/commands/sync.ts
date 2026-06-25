@@ -10,7 +10,7 @@ export async function syncCommand(skillName: string | undefined) {
 
   const apiKey = getApiKey();
   if (!apiKey) {
-    p.log.error('Authentication required! Please run "jagopakai login" first.');
+    p.log.error('Authentication required! Please run "jagopakaiai-cli login" first.');
     process.exit(1);
   }
 

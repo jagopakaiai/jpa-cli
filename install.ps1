@@ -1,10 +1,10 @@
 $owner = "jagopakaiai"
 $repo = "jagopakaiAI-cli"
-$binary = "jagopakai"
+$binary = "jagopakaiai-cli"
 $suffix = "win-x64.exe"
 
 $url = "https://github.com/$owner/$repo/releases/latest/download/${binary}-${suffix}"
-$installDir = Join-Path $env:USERPROFILE ".jagopakai\bin"
+$installDir = Join-Path $env:USERPROFILE ".jagopakaiai-cli\bin"
 $dest = Join-Path $installDir "${binary}.exe"
 
 if (!(Test-Path $installDir)) {
