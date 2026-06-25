@@ -3,6 +3,8 @@ import { loginCommand } from './commands/login.js';
 import { detectCommand } from './commands/detect.js';
 import { syncCommand } from './commands/sync.js';
 import { initCommand } from './commands/init.js';
+import { skillsListCommand } from './commands/skills.js';
+import { mcpListCommand, mcpInstallCommand } from './commands/mcp.js';
 import * as p from '@clack/prompts';
 
 const program = new Command();
@@ -41,6 +43,25 @@ program
     await initCommand();
   });
 
+program
+  .command('skills')
+  .description('List available skills and check synchronization status')
+  .action(async () => {
+    await skillsListCommand();
+  });
+
+program
+  .command('mcp')
+  .argument('[install-name]', 'Name of recommended MCP server to install')
+  .description('List and install recommended Model Context Protocol (MCP) servers')
+  .action(async (installName) => {
+    if (installName) {
+      await mcpInstallCommand(installName);
+    } else {
+      await mcpListCommand();
+    }
+  });
+
 async function showMainMenu() {
   p.intro('JagoPakaiAI CLI Main Menu');
   const choice = await p.select({
@@ -49,7 +70,8 @@ async function showMainMenu() {
       { value: 'login', label: '🔑 Login (Save API Key)' },
       { value: 'detect', label: '🔍 Detect Workspace & Environment' },
       { value: 'init', label: '🚀 Initialize Project & Generate PRD' },
-      { value: 'sync', label: '🔄 Sync Skill Rules' },
+      { value: 'skills', label: '📚 View Skills Catalog' },
+      { value: 'mcp', label: '🛠️ Configure MCP Servers' },
       { value: 'exit', label: '❌ Exit' }
     ]
   });
@@ -69,8 +91,11 @@ async function showMainMenu() {
     case 'init':
       await initCommand();
       break;
-    case 'sync':
-      await syncCommand(undefined);
+    case 'skills':
+      await skillsListCommand();
+      break;
+    case 'mcp':
+      await mcpListCommand();
       break;
   }
 }
