@@ -4,4 +4,6 @@ bin/
 .env
 .DS_Store
 playground/
+.agents/
+
 
