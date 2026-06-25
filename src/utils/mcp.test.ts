@@ -2,7 +2,8 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
-import { getClaudeConfig, saveClaudeConfig, checkMcpInstalled } from './mcp.js';
+import { getClaudeConfig, saveClaudeConfig, checkMcpInstalled, installMcpServer } from './mcp.js';
+import { execSync } from 'child_process';
 
 describe('MCP Configuration Utility', () => {
   beforeEach(() => {
@@ -33,5 +34,19 @@ describe('MCP Configuration Utility', () => {
     vi.spyOn(fs, 'existsSync').mockReturnValue(true);
     vi.spyOn(fs, 'readFileSync').mockReturnValue(JSON.stringify({ mcpServers: {} }));
     expect(checkMcpInstalled('sqlite')).toBe(false);
+  });
+
+  it('should write config correctly when installMcpServer is called', () => {
+    const mockExistsSync = vi.spyOn(fs, 'existsSync').mockReturnValue(false);
+    const mockWriteFileSync = vi.spyOn(fs, 'writeFileSync').mockImplementation(() => {});
+    const mockMkdirSync = vi.spyOn(fs, 'mkdirSync').mockImplementation(() => undefined);
+    
+    installMcpServer('sqlite', ['--db', 'custom.db'], { MY_VAR: 'value' });
+    
+    expect(mockWriteFileSync).toHaveBeenCalled();
+    const [filePath, content] = mockWriteFileSync.mock.calls[0];
+    const parsed = JSON.parse(content as string);
+    expect(parsed.mcpServers.sqlite.args).toContain('custom.db');
+    expect(parsed.mcpServers.sqlite.env).toEqual({ MY_VAR: 'value' });
   });
 });

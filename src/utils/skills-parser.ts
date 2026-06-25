@@ -84,6 +84,39 @@ export function parseSkillFile(filePath: string): ParsedSkill {
   return result;
 }
 
+import os from 'os';
+
+export function isWorkspaceSkillInstalled(name: string): boolean {
+  const currentDir = process.cwd();
+  const file = path.join(currentDir, '.agents', 'skills', name, 'SKILL.md');
+  return fs.existsSync(file);
+}
+
+export function isGlobalSkillInstalled(name: string): boolean {
+  const globalSkillsDir = path.join(os.homedir(), '.config', 'jagopakaiai-cli', 'skills');
+  const file = path.join(globalSkillsDir, name, 'SKILL.md');
+  return fs.existsSync(file);
+}
+
+export function isSkillSynced(name: string): boolean {
+  const currentDir = process.cwd();
+  const targets = ['.cursorrules', '.claudecoderc', '.github/copilot-instructions.md'];
+  for (const target of targets) {
+    const fullPath = path.join(currentDir, target);
+    if (fs.existsSync(fullPath)) {
+      try {
+        const content = fs.readFileSync(fullPath, 'utf-8');
+        if (content.includes(`Integrated Skill Rules (${name})`) || 
+            content.includes(`Skill: ${name}`) || 
+            content.includes(`skills/${name}`)) {
+          return true;
+        }
+      } catch {}
+    }
+  }
+  return false;
+}
+
 export function generateSkillTemplate(name: string, description: string): string {
   return [
     '---',
@@ -97,3 +130,4 @@ export function generateSkillTemplate(name: string, description: string): string
     ''
   ].join('\n');
 }
+

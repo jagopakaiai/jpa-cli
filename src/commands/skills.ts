@@ -6,7 +6,13 @@ import { getApiKey } from '../utils/config.js';
 import { fetchSkillRule } from '../utils/api.js';
 import { detectWorkspace } from '../utils/detector.js';
 import { syncCommand } from './sync.js';
-import { parseSkillFile, generateSkillTemplate } from '../utils/skills-parser.js';
+import { 
+  parseSkillFile, 
+  generateSkillTemplate, 
+  isWorkspaceSkillInstalled, 
+  isGlobalSkillInstalled, 
+  isSkillSynced 
+} from '../utils/skills-parser.js';
 
 interface SkillInfo {
   name: string;
@@ -15,16 +21,19 @@ interface SkillInfo {
   filePath?: string;
 }
 
-const REMOTE_CATALOG: SkillInfo[] = [
+const RECOMMENDED_SKILLS: SkillInfo[] = [
+  { name: 'brainstorming', description: 'Brainstorm intent and design choices before implementation', scope: 'Remote' },
+  { name: 'subagent-development', description: 'Run subagent tasks systematically with plan isolation', scope: 'Remote' },
+  { name: 'tdd-methodology', description: 'Strict Test-Driven Development (TDD) execution guidelines', scope: 'Remote' },
+  { name: 'systematic-debugging', description: 'Root cause analysis and debugging process before fixing bugs', scope: 'Remote' },
+  { name: 'verification-workflow', description: 'Pre-flight checks and verification steps before completion', scope: 'Remote' },
+  { name: 'plan-writing', description: 'Writing structured and reviewable task implementation plans', scope: 'Remote' },
+  { name: 'skill-authoring', description: 'Scaffolding, validating, and registering custom agent skills', scope: 'Remote' },
+  { name: 'git-worktrees', description: 'Isolating concurrent tasks using Git worktrees safely', scope: 'Remote' },
   { name: 'laravel-clean-api', description: 'Laravel coding standards for modular, clean controllers and repositories', scope: 'Remote' },
   { name: 'typescript-esm', description: 'Strict TypeScript configuration with native ESM import resolutions', scope: 'Remote' },
   { name: 'python-data-science', description: 'Data Science stack settings for pandas, numpy, and Jupyter notebook optimizations', scope: 'Remote' },
-  { name: 'generic-clean-code', description: 'General software engineering guidelines focusing on DRY, SOLID, and TDD', scope: 'Remote' },
-  { name: 'google-gemini-api-dev', description: 'Developing GenAI integrations using Google Gemini API and Vertex AI SDKs', scope: 'Remote' },
-  { name: 'supabase-postgres-best-practices', description: 'PostgreSQL schema design, constraints, and indexing standards for Supabase', scope: 'Remote' },
-  { name: 'stripe-best-practices', description: 'Building secure, idempotent payment workflows and webhooks integrations with Stripe', scope: 'Remote' },
-  { name: 'cloudflare-workers-dev', description: 'Deploying optimized serverless endpoints and edge caching using Cloudflare Workers', scope: 'Remote' },
-  { name: 'vercel-nextjs-optimization', description: 'Next.js rendering optimization (SSR/SSG), routing layout patterns, and core web vitals', scope: 'Remote' }
+  { name: 'generic-clean-code', description: 'General software engineering guidelines focusing on DRY, SOLID, and TDD', scope: 'Remote' }
 ];
 
 const GLOBAL_SKILLS_DIR = path.join(os.homedir(), '.config', 'jagopakaiai-cli', 'skills');
@@ -33,7 +42,7 @@ export async function skillsListCommand() {
   p.intro('JagoPakaiAI Skills Manager');
 
   // Discover skills
-  const discovered: SkillInfo[] = [];
+  const discoveredMap = new Map<string, SkillInfo>();
 
   // 1. Workspace-scoped skills (.agents/skills/*)
   const currentDir = process.cwd();
@@ -46,7 +55,7 @@ export async function skillsListCommand() {
         if (fs.existsSync(file)) {
           const parsed = parseSkillFile(file);
           if (parsed.isValid) {
-            discovered.push({
+            discoveredMap.set(parsed.metadata.name, {
               name: parsed.metadata.name,
               description: parsed.metadata.description,
               scope: 'Workspace',
@@ -67,35 +76,53 @@ export async function skillsListCommand() {
         if (fs.existsSync(file)) {
           const parsed = parseSkillFile(file);
           if (parsed.isValid) {
-            discovered.push({
-              name: parsed.metadata.name,
-              description: parsed.metadata.description,
-              scope: 'Global',
-              filePath: file
-            });
+            // Workspace scope takes precedence in display
+            if (!discoveredMap.has(parsed.metadata.name)) {
+              discoveredMap.set(parsed.metadata.name, {
+                name: parsed.metadata.name,
+                description: parsed.metadata.description,
+                scope: 'Global',
+                filePath: file
+              });
+            }
           }
         }
       }
     } catch {}
   }
 
-  // 3. Remote catalog
-  discovered.push(...REMOTE_CATALOG);
+  // 3. Remote/Recommended catalog
+  for (const s of RECOMMENDED_SKILLS) {
+    if (!discoveredMap.has(s.name)) {
+      discoveredMap.set(s.name, s);
+    }
+  }
 
-  // Present skills list
+  const discovered = Array.from(discoveredMap.values());
+
+  // Present skills list with statuses
   const listRows = discovered.map((s, idx) => {
-    return `${idx + 1}. [${s.scope}] ${s.name}\n   Description: ${s.description}`;
+    const isW = isWorkspaceSkillInstalled(s.name);
+    const isG = isGlobalSkillInstalled(s.name);
+    const isS = isSkillSynced(s.name);
+    
+    let statusText = 'Remote';
+    if (isW) statusText = 'Workspace';
+    else if (isG) statusText = 'Global';
+
+    const syncStatusText = isS ? '● Synced' : '○ Not Synced';
+    return `${idx + 1}. [${statusText} | ${syncStatusText}] ${s.name}\n   Description: ${s.description}`;
   }).join('\n\n');
 
-  p.note(listRows || 'No skills discovered.', 'Discovered Skills (ATM Model)');
+  p.note(listRows || 'No skills available.', 'Discovered Skills Catalog');
 
   // Main menu choices
   const action = await p.select({
     message: 'Select action to perform:',
     options: [
-      { value: 'sync', label: '🔄 Synchronize rules for a remote skill' },
-      { value: 'create', label: '🆕 Create/Scaffold a new custom skill' },
-      { value: 'validate', label: '🔍 Validate a skill markdown file' },
+      { value: 'manage', label: '🛠️ Manage / Sync a specific skill' },
+      { value: 'create', label: '🆕 Create / Scaffold a new custom skill' },
+      { value: 'validate', label: '🔍 Validate a local SKILL.md file' },
       { value: 'back', label: '🔙 Return' }
     ]
   });
@@ -105,23 +132,141 @@ export async function skillsListCommand() {
     return;
   }
 
-  if (action === 'sync') {
-    const choices = REMOTE_CATALOG.map(s => ({ value: s.name, label: s.name }));
+  if (action === 'manage') {
+    const choices = discovered.map(s => {
+      const isW = isWorkspaceSkillInstalled(s.name);
+      const isG = isGlobalSkillInstalled(s.name);
+      const loc = isW ? '(Workspace)' : isG ? '(Global)' : '(Remote)';
+      return { value: s.name, label: `${s.name} ${loc}` };
+    });
+
     const selectSkill = await p.select({
-      message: 'Select a skill to sync:',
+      message: 'Select a skill to manage:',
       options: choices
     });
 
-    if (!p.isCancel(selectSkill)) {
-      await syncCommand(selectSkill as string);
+    if (p.isCancel(selectSkill)) {
+      p.outro('Skills operation cancelled.');
+      return;
     }
+
+    const selectedSkillName = selectSkill as string;
+    const sInfo = discovered.find(s => s.name === selectedSkillName)!;
+
+    await manageSkillMenu(sInfo);
+
   } else if (action === 'create') {
     await skillsCreateCommand();
   } else if (action === 'validate') {
     await skillsValidateCommand();
   }
+}
 
-  p.outro('Skills operation complete!');
+async function manageSkillMenu(sInfo: SkillInfo) {
+  const isW = isWorkspaceSkillInstalled(sInfo.name);
+  const isG = isGlobalSkillInstalled(sInfo.name);
+  const isS = isSkillSynced(sInfo.name);
+
+  p.note(
+    `Skill: ${sInfo.name}\n` +
+    `Description: ${sInfo.description}\n` +
+    `Scope: ${isW ? 'Workspace-installed' : isG ? 'Global-installed' : 'Remote (Uninstalled)'}\n` +
+    `Sync status: ${isS ? 'Rules synchronized in project config' : 'Rules not synchronized'}\n` +
+    (sInfo.filePath ? `File Path: ${sInfo.filePath}` : ''),
+    'Skill Status Information'
+  );
+
+  const subAction = await p.select({
+    message: `What would you like to do with "${sInfo.name}"?`,
+    options: [
+      { value: 'sync', label: '🔄 Synchronize rules to project editor configs' },
+      { value: 'install_workspace', label: '💻 Save/Install locally to workspace (.agents/skills/)' },
+      { value: 'install_global', label: '🌍 Save/Install globally to home directory (~/.config/)' },
+      ...(isW || isG ? [{ value: 'validate', label: '🔍 Validate local file integrity' }] : []),
+      { value: 'back', label: '🔙 Back' }
+    ]
+  });
+
+  if (p.isCancel(subAction) || subAction === 'back') {
+    return;
+  }
+
+  if (subAction === 'sync') {
+    await syncCommand(sInfo.name);
+  } else if (subAction === 'install_workspace' || subAction === 'install_global') {
+    const scope = subAction === 'install_workspace' ? 'workspace' : 'global';
+    const targetDir = scope === 'workspace' 
+      ? path.join(process.cwd(), '.agents', 'skills', sInfo.name)
+      : path.join(GLOBAL_SKILLS_DIR, sInfo.name);
+    
+    const file = path.join(targetDir, 'SKILL.md');
+
+    // Get content from local if exists, else remote
+    let content = '';
+    if (sInfo.filePath && fs.existsSync(sInfo.filePath)) {
+      content = fs.readFileSync(sInfo.filePath, 'utf-8');
+    } else {
+      const apiKey = getApiKey();
+      if (!apiKey) {
+        p.log.warn('Authentication required to download remote skills. Running login flow or fallback template...');
+        const shouldLogin = await p.confirm({ message: 'Log in now?', initialValue: true });
+        if (shouldLogin && !p.isCancel(shouldLogin)) {
+          p.log.info('To login, please exit and run: jagopakaiai-cli login');
+        }
+        // Fallback: generate a template with the remote info
+        content = generateSkillTemplate(sInfo.name, sInfo.description);
+      } else {
+        const fetchSpinner = p.spinner();
+        fetchSpinner.start(`Fetching skill "${sInfo.name}" rules from API...`);
+        try {
+          const apiRules = await fetchSkillRule(apiKey, sInfo.name);
+          fetchSpinner.stop('Fetched successfully!');
+          content = apiRules;
+          if (!content.trim().startsWith('---')) {
+            content = [
+              '---',
+              `name: ${sInfo.name}`,
+              `description: "${sInfo.description}"`,
+              '---',
+              '',
+              content
+            ].join('\n');
+          }
+        } catch (err: any) {
+          fetchSpinner.stop('Fetch failed!');
+          p.log.error(`API Error: ${err.message || String(err)}`);
+          content = generateSkillTemplate(sInfo.name, sInfo.description);
+        }
+      }
+    }
+
+    const s = p.spinner();
+    s.start(`Writing skill files to ${scope} folder...`);
+    try {
+      if (!fs.existsSync(targetDir)) {
+        fs.mkdirSync(targetDir, { recursive: true });
+      }
+      fs.writeFileSync(file, content);
+      s.stop(`Successfully installed skill ${sInfo.name}!`);
+      p.log.success(`File saved: ${file}`);
+    } catch (err: any) {
+      s.stop('Write failed!');
+      p.log.error(err.message || String(err));
+    }
+  } else if (subAction === 'validate') {
+    if (sInfo.filePath) {
+      const s = p.spinner();
+      s.start('Validating file integrity...');
+      const result = parseSkillFile(sInfo.filePath);
+      s.stop('Validation scan completed!');
+      if (result.isValid) {
+        p.log.success('The skill file structure is VALID!');
+      } else {
+        p.log.error('The skill file structure is INVALID!');
+        p.note(result.errors.join('\n'), 'Validation Errors');
+      }
+    }
+  }
 }
 
 export async function skillsCreateCommand() {

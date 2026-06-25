@@ -59,6 +59,30 @@ export const RECOMMENDED_MCPS: McpDefinition[] = [
     description: 'Graph-based knowledge indexing and semantic storage',
     package: '@modelcontextprotocol/server-memory',
     defaultArgs: []
+  },
+  {
+    name: 'brave-search',
+    description: 'Brave Search engine API integration for web search capabilities',
+    package: '@modelcontextprotocol/server-brave-search',
+    defaultArgs: []
+  },
+  {
+    name: 'gmail',
+    description: 'Gmail integration allowing reading, drafting, and sending emails',
+    package: '@modelcontextprotocol/server-gmail',
+    defaultArgs: []
+  },
+  {
+    name: 'gcalendar',
+    description: 'Google Calendar integration for scheduling and event tracking',
+    package: '@modelcontextprotocol/server-gcalendar',
+    defaultArgs: []
+  },
+  {
+    name: 'docker',
+    description: 'Manage and inspect local Docker containers and images',
+    package: '@modelcontextprotocol/server-docker',
+    defaultArgs: []
   }
 ];
 
@@ -89,7 +113,7 @@ export function checkMcpInstalled(name: string): boolean {
   return false;
 }
 
-export function installMcpServer(name: string, customArgs?: string[]): void {
+export function installMcpServer(name: string, customArgs?: string[], customEnv?: Record<string, string>): void {
   const def = RECOMMENDED_MCPS.find(m => m.name === name);
   if (!def) {
     throw new Error(`MCP Server "${name}" is not supported.`);
@@ -112,7 +136,8 @@ export function installMcpServer(name: string, customArgs?: string[]): void {
   // Configure command definition
   config.mcpServers[name] = {
     command: 'npx',
-    args: ['-y', def.package, ...(customArgs || def.defaultArgs)]
+    args: ['-y', def.package, ...(customArgs || def.defaultArgs)],
+    ...(customEnv && Object.keys(customEnv).length > 0 ? { env: customEnv } : {})
   };
 
   saveClaudeConfig(config);

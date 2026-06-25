@@ -2,7 +2,13 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
-import { parseSkillFile, generateSkillTemplate } from './skills-parser.js';
+import { 
+  parseSkillFile, 
+  generateSkillTemplate, 
+  isWorkspaceSkillInstalled, 
+  isGlobalSkillInstalled, 
+  isSkillSynced 
+} from './skills-parser.js';
 
 const TEMP_TEST_DIR = path.join(os.tmpdir(), 'jagopakai-test-skills');
 
@@ -51,5 +57,15 @@ describe('Skills Parser Utility', () => {
     const parsed = parseSkillFile(filePath);
     expect(parsed.isValid).toBe(false);
     expect(parsed.errors).toContain('Missing required frontmatter property: "description"');
+  });
+
+  it('should verify workspace and global skill helper existence checks', () => {
+    expect(typeof isWorkspaceSkillInstalled).toBe('function');
+    expect(typeof isGlobalSkillInstalled).toBe('function');
+    expect(typeof isSkillSynced).toBe('function');
+
+    expect(isWorkspaceSkillInstalled('non-existent-skill-abc')).toBe(false);
+    expect(isGlobalSkillInstalled('non-existent-skill-abc')).toBe(false);
+    expect(isSkillSynced('non-existent-skill-abc')).toBe(false);
   });
 });
