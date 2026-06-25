@@ -5,10 +5,10 @@ esbuild.build({
   bundle: true,
   platform: 'node',
   target: 'node18',
-  format: 'esm',
+  format: 'cjs',
   outfile: 'dist/index.js',
   banner: {
-    js: '#!/usr/bin/env node\nimport { createRequire } from "module"; const require = createRequire(import.meta.url);'
+    js: '#!/usr/bin/env node'
   },
   // Make sure we resolve node imports correctly
   external: [],

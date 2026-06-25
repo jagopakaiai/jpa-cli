@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import { Command } from 'commander';
 import { loginCommand } from './commands/login.js';
 import { detectCommand } from './commands/detect.js';
