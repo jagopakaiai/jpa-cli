@@ -1,5 +1,5 @@
 import * as p from '@clack/prompts';
-import { getApiKey } from '../utils/config.js';
+import { getApiKey, getGeminiApiKey, getOpenRouterApiKey, getGroqApiKey } from '../utils/config.js';
 import { detectWorkspace } from '../utils/detector.js';
 
 export async function detectCommand() {
@@ -14,9 +14,21 @@ export async function detectCommand() {
   const apiKey = getApiKey();
   const apiKeyStatus = apiKey ? 'Active (Key Saved)' : 'Missing (Use "jagopakaiai-cli login" to authenticate)';
 
+  const geminiKey = getGeminiApiKey();
+  const geminiStatus = geminiKey ? 'Active (Key Saved)' : 'Not Configured';
+
+  const openrouterKey = getOpenRouterApiKey();
+  const openrouterStatus = openrouterKey ? 'Active (Key Saved)' : 'Not Configured';
+
+  const groqKey = getGroqApiKey();
+  const groqStatus = groqKey ? 'Active (Key Saved)' : 'Not Configured';
+
   const details = [
     `Workspace: ${currentDir}`,
-    `API Key: ${apiKeyStatus}`,
+    `JagoPakaiAI API Key: ${apiKeyStatus}`,
+    `Gemini API Key: ${geminiStatus}`,
+    `OpenRouter API Key: ${openrouterStatus}`,
+    `Groq API Key: ${groqStatus}`,
     `Git Repo: ${env.git ? 'Yes' : 'No'}`,
     `Cursor Rules Config: ${env.cursor ? 'Detected' : 'Not found'}`,
     `Claude Code Config: ${env.claude ? 'Detected' : 'Not found'}`,
@@ -25,5 +37,5 @@ export async function detectCommand() {
   ].join('\n');
 
   p.note(details, 'Audit Summary');
-  p.outro('To sync rules, run: jagopakaiai-cli sync <skill-name>');
+  p.outro('To sync rules, run: jagopakaiai-cli sync <skill-name> or configure keys with: jagopakaiai-cli keys');
 }

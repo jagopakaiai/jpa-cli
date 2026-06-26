@@ -34,7 +34,20 @@ jagopakaiai-cli login
 2. If the API key is valid, it writes to the global path.
 3. You can override an existing session at any time by running the command again.
 
-### 2. Workspace Diagnostics (`detect`)
+### 2. Multi-Provider AI Keys Management (`keys`)
+To set up keys for external AI providers (Gemini, OpenRouter, Groq) or JagoPakaiAI:
+```bash
+# Interactively configure provider keys
+jagopakaiai-cli keys
+
+# Directly configure a specific key
+jagopakaiai-cli keys groq <api-key>
+```
+1. Run without arguments to launch an interactive selection and configuration wizard.
+2. Direct CLI invocation writes/updates the key for the provider instantly.
+3. Allows verifying and deleting configured keys.
+
+### 3. Workspace Diagnostics (`detect`)
 Use this command to audit a newly cloned repository or check configuration status.
 ```bash
 jagopakaiai-cli detect
@@ -45,8 +58,9 @@ This command performs light scanning at the root directory of your workspace:
 - `.claudecoderc` or `.claudecode/`: Indicates the workspace is set up for Claude Code.
 - `.github/copilot-instructions.md`: Indicates the workspace supports GitHub Copilot instructions.
 - Checks files like `package.json`, `composer.json`, `Cargo.toml`, etc., to log the runtime stack context.
+- Prints the status of each configured API key (JagoPakaiAI, Gemini, OpenRouter, Groq).
 
-### 3. Fetching Instructions (`sync`)
+### 4. Fetching Instructions (`sync`)
 To fetch AI rules for your workspace:
 ```bash
 jagopakaiai-cli sync [skill-name]

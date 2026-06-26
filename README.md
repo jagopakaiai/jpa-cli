@@ -59,28 +59,38 @@ jagopakaiAI-cli/
 
 ## 🚀 Installation
 
-### 1. Global Installation (via npm)
-You can install the CLI globally using `npm`:
+You can install the JagoPakaiAI CLI using one of the following methods depending on your environment requirements:
+
+### 1. Global Installation (via npm - Recommended)
+Make sure you have **Node.js** (version 18 or higher) installed. Run the following command to install the CLI globally:
 ```bash
 npm install -g jagopakaiai-cli
 ```
+Once installed, the `jagopakaiai-cli` command will be available globally in your terminal.
 
-### 2. Standalone Binary Installers
+### 2. Run without Installation (via `npx`)
+If you want to try or run the CLI instantly without installing it globally on your system, use `npx`:
+```bash
+npx jagopakaiai-cli
+```
 
-#### macOS / Linux (via curl)
-Download the platform-specific compiled binary and move it to `/usr/local/bin`:
+### 3. Standalone Binary Installers (No Node.js Required)
+If you do not have Node.js / npm installed on your machine, you can download a compiled standalone binary:
+
+#### 💻 macOS / Linux (via curl)
+Download the platform-specific compiled binary and move it to `/usr/local/bin` automatically with:
 ```bash
 curl -fsSL https://raw.githubusercontent.com/jagopakaiai/jagopakaiAI-cli/main/install.sh | sh
 ```
 
-#### Windows (via PowerShell)
-Add the binary executable to the Windows User Environment PATH:
+#### 🖥️ Windows (via PowerShell)
+Open PowerShell and run the following command to download the Windows executable and append it to your User Environment PATH:
 ```powershell
 irm https://raw.githubusercontent.com/jagopakaiai/jagopakaiAI-cli/main/install.ps1 | iex
 ```
 
-#### macOS (via Homebrew)
-Install using our tap recipe formula:
+#### 🍺 macOS (via Homebrew)
+Install using our Homebrew tap formula:
 ```bash
 brew install jagopakaiai/tap/jagopakaiai-cli
 ```
@@ -99,7 +109,22 @@ The key is securely written to your home directory:
 
 ---
 
-### 🔍 2. `jagopakaiai-cli detect`
+### 🔑 2. `jagopakaiai-cli keys`
+Manages API keys for various AI providers (Gemini, OpenRouter, Groq, and JagoPakaiAI). You can run this command to start an interactive management manager wizard, or supply credentials directly.
+```bash
+# Start the interactive keys wizard
+jagopakaiai-cli keys
+
+# Save a specific provider's API key directly
+jagopakaiai-cli keys groq <api-key>
+jagopakaiai-cli keys gemini <api-key>
+jagopakaiai-cli keys openrouter <api-key>
+jagopakaiai-cli keys jagopakaiai <api-key>
+```
+
+---
+
+### 🔍 3. `jagopakaiai-cli detect`
 Scans the current workspace directory to audit the existing configurations and active project environment.
 ```bash
 jagopakaiai-cli detect
@@ -127,7 +152,7 @@ Example Output:
 
 ---
 
-### 🔄 3. `jagopakaiai-cli sync [skill-name]`
+### 🔄 4. `jagopakaiai-cli sync [skill-name]`
 Synchronizes and writes custom editor instruction rules for the specified skill from the JagoPakaiAI API directly into your workspace.
 ```bash
 jagopakaiai-cli sync laravel-clean-api
