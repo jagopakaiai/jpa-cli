@@ -14,7 +14,7 @@ def get_registry_links():
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
         try:
             with urllib.request.urlopen(req) as resp:
-                html = resp.read().decode('utf-8')
+                html = resp.read().decode('utf-8', errors='replace')
                 found = re.findall(r'href="(/mcp/[^"?#"]+)"', html)
                 for l in found:
                     parts = l.strip('/').split('/')
@@ -28,7 +28,7 @@ def fetch_detail(url):
     req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
     try:
         with urllib.request.urlopen(req) as resp:
-            html = resp.read().decode('utf-8')
+            html = resp.read().decode('utf-8', errors='replace')
             matches = re.finditer(r'<script[^>]*>(.*?mcpDetailsRoute.*?)</script>', html, re.DOTALL)
             for match in matches:
                 content = match.group(1).strip()
@@ -40,8 +40,11 @@ def fetch_detail(url):
                     decoder = json.JSONDecoder()
                     try:
                         data, end_idx = decoder.raw_decode(content[json_start:])
-                        if 'payload' in data and 'mcpDetailsRoute' in data['payload']:
-                            return data['payload']['mcpDetailsRoute'].get('server_data')
+                        payload = data.get('payload') or {}
+                        route = payload.get('mcpDetailsRoute') or {}
+                        server_data = route.get('server_data')
+                        if server_data:
+                            return server_data
                         start_pos = json_start + end_idx
                     except Exception:
                         start_pos = json_start + 1
@@ -54,14 +57,18 @@ def process_server(url):
     if not server_data:
         return False
     
-    name = server_data.get('name', '')
-    normalized_name = name.lower().replace('/', '-')
+    # Extract owner and repo from registry page URL
+    parts = url.rstrip('/').split('/')
+    owner = parts[-2] if len(parts) >= 2 else ''
+    repo = parts[-1] if len(parts) >= 1 else ''
+    normalized_name = f"{owner.lower()}-{repo.lower()}"
+    
     dest_folder = os.path.join(TARGET_DIR, normalized_name)
     os.makedirs(dest_folder, exist_ok=True)
     
     # Write README
-    repo_data = server_data.get('repository', {})
-    readme = repo_data.get('readme', '')
+    repo_data = server_data.get('repository') or {}
+    readme = repo_data.get('readme') or ''
     with open(os.path.join(dest_folder, 'README.md'), 'w', encoding='utf-8') as f:
         f.write(readme)
     
@@ -72,15 +79,15 @@ def process_server(url):
         "env": {}
     }
     
-    raw_data = server_data.get('raw_data', {})
-    server_info = raw_data.get('server', {})
-    packages = server_info.get('packages', [])
+    raw_data = server_data.get('raw_data') or {}
+    server_info = raw_data.get('server') or {}
+    packages = server_info.get('packages') or []
     
     if packages:
-        pkg = packages[0]
-        identifier = pkg.get('identifier', '')
-        hint = pkg.get('runtimeHint', '')
-        reg_type = pkg.get('registryType', '')
+        pkg = packages[0] or {}
+        identifier = pkg.get('identifier') or ''
+        hint = pkg.get('runtimeHint') or ''
+        reg_type = pkg.get('registryType') or ''
         
         if hint == 'uvx' or reg_type == 'pypi':
             mcp_config['command'] = 'uvx'
@@ -95,11 +102,15 @@ def process_server(url):
             mcp_config['command'] = 'npx'
             mcp_config['args'] = ['-y', identifier]
             
+    name = server_data.get('name') or ''
+    description = server_data.get('description') or ''
+    display_name = server_data.get('display_name') or ''
+    
     metadata = {
-        "name": name,
-        "displayName": server_data.get('display_name', ''),
-        "description": server_data.get('description', ''),
-        "repository": repo_data.get('url', ''),
+        "name": normalized_name,
+        "displayName": display_name,
+        "description": description,
+        "repository": repo_data.get('url') or '',
         "mcpConfig": mcp_config,
         "env": {}
     }
