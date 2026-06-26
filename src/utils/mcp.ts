@@ -18,73 +18,50 @@ export interface ClaudeConfig {
 
 export interface McpDefinition {
   name: string;
+  displayName?: string;
   description: string;
-  package: string;
-  defaultArgs: string[];
+  package?: string; // fallback
+  defaultArgs?: string[]; // fallback
+  mcpConfig?: McpServerConfig;
 }
 
-export const RECOMMENDED_MCPS: McpDefinition[] = [
-  {
-    name: 'sqlite',
-    description: 'SQLite database inspection and operations tool',
-    package: '@modelcontextprotocol/server-sqlite',
-    defaultArgs: ['--db', 'sqlite.db']
-  },
-  {
-    name: 'postgres',
-    description: 'Postgres database connection and explorer tool',
-    package: '@modelcontextprotocol/server-postgres',
-    defaultArgs: []
-  },
-  {
-    name: 'filesystem',
-    description: 'Provides controlled local filesystem access to AI agents',
-    package: '@modelcontextprotocol/server-filesystem',
-    defaultArgs: [path.join(os.homedir(), 'Projects')] // fallback default path
-  },
-  {
-    name: 'fetch',
-    description: 'Fetches web content and converts HTML to markdown',
-    package: '@modelcontextprotocol/server-fetch',
-    defaultArgs: []
-  },
-  {
-    name: 'github',
-    description: 'Enables repository, pull requests, and issues automation',
-    package: '@modelcontextprotocol/server-github',
-    defaultArgs: []
-  },
-  {
-    name: 'memory',
-    description: 'Graph-based knowledge indexing and semantic storage',
-    package: '@modelcontextprotocol/server-memory',
-    defaultArgs: []
-  },
-  {
-    name: 'brave-search',
-    description: 'Brave Search engine API integration for web search capabilities',
-    package: '@modelcontextprotocol/server-brave-search',
-    defaultArgs: []
-  },
-  {
-    name: 'gmail',
-    description: 'Gmail integration allowing reading, drafting, and sending emails',
-    package: '@modelcontextprotocol/server-gmail',
-    defaultArgs: []
-  },
-  {
-    name: 'gcalendar',
-    description: 'Google Calendar integration for scheduling and event tracking',
-    package: '@modelcontextprotocol/server-gcalendar',
-    defaultArgs: []
-  },
-  {
-    name: 'docker',
-    description: 'Manage and inspect local Docker containers and images',
-    package: '@modelcontextprotocol/server-docker',
-    defaultArgs: []
+// Load MCP Definitions dynamically from the mcp folder
+export function loadMcpDefinitions(): McpDefinition[] {
+  let mcpDir = path.join(__dirname, '..', '..', 'mcp');
+  if (!fs.existsSync(mcpDir)) {
+    mcpDir = path.join(__dirname, '..', 'mcp');
   }
-];
+  const definitions: McpDefinition[] = [];
+  
+  if (!fs.existsSync(mcpDir)) {
+    return [];
+  }
+
+  const items = fs.readdirSync(mcpDir);
+  for (const item of items) {
+    const itemPath = path.join(mcpDir, item);
+    if (fs.statSync(itemPath).isDirectory()) {
+      const configPath = path.join(itemPath, 'config.json');
+      if (fs.existsSync(configPath)) {
+        try {
+          const data = fs.readFileSync(configPath, 'utf-8');
+          const parsed = JSON.parse(data);
+          definitions.push({
+            name: parsed.name || item,
+            displayName: parsed.displayName,
+            description: parsed.description || '',
+            mcpConfig: parsed.mcpConfig
+          });
+        } catch (e) {
+          // Ignore corrupted configs
+        }
+      }
+    }
+  }
+  return definitions;
+}
+
+export const RECOMMENDED_MCPS: McpDefinition[] = loadMcpDefinitions();
 
 export function getClaudeConfig(): ClaudeConfig {
   if (!fs.existsSync(CLAUDE_CONFIG_FILE)) {
@@ -114,18 +91,23 @@ export function checkMcpInstalled(name: string): boolean {
 }
 
 export function installMcpServer(name: string, customArgs?: string[], customEnv?: Record<string, string>): void {
-  const def = RECOMMENDED_MCPS.find(m => m.name === name);
-  if (!def) {
-    throw new Error(`MCP Server "${name}" is not supported.`);
+  const defs = loadMcpDefinitions();
+  const def = defs.find(m => m.name === name);
+  if (!def || !def.mcpConfig) {
+    throw new Error(`MCP Server "${name}" is not supported or missing config.`);
   }
 
-  // Pre-install package globally for high speed execution or run directly via npx
-  try {
-    console.log(`Installing ${def.package} globally via npm...`);
-    execSync(`npm install -g ${def.package}`, { stdio: 'ignore' });
-  } catch {
-    // If global install fails (e.g. permissions), we will rely on npx resolving it on execution
-    console.log('Global npm install failed, will fallback to npx execution.');
+  const cmdConfig = def.mcpConfig;
+  
+  // Attempt global install if NPX/npm package is defined in args
+  if (cmdConfig.command === 'npx' && cmdConfig.args.length > 1) {
+    const pkg = cmdConfig.args[1];
+    try {
+      console.log(`Installing ${pkg} globally via npm...`);
+      execSync(`npm install -g ${pkg}`, { stdio: 'ignore' });
+    } catch {
+      console.log('Global npm install failed, will fallback to npx execution.');
+    }
   }
 
   const config = getClaudeConfig();
@@ -133,12 +115,12 @@ export function installMcpServer(name: string, customArgs?: string[], customEnv?
     config.mcpServers = {};
   }
 
-  // Configure command definition
   config.mcpServers[name] = {
-    command: 'npx',
-    args: ['-y', def.package, ...(customArgs || def.defaultArgs)],
-    ...(customEnv && Object.keys(customEnv).length > 0 ? { env: customEnv } : {})
+    command: cmdConfig.command,
+    args: customArgs || cmdConfig.args,
+    ...(customEnv && Object.keys(customEnv).length > 0 ? { env: customEnv } : (cmdConfig.env ? { env: cmdConfig.env } : {}))
   };
 
   saveClaudeConfig(config);
 }
+

@@ -37,7 +37,35 @@ describe('MCP Configuration Utility', () => {
   });
 
   it('should write config correctly when installMcpServer is called', () => {
-    const mockExistsSync = vi.spyOn(fs, 'existsSync').mockReturnValue(false);
+    const mockExistsSync = vi.spyOn(fs, 'existsSync').mockImplementation((p) => {
+      const pStr = p.toString();
+      if (pStr.includes('.claudecode')) return false;
+      if (pStr.includes('mcp')) return true;
+      return false;
+    });
+    vi.spyOn(fs, 'readdirSync').mockImplementation((p) => {
+      if (p.toString().includes('mcp')) {
+        return ['sqlite'] as any;
+      }
+      return [];
+    });
+    vi.spyOn(fs, 'statSync').mockImplementation(() => {
+      return { isDirectory: () => true } as any;
+    });
+    vi.spyOn(fs, 'readFileSync').mockImplementation((p) => {
+      if (p.toString().includes('sqlite') && p.toString().includes('config.json')) {
+        return JSON.stringify({
+          name: 'sqlite',
+          displayName: 'SQLite',
+          description: 'SQLite database inspection and operations tool',
+          mcpConfig: {
+            command: 'npx',
+            args: ['-y', '@modelcontextprotocol/server-sqlite', '--db', 'sqlite.db']
+          }
+        });
+      }
+      return '{}';
+    });
     const mockWriteFileSync = vi.spyOn(fs, 'writeFileSync').mockImplementation(() => {});
     const mockMkdirSync = vi.spyOn(fs, 'mkdirSync').mockImplementation(() => undefined);
     

@@ -9,7 +9,7 @@ export async function mcpListCommand() {
   const listRows = RECOMMENDED_MCPS.map((m, idx) => {
     const isInstalled = checkMcpInstalled(m.name);
     const statusText = isInstalled ? '● Active' : '○ Not Configured';
-    return `${idx + 1}. [${statusText}] ${m.name} (${m.package})\n   Description: ${m.description}`;
+    return `${idx + 1}. [${statusText}] ${m.displayName || m.name}\n   Description: ${m.description}`;
   }).join('\n\n');
 
   p.note(listRows, 'Recommended MCP Servers');
@@ -20,7 +20,7 @@ export async function mcpListCommand() {
   });
 
   if (shouldInstall && !p.isCancel(shouldInstall)) {
-    const choices = RECOMMENDED_MCPS.map(m => ({ value: m.name, label: `${m.name} (${m.package})` }));
+    const choices = RECOMMENDED_MCPS.map(m => ({ value: m.name, label: m.displayName || m.name }));
     const selectMcp = await p.select({
       message: 'Select an MCP server to install:',
       options: choices
