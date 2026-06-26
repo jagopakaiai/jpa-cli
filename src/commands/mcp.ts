@@ -1,12 +1,13 @@
 import * as p from '@clack/prompts';
 import os from 'os';
 import path from 'path';
-import { RECOMMENDED_MCPS, checkMcpInstalled, installMcpServer } from '../utils/mcp.js';
+import { getRecommendedMcps, checkMcpInstalled, installMcpServer } from '../utils/mcp.js';
 
 export async function mcpListCommand() {
   p.intro('JagoPakaiAI Recommended MCP Servers');
 
-  const listRows = RECOMMENDED_MCPS.map((m, idx) => {
+  const defs = getRecommendedMcps();
+  const listRows = defs.map((m, idx) => {
     const isInstalled = checkMcpInstalled(m.name);
     const statusText = isInstalled ? '● Active' : '○ Not Configured';
     return `${idx + 1}. [${statusText}] ${m.displayName || m.name}\n   Description: ${m.description}`;
@@ -20,7 +21,7 @@ export async function mcpListCommand() {
   });
 
   if (shouldInstall && !p.isCancel(shouldInstall)) {
-    const choices = RECOMMENDED_MCPS.map(m => ({ value: m.name, label: m.displayName || m.name }));
+    const choices = defs.map(m => ({ value: m.name, label: m.displayName || m.name }));
     const selectMcp = await p.select({
       message: 'Select an MCP server to install:',
       options: choices
@@ -35,7 +36,8 @@ export async function mcpListCommand() {
 }
 
 export async function mcpInstallCommand(name: string) {
-  const def = RECOMMENDED_MCPS.find(m => m.name === name);
+  const defs = getRecommendedMcps();
+  const def = defs.find(m => m.name === name);
   if (!def) {
     p.log.error(`MCP Server "${name}" is not supported.`);
     return;

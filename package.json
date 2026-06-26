@@ -1,11 +1,16 @@
 {
   "name": "jagopakaiai-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "JagoPakaiAI CLI utility for managing AI agent rule configurations",
   "main": "dist/index.js",
   "bin": {
-    "jagopakaiai-cli": "./dist/index.js"
+    "jagopakaiai-cli": "dist/index.js"
   },
+  "files": [
+    "dist",
+    "mcp",
+    "skills"
+  ],
   "scripts": {
     "build": "node esbuild.config.js",
     "test": "vitest run",
@@ -26,7 +31,9 @@
   },
   "pkg": {
     "assets": [
-      "dist/index.js"
+      "dist/index.js",
+      "mcp/**/*",
+      "skills/**/*"
     ],
     "targets": [
       "node18-linux-x64",

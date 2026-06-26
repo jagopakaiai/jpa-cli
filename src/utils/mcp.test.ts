@@ -2,8 +2,14 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
+
+vi.mock('child_process', () => {
+  return {
+    execSync: vi.fn().mockReturnValue(Buffer.from(''))
+  };
+});
+
 import { getClaudeConfig, saveClaudeConfig, checkMcpInstalled, installMcpServer } from './mcp.js';
-import { execSync } from 'child_process';
 
 describe('MCP Configuration Utility', () => {
   beforeEach(() => {

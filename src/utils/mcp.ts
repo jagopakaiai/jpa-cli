@@ -28,7 +28,9 @@ export interface McpDefinition {
 // Load MCP Definitions dynamically from the mcp folder
 export function loadMcpDefinitions(): McpDefinition[] {
   let mcpDir = path.join(__dirname, '..', '..', 'mcp');
-  if (!fs.existsSync(mcpDir)) {
+  if ((process as any).pkg) {
+    mcpDir = path.join(__dirname, '..', 'mcp');
+  } else if (!fs.existsSync(mcpDir)) {
     mcpDir = path.join(__dirname, '..', 'mcp');
   }
   const definitions: McpDefinition[] = [];
@@ -61,7 +63,13 @@ export function loadMcpDefinitions(): McpDefinition[] {
   return definitions;
 }
 
-export const RECOMMENDED_MCPS: McpDefinition[] = loadMcpDefinitions();
+let cachedMcps: McpDefinition[] | null = null;
+export function getRecommendedMcps(): McpDefinition[] {
+  if (!cachedMcps) {
+    cachedMcps = loadMcpDefinitions();
+  }
+  return cachedMcps;
+}
 
 export function getClaudeConfig(): ClaudeConfig {
   if (!fs.existsSync(CLAUDE_CONFIG_FILE)) {
@@ -91,7 +99,7 @@ export function checkMcpInstalled(name: string): boolean {
 }
 
 export function installMcpServer(name: string, customArgs?: string[], customEnv?: Record<string, string>): void {
-  const defs = loadMcpDefinitions();
+  const defs = getRecommendedMcps();
   const def = defs.find(m => m.name === name);
   if (!def || !def.mcpConfig) {
     throw new Error(`MCP Server "${name}" is not supported or missing config.`);
