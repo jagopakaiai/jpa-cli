@@ -4,7 +4,7 @@ This document describes the technical architecture, component design, compilatio
 
 ---
 
-## 🏗️ System Overview
+## System Overview
 
 The JagoPakaiAI CLI acts as a bridge between your local development workspace, AI coding agents (Claude Code, Cursor, Cline), and the JagoPakaiAI central rules API.
 
@@ -23,7 +23,7 @@ graph TD
 
 ---
 
-## 📁 Key Components
+## Key Components
 
 ### 1. Workspace Diagnostics Engine (`src/utils/detector.ts`)
 - Scans current folders and parents to check if the project is under Git control.
@@ -48,7 +48,7 @@ graph TD
 
 ---
 
-## 📦 Compilation & Packaging Pipeline
+## Compilation & Packaging Pipeline
 
 ### 1. Bundling via ESBuild (`esbuild.config.js`)
 - TypeScript source code is compiled and bundled into a single JavaScript file (`dist/index.js`).
@@ -64,7 +64,7 @@ graph TD
 
 ---
 
-## 🧪 Testing Strategy (Vitest)
+## Testing Strategy (Vitest)
 
 Unit tests are written using `vitest`.
 - **API Tests (`src/utils/api.test.ts`)**: Mock API requests using axios mocks.

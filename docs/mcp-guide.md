@@ -4,13 +4,13 @@ This guide describes how the JagoPakaiAI CLI integrates with and configures Mode
 
 ---
 
-## 💡 What is the Model Context Protocol (MCP)?
+## What is the Model Context Protocol (MCP)?
 
 The Model Context Protocol (MCP) is an open standard designed to enable AI models to interact with local development environments, databases, external APIs, and tools securely. By registering an MCP server, you grant your AI coding agents the ability to run specific tools (e.g. executing SQL queries, reading git history, calling search APIs).
 
 ---
 
-## 🛠️ Dynamic MCP Configuration Catalog
+## Dynamic MCP Configuration Catalog
 
 JagoPakaiAI CLI maintains a library of over 130+ pre-scraped and configured MCP servers in the `mcp/` directory. Each server definition contains:
 - `README.md`: Explaining the tools provided, dependencies, and parameters.
@@ -49,7 +49,7 @@ JagoPakaiAI CLI maintains a library of over 130+ pre-scraped and configured MCP 
 
 ---
 
-## ⚙️ Interactive Installation Process
+## Interactive Installation Process
 
 When you run the command:
 ```bash
@@ -64,7 +64,7 @@ The CLI executes the following steps:
 
 ---
 
-## 📁 Manual MCP Configuration Registration
+## Manual MCP Configuration Registration
 
 If you prefer to configure MCP servers manually in your client (like Cline or cursor settings), you can find the complete configuration definitions for all ~130 servers inside the `mcp/` directory.
 

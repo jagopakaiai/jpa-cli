@@ -4,33 +4,34 @@
 [![Build Status](https://img.shields.io/github/actions/workflow/status/jagopakaiai/jagopakaiAI-cli/release.yml?style=flat-square)](https://github.com/jagopakaiai/jagopakaiAI-cli/actions)
 [![License](https://img.shields.io/github/license/jagopakaiai/jagopakaiAI-cli?style=flat-square)](LICENSE)
 [![npm version](https://img.shields.io/npm/v/jagopakaiai-cli?color=brightgreen&style=flat-square)](https://www.npmjs.com/package/jagopakaiai-cli)
+[![npm downloads](https://img.shields.io/npm/dm/jagopakaiai-cli?color=brightgreen&style=flat-square)](https://www.npmjs.com/package/jagopakaiai-cli)
 
-**JagoPakaiAI CLI** is a modern Command Line Interface utility designed to automatically detect, manage, and synchronize local AI Agent and Editor rule configurations (such as `.cursorrules`, `.claudecoderc`, and `.github/copilot-instructions.md`) directly in your workspace.
+**JagoPakaiAI CLI** is a Command Line Interface utility designed to automatically detect, manage, and synchronize local AI Agent and Editor rule configurations (such as `.cursorrules`, `.claudecoderc`, and `.github/copilot-instructions.md`) directly in your workspace.
 
 Synchronize custom and community-developed developer instructions (skills) directly from the JagoPakaiAI API, configure multi-provider AI keys, and automatically set up pre-packaged Model Context Protocol (MCP) servers locally to optimize your AI pair programming experience.
 
 ---
 
-## ✨ Features
+## Features
 
-- ⚙️ **Interactive Prompts**: Beautiful, styled prompts, spin indicators, and selection menus powered by `@clack/prompts`.
-- 🔍 **Auto-Environment Auditing**: Intelligently scans the current workspace for Git repositories, active AI/Editor configuration files, and project stack languages (Node.js, Laravel/PHP, Python, Rust, Go).
-- 🔄 **Multi-Target Synchronization**: Sync single skill configurations to one or more rules files simultaneously (`.cursorrules`, `.claudecoderc`, `.github/copilot-instructions.md`).
-- 🛠️ **Recommended MCP Directory**: Dynamic loading and installation of over 130+ pre-scraped and curated MCP server configurations (including `sqlite`, `postgres`, `filesystem`, `brave-search`, `gcalendar`, `gmail`, `docker`, and `upstash-context7`).
-- 🔑 **AI Provider Keys Manager**: Securely stores and manages API credentials locally for multiple AI providers (Gemini, OpenRouter, Groq, and JagoPakaiAI) inside your user profile.
-- 🚀 **Project Initializer & PRD Generator**: Seamlessly scaffolds new projects, detects active AI environments, configures local agent rules, and creates a tailored `PRD.md` (Product Requirements Document).
-- 🔒 **Secure Local Config**: Saves configuration files with restrictive file permissions (`0o600` on Unix-like systems) to prevent unauthorized token reading.
-- 📦 **Zero-Dependency Native Binaries**: Fully compiled standalone binaries packaged for Windows (x64), macOS (Intel/Apple Silicon), and Linux (x64).
+- **Interactive Prompts**: Clean, structured prompts, spin indicators, and selection menus powered by `@clack/prompts`.
+- **Auto-Environment Auditing**: Intelligently scans the current workspace for Git repositories, active AI/Editor configuration files, and project stack languages (Node.js, Laravel/PHP, Python, Rust, Go).
+- **Multi-Target Synchronization**: Sync single skill configurations to one or more rules files simultaneously (`.cursorrules`, `.claudecoderc`, `.github/copilot-instructions.md`).
+- **Recommended MCP Directory**: Dynamic loading and installation of over 130+ pre-scraped and curated MCP server configurations (including `sqlite`, `postgres`, `filesystem`, `brave-search`, `gcalendar`, `gmail`, `docker`, and `upstash-context7`).
+- **AI Provider Keys Manager**: Securely stores and manages API credentials locally for multiple AI providers (Gemini, OpenRouter, Groq, and JagoPakaiAI) inside your user profile.
+- **Project Initializer & PRD Generator**: Seamlessly scaffolds new projects, detects active AI environments, configures local agent rules, and creates a tailored `PRD.md` (Product Requirements Document).
+- **Secure Local Config**: Saves configuration files with restrictive file permissions (`0o600` on Unix-like systems) to prevent unauthorized token reading.
+- **Zero-Dependency Native Binaries**: Fully compiled standalone binaries packaged for Windows (x64), macOS (Intel/Apple Silicon), and Linux (x64).
 
 ---
 
-## 📂 Project Directory Structure
+## Project Directory Structure
 
 ```text
 jagopakaiAI-cli/
 ├── .github/
 │   └── workflows/
-│       └── release.yml       # Automated test, release, & dual npm publication CI/CD pipeline
+│       └── release.yml       # Release & cross-compilation GitHub Actions pipeline
 ├── bin/                      # Compiled native executables (gitignored)
 ├── dist/                     # Compiled JS bundle (gitignored)
 ├── docs/                     # Documentation folder
@@ -69,7 +70,7 @@ jagopakaiAI-cli/
 
 ---
 
-## 🚀 Installation
+## Installation
 
 You can install the JagoPakaiAI CLI using one of the following methods depending on your environment requirements:
 
@@ -89,13 +90,13 @@ npx jagopakaiai-cli
 ### 3. Standalone Binary Installers (No Node.js Required)
 If you do not have Node.js / npm installed on your machine, you can download a compiled standalone binary:
 
-#### 💻 macOS / Linux (via curl)
+#### macOS / Linux (via curl)
 Download the platform-specific compiled binary and move it to `/usr/local/bin` automatically with:
 ```bash
 curl -fsSL https://raw.githubusercontent.com/jagopakaiai/jagopakaiAI-cli/main/install.sh | sh
 ```
 
-#### 🖥️ Windows (via PowerShell)
+#### Windows (via PowerShell)
 Open PowerShell and run the following command to download the Windows executable and append it to your User Environment PATH:
 ```powershell
 irm https://raw.githubusercontent.com/jagopakaiai/jagopakaiAI-cli/main/install.ps1 | iex
@@ -103,11 +104,11 @@ irm https://raw.githubusercontent.com/jagopakaiai/jagopakaiAI-cli/main/install.p
 
 ---
 
-## 💻 CLI Commands
+## CLI Commands
 
-When run without commands or arguments, `jagopakaiai-cli` launches an **interactive graphical main menu console** displaying all available features. You can also run commands directly with options:
+When run without commands or arguments, `jagopakaiai-cli` launches an interactive main menu console displaying all available features. You can also run commands directly with options:
 
-### 🔑 1. `jagopakaiai-cli login`
+### 1. `jagopakaiai-cli login`
 Authenticates with your JagoPakaiAI credentials. You will be prompted to enter your API Key.
 ```bash
 jagopakaiai-cli login
@@ -117,10 +118,10 @@ The key is securely written to your home directory:
 
 ---
 
-### 🔑 2. `jagopakaiai-cli keys [provider] [key]`
+### 2. `jagopakaiai-cli keys [provider] [key]`
 Manages API keys for various AI providers (Gemini, OpenRouter, Groq, and JagoPakaiAI). 
 ```bash
-# Start the interactive keys wizard (highly recommended)
+# Start the interactive keys wizard
 jagopakaiai-cli keys
 
 # Save a specific provider's API key directly
@@ -132,7 +133,7 @@ jagopakaiai-cli keys jagopakaiai <api-key>
 
 ---
 
-### 🔍 3. `jagopakaiai-cli detect`
+### 3. `jagopakaiai-cli detect`
 Scans the current workspace directory to audit the existing configurations and active project environment.
 ```bash
 jagopakaiai-cli detect
@@ -146,7 +147,7 @@ It prints a detailed summary displaying:
 
 ---
 
-### 🚀 4. `jagopakaiai-cli init`
+### 4. `jagopakaiai-cli init`
 Guides you through setting up a new project workspace.
 ```bash
 jagopakaiai-cli init
@@ -159,7 +160,7 @@ jagopakaiai-cli init
 
 ---
 
-### 📚 5. `jagopakaiai-cli skills`
+### 5. `jagopakaiai-cli skills`
 Lists all available local/custom instruction profiles and audits their synchronization status in the current project files.
 ```bash
 jagopakaiai-cli skills
@@ -167,17 +168,17 @@ jagopakaiai-cli skills
 
 ---
 
-### 🔄 6. `jagopakaiai-cli sync [skill-name]`
+### 6. `jagopakaiai-cli sync [skill-name]`
 Synchronizes and writes custom editor instruction rules for the specified skill from the JagoPakaiAI API directly into your workspace.
 ```bash
 jagopakaiai-cli sync laravel-clean-api
 ```
 - If multiple environments are detected (e.g. both Cursor and Claude Code settings are found), you will be interactively prompted to choose which rule files to write to.
-- It displays beautiful animated spinners and logs successful sync writes.
+- It displays animated spinners and logs successful sync writes.
 
 ---
 
-### 🛠️ 7. `jagopakaiai-cli mcp [install-name]`
+### 7. `jagopakaiai-cli mcp [install-name]`
 Lists, views, and installs curated Model Context Protocol (MCP) servers to extend AI coding assistant capabilities.
 ```bash
 # Start the interactive recommended MCP list & installation wizard
@@ -191,7 +192,7 @@ jagopakaiai-cli mcp sqlite
 
 ---
 
-## 🛠️ Development & Compilation
+## Development & Compilation
 
 To build and compile the application locally:
 
@@ -214,5 +215,5 @@ npm run package
 
 ---
 
-## 📄 License
+## License
 This project is open-source and licensed under the MIT License.

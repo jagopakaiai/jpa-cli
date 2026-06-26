@@ -4,7 +4,7 @@ This guide provides an in-depth look at configuring, executing, and troubleshoot
 
 ---
 
-## 📂 Configuration Storage & Security
+## Configuration Storage & Security
 
 JagoPakaiAI CLI stores credentials and user configurations globally on your local machine to preserve authentication state across different workspaces.
 
@@ -30,7 +30,7 @@ To prevent local token sniffing:
 
 ---
 
-## 💻 Detailed Commands Workflow
+## Detailed Commands Workflow
 
 When executing `jagopakaiai-cli` without parameters, an interactive terminal dashboard menu is launched. You can also run commands directly with flags and arguments:
 
@@ -105,7 +105,7 @@ jagopakaiai-cli mcp sqlite
 
 ---
 
-## 🛠️ Troubleshooting Scenarios
+## Troubleshooting Scenarios
 
 ### 1. Connection Errors / API Reachability
 If the CLI reports HTTP errors during `sync` or `login`:
