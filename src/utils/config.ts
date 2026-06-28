@@ -47,9 +47,9 @@ export function getApiKey(): string | null {
 }
 
 export function deleteApiKey(): void {
-  if (fs.existsSync(CONFIG_FILE)) {
-    fs.unlinkSync(CONFIG_FILE);
-  }
+  const config = readConfig();
+  delete config.apiKey;
+  writeConfig(config);
 }
 
 // Gemini API Key

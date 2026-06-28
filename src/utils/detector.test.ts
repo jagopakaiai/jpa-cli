@@ -51,7 +51,7 @@ describe('Workspace Detector Utility', () => {
     expect(agents).toHaveProperty('cline');
     expect(agents).toHaveProperty('codex');
     expect(agents).toHaveProperty('kilo');
-    expect(agents).toHaveProperty('opencode');
+    expect(agents).toHaveProperty('openCode');
   });
 });
 

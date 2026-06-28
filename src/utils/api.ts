@@ -6,7 +6,8 @@ export async function fetchSkillRule(apiKey: string, skillName: string): Promise
     const response = await axios.get(url, {
       headers: {
         'Authorization': `Bearer ${apiKey}`
-      }
+      },
+      timeout: 15000
     });
     
     // Support standard content or content fallback
@@ -24,7 +25,8 @@ export async function fetchSkillRule(apiKey: string, skillName: string): Promise
       const fallbackRes = await axios.get(fallbackUrl, {
         headers: {
           'Authorization': `Bearer ${apiKey}`
-        }
+        },
+        timeout: 15000
       });
       if (fallbackRes.data && typeof fallbackRes.data.content === 'string') {
         return fallbackRes.data.content;
@@ -44,7 +46,7 @@ export async function fetchRawSkillFromUrl(url: string): Promise<string> {
   if (url.includes('officialskills.sh')) {
     try {
       // 1. Fetch officialskills.sh HTML
-      const response = await axios.get(url);
+      const response = await axios.get(url, { timeout: 15000 });
       const html = response.data;
       
       // 2. Parse GitHub tree URL from HTML
@@ -98,7 +100,7 @@ export async function fetchRawSkillFromUrl(url: string): Promise<string> {
 }
 
 async function fetchUrlContent(url: string): Promise<string> {
-  const res = await axios.get(url);
+  const res = await axios.get(url, { timeout: 15000 });
   if (typeof res.data === 'string') {
     return res.data;
   }

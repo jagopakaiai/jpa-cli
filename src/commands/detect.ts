@@ -33,6 +33,21 @@ export async function detectCommand() {
     `Cursor Rules Config: ${env.cursor ? 'Detected' : 'Not found'}`,
     `Claude Code Config: ${env.claude ? 'Detected' : 'Not found'}`,
     `Copilot Config: ${env.copilot ? 'Detected' : 'Not found'}`,
+    `CLAUDE.md: ${env.claudeMd ? 'Detected' : 'Not found'}`,
+    `Cursor Rules Dir (.cursor/rules/): ${env.cursorDir ? 'Detected' : 'Not found'}`,
+    `Windsurf Config: ${env.windsurf ? 'Detected' : 'Not found'}`,
+    `AGENTS.md: ${env.agentsMd ? 'Detected' : 'Not found'}`,
+    `Aider Config: ${env.aiderRules ? 'Detected' : 'Not found'}`,
+    `Trae Rules: ${env.traerules ? 'Detected' : 'Not found'}`,
+    `Devin Config: ${env.devinDir ? 'Detected' : 'Not found'}`,
+    `CodeBuddy Config: ${env.codebuddyrc ? 'Detected' : 'Not found'}`,
+    `Codex Rules: ${env.codexrules ? 'Detected' : 'Not found'}`,
+    `OpenCode Rules: ${env.opencoderules ? 'Detected' : 'Not found'}`,
+    `Kilo Rules: ${env.kilorules ? 'Detected' : 'Not found'}`,
+    `Kiro Rules: ${env.kirorules ? 'Detected' : 'Not found'}`,
+    `OpenClaw Rules: ${env.openclawrules ? 'Detected' : 'Not found'}`,
+    `Factory Droid Rules: ${env.factorydroidrules ? 'Detected' : 'Not found'}`,
+    `Hermes Rules: ${env.hermesrules ? 'Detected' : 'Not found'}`,
     `Project Type: ${env.projectType || 'Unknown/Generic'}`
   ].join('\n');
 

@@ -15,13 +15,26 @@ export async function initCommand() {
   s.stop('Detection complete!');
 
   const installedList: string[] = [];
-  if (agents.claudeCode) installedList.push('Claude Code');
-  if (agents.antigravity) installedList.push('Antigravity CLI/IDE');
   if (agents.geminiCli) installedList.push('Gemini CLI');
-  if (agents.cline) installedList.push('Cline/Roo-Code');
+  if (agents.cursor) installedList.push('Cursor');
+  if (agents.claudeCode) installedList.push('Claude Code');
+  if (agents.codeBuddy) installedList.push('CodeBuddy');
   if (agents.codex) installedList.push('Codex');
+  if (agents.openCode) installedList.push('OpenCode');
   if (agents.kilo) installedList.push('Kilo');
-  if (agents.opencode) installedList.push('OpenCode');
+  if (agents.aider) installedList.push('Aider');
+  if (agents.copilotCli) installedList.push('GitHub Copilot CLI');
+  if (agents.copilotChat) installedList.push('VS Code Copilot Chat');
+  if (agents.openClaw) installedList.push('OpenClaw');
+  if (agents.factoryDroid) installedList.push('Factory Droid');
+  if (agents.trae) installedList.push('Trae');
+  if (agents.traeCn) installedList.push('Trae CN');
+  if (agents.antigravity) installedList.push('Google Antigravity');
+  if (agents.hermes) installedList.push('Hermes');
+  if (agents.kiro) installedList.push('Kiro IDE/CLI');
+  if (agents.pi) installedList.push('Pi coding agent');
+  if (agents.devin) installedList.push('Devin CLI');
+  if (agents.cline) installedList.push('Cline/Roo-Code');
 
   if (installedList.length > 0) {
     p.log.success(`Detected AI Agents: ${installedList.join(', ')}`);
@@ -86,8 +99,23 @@ export async function initCommand() {
   // 3. Selection of AI configuration files to create
   const fileOptions = [
     { value: '.cursorrules', label: 'Cursor Rules (.cursorrules)' },
+    { value: '.cursor/rules/jagopakaiai.md', label: 'Cursor Rules Dir (.cursor/rules/)' },
     { value: '.claudecoderc', label: 'Claude Code (.claudecoderc)' },
-    { value: '.github/copilot-instructions.md', label: 'GitHub Copilot (.github/copilot-instructions.md)' }
+    { value: 'CLAUDE.md', label: 'Claude MD (CLAUDE.md)' },
+    { value: '.github/copilot-instructions.md', label: 'GitHub Copilot (.github/copilot-instructions.md)' },
+    { value: 'AGENTS.md', label: 'Agents MD (AGENTS.md) - Gemini/Antigravity/Pi' },
+    { value: '.aider.instructions.md', label: 'Aider Rules (.aider.instructions.md)' },
+    { value: '.traerules', label: 'Trae Rules (.traerules)' },
+    { value: '.devin/instructions.md', label: 'Devin Rules (.devin/instructions.md)' },
+    { value: '.codebuddyrc', label: 'CodeBuddy Config (.codebuddyrc)' },
+    { value: '.codexrules', label: 'Codex Rules (.codexrules)' },
+    { value: '.opencoderules', label: 'OpenCode Rules (.opencoderules)' },
+    { value: '.kilorules', label: 'Kilo Rules (.kilorules)' },
+    { value: '.kirorules', label: 'Kiro Rules (.kirorules)' },
+    { value: '.openclawrules', label: 'OpenClaw Rules (.openclawrules)' },
+    { value: '.factorydroidrules', label: 'Factory Droid Rules (.factorydroidrules)' },
+    { value: '.hermesrules', label: 'Hermes Rules (.hermesrules)' },
+    { value: '.windsurfrules', label: 'Windsurf Rules (.windsurfrules)' }
   ];
   const selectedFiles = await p.multiselect({
     message: 'Select AI rule configs to generate for this workspace:',

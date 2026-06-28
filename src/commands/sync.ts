@@ -28,15 +28,35 @@ export async function syncCommand(skillName: string | undefined, url?: string) {
 
   const availableConfigs = [];
   if (env.cursor) availableConfigs.push({ value: '.cursorrules', label: 'Cursor Rules (.cursorrules)' });
+  if (env.cursorDir) availableConfigs.push({ value: '.cursor/rules/jagopakaiai.md', label: 'Cursor Rules Dir (.cursor/rules/)' });
   if (env.claude) availableConfigs.push({ value: '.claudecoderc', label: 'Claude Code (.claudecoderc)' });
+  if (env.claudeMd) availableConfigs.push({ value: 'CLAUDE.md', label: 'Claude MD (CLAUDE.md)' });
   if (env.copilot) availableConfigs.push({ value: '.github/copilot-instructions.md', label: 'GitHub Copilot (.github/copilot-instructions.md)' });
+  if (env.agentsMd) availableConfigs.push({ value: 'AGENTS.md', label: 'Agents MD (AGENTS.md) - Gemini/Antigravity/Pi' });
+  if (env.aiderRules) availableConfigs.push({ value: '.aider.instructions.md', label: 'Aider Rules (.aider.instructions.md)' });
+  if (env.traerules) availableConfigs.push({ value: '.traerules', label: 'Trae Rules (.traerules)' });
+  if (env.devinDir) availableConfigs.push({ value: '.devin/instructions.md', label: 'Devin Rules (.devin/instructions.md)' });
+  if (env.codebuddyrc) availableConfigs.push({ value: '.codebuddyrc', label: 'CodeBuddy Config (.codebuddyrc)' });
+  if (env.codexrules) availableConfigs.push({ value: '.codexrules', label: 'Codex Rules (.codexrules)' });
+  if (env.opencoderules) availableConfigs.push({ value: '.opencoderules', label: 'OpenCode Rules (.opencoderules)' });
+  if (env.kilorules) availableConfigs.push({ value: '.kilorules', label: 'Kilo Rules (.kilorules)' });
+  if (env.kirorules) availableConfigs.push({ value: '.kirorules', label: 'Kiro Rules (.kirorules)' });
+  if (env.openclawrules) availableConfigs.push({ value: '.openclawrules', label: 'OpenClaw Rules (.openclawrules)' });
+  if (env.factorydroidrules) availableConfigs.push({ value: '.factorydroidrules', label: 'Factory Droid Rules (.factorydroidrules)' });
+  if (env.hermesrules) availableConfigs.push({ value: '.hermesrules', label: 'Hermes Rules (.hermesrules)' });
+  if (env.windsurf) availableConfigs.push({ value: '.windsurfrules', label: 'Windsurf Rules (.windsurfrules)' });
 
   // Fallbacks if nothing detected
   if (availableConfigs.length === 0) {
     availableConfigs.push(
       { value: '.cursorrules', label: 'Cursor Rules (.cursorrules)' },
       { value: '.claudecoderc', label: 'Claude Code (.claudecoderc)' },
-      { value: '.github/copilot-instructions.md', label: 'GitHub Copilot (.github/copilot-instructions.md)' }
+      { value: 'CLAUDE.md', label: 'Claude MD (CLAUDE.md)' },
+      { value: '.github/copilot-instructions.md', label: 'GitHub Copilot (.github/copilot-instructions.md)' },
+      { value: 'AGENTS.md', label: 'Agents MD (AGENTS.md)' },
+      { value: '.aider.instructions.md', label: 'Aider Rules (.aider.instructions.md)' },
+      { value: '.traerules', label: 'Trae Rules (.traerules)' },
+      { value: '.windsurfrules', label: 'Windsurf Rules (.windsurfrules)' }
     );
   }
 
@@ -87,13 +107,37 @@ export async function syncCommand(skillName: string | undefined, url?: string) {
       fs.mkdirSync(parentDir, { recursive: true });
     }
     
-    // Format rule block nicely
+    // Use delimited sections to preserve existing content
+    const START_MARKER = `<!-- jagopakaiai:${skillName}:start -->`;
+    const END_MARKER = `<!-- jagopakaiai:${skillName}:end -->`;
     const blockContent = [
+      START_MARKER,
       `# JagoPakaiAI Integrated Skill Rules: ${skillName}`,
-      ruleContent
-    ].join('\n\n');
-    
-    fs.writeFileSync(fullPath, blockContent);
+      '',
+      ruleContent,
+      END_MARKER
+    ].join('\n');
+
+    let existingContent = '';
+    if (fs.existsSync(fullPath)) {
+      existingContent = fs.readFileSync(fullPath, 'utf-8');
+    }
+
+    let finalContent: string;
+    const startIdx = existingContent.indexOf(START_MARKER);
+    const endIdx = existingContent.indexOf(END_MARKER);
+    if (startIdx !== -1 && endIdx !== -1) {
+      // Replace existing section for this skill
+      finalContent = existingContent.substring(0, startIdx) + blockContent + existingContent.substring(endIdx + END_MARKER.length);
+    } else if (existingContent.trim().length > 0) {
+      // Append to existing content
+      finalContent = existingContent.trimEnd() + '\n\n' + blockContent + '\n';
+    } else {
+      // New file
+      finalContent = blockContent + '\n';
+    }
+
+    fs.writeFileSync(fullPath, finalContent);
     p.log.success(`Synchronized: ${target}`);
   }
   writeSpinner.stop('Writing complete!');

@@ -20,7 +20,8 @@ describe('API Utility', () => {
       {
         headers: {
           Authorization: 'Bearer dummy-key'
-        }
+        },
+        timeout: 15000
       }
     );
   });
@@ -38,7 +39,8 @@ describe('API Utility', () => {
     const content = await fetchRawSkillFromUrl('https://github.com/google-gemini/gemini-skills/tree/main/skills/gemini-api-dev');
     expect(content).toBe('my-github-markdown-content');
     expect(axios.get).toHaveBeenCalledWith(
-      'https://raw.githubusercontent.com/google-gemini/gemini-skills/main/skills/gemini-api-dev/SKILL.md'
+      'https://raw.githubusercontent.com/google-gemini/gemini-skills/main/skills/gemini-api-dev/SKILL.md',
+      { timeout: 15000 }
     );
   });
 
@@ -58,11 +60,13 @@ describe('API Utility', () => {
     expect(content).toBe('my-voltagent-skill-markdown');
     expect(axios.get).toHaveBeenNthCalledWith(
       1,
-      'https://officialskills.sh/voltagent/skills/create-voltagent'
+      'https://officialskills.sh/voltagent/skills/create-voltagent',
+      { timeout: 15000 }
     );
     expect(axios.get).toHaveBeenNthCalledWith(
       2,
-      'https://raw.githubusercontent.com/voltagent/skills/main/skills/create-voltagent/SKILL.md'
+      'https://raw.githubusercontent.com/voltagent/skills/main/skills/create-voltagent/SKILL.md',
+      { timeout: 15000 }
     );
   });
 });

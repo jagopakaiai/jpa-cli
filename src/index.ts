@@ -8,13 +8,23 @@ import { mcpListCommand, mcpInstallCommand } from './commands/mcp.js';
 import { keysCommand } from './commands/keys.js';
 import * as p from '@clack/prompts';
 import pc from 'picocolors';
+import fs from 'fs';
+import path from 'path';
+
+let CLI_VERSION = '1.1.2';
+try {
+  const pkgPath = path.resolve(__dirname, '..', 'package.json');
+  if (fs.existsSync(pkgPath)) {
+    CLI_VERSION = JSON.parse(fs.readFileSync(pkgPath, 'utf-8')).version || CLI_VERSION;
+  }
+} catch {}
 
 const program = new Command();
 
 program
   .name('jagopakaiai-cli')
   .description('JagoPakaiAI Command Line Interface rules synchronizer')
-  .version('1.0.1');
+  .version(CLI_VERSION);
 
 program
   .command('login')
@@ -135,7 +145,7 @@ function printLogo() {
     console.log(getGoldColor(i + 6, line2[i]));
   }
 
-  console.log(pc.bold(getGoldColor(0, '\n 🚀 JagoPakaiAI CLI - Smart Rules Synchronizer v1.0.1\n')));
+  console.log(pc.bold(getGoldColor(0, `\n 🚀 JagoPakaiAI CLI - Smart Rules Synchronizer v${CLI_VERSION}\n`)));
 }
 
 async function showMainMenu() {
