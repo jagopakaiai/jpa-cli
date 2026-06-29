@@ -52,7 +52,7 @@ export async function initCommand() {
   });
   if (p.isCancel(projectName)) {
     p.cancel('Initialization cancelled.');
-    process.exit(0);
+    return;
   }
 
   const projectType = await p.select({
@@ -68,7 +68,7 @@ export async function initCommand() {
   });
   if (p.isCancel(projectType)) {
     p.cancel('Initialization cancelled.');
-    process.exit(0);
+    return;
   }
 
   const projectGoal = await p.text({
@@ -80,7 +80,7 @@ export async function initCommand() {
   });
   if (p.isCancel(projectGoal)) {
     p.cancel('Initialization cancelled.');
-    process.exit(0);
+    return;
   }
 
   const workflow = await p.select({
@@ -93,7 +93,7 @@ export async function initCommand() {
   });
   if (p.isCancel(workflow)) {
     p.cancel('Initialization cancelled.');
-    process.exit(0);
+    return;
   }
 
   // 3. Selection of AI configuration files to create
@@ -124,7 +124,7 @@ export async function initCommand() {
   });
   if (p.isCancel(selectedFiles)) {
     p.cancel('Initialization cancelled.');
-    process.exit(0);
+    return;
   }
 
   // 4. MCP & Skills integration
@@ -134,7 +134,7 @@ export async function initCommand() {
   });
   if (p.isCancel(shouldSyncSkill)) {
     p.cancel('Initialization cancelled.');
-    process.exit(0);
+    return;
   }
 
   let skillName = '';

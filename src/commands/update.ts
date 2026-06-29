@@ -1,16 +1,7 @@
-import fs from 'fs';
-import path from 'path';
 import { execSync } from 'child_process';
 import * as p from '@clack/prompts';
 import pc from 'picocolors';
-
-let UPDATE_VERSION = '1.1.3';
-try {
-  const pkgPath = path.resolve(__dirname, '..', '..', 'package.json');
-  if (fs.existsSync(pkgPath)) {
-    UPDATE_VERSION = JSON.parse(fs.readFileSync(pkgPath, 'utf-8')).version || UPDATE_VERSION;
-  }
-} catch {}
+import { CLI_VERSION } from '../version.js';
 
 export async function updateCommand(autoInstall?: boolean) {
   p.intro('Check for Updates');
@@ -28,13 +19,13 @@ export async function updateCommand(autoInstall?: boolean) {
     const latestVersion = result;
     s.stop('Version check complete!');
 
-    if (latestVersion === UPDATE_VERSION) {
-      p.log.success(`You are using the latest version: ${pc.bold(`v${UPDATE_VERSION}`)}`);
+    if (latestVersion === CLI_VERSION) {
+      p.log.success(`You are using the latest version: ${pc.bold(`v${CLI_VERSION}`)}`);
       p.outro('No update needed.');
       return;
     }
 
-    p.log.warn(`Current version: ${pc.bold(`v${UPDATE_VERSION}`)}`);
+    p.log.warn(`Current version: ${pc.bold(`v${CLI_VERSION}`)}`);
     p.log.warn(`Latest version:  ${pc.bold(`v${latestVersion}`)}`);
 
     if (autoInstall) {
@@ -57,7 +48,7 @@ export async function updateCommand(autoInstall?: boolean) {
   } catch {
     s.stop('Version check failed!');
     p.log.warn('Could not reach npm registry. Check your internet connection.');
-    p.log.info(`Current version: ${pc.bold(`v${UPDATE_VERSION}`)}`);
+    p.log.info(`Current version: ${pc.bold(`v${CLI_VERSION}`)}`);
     p.outro('Update check failed.');
   }
 }

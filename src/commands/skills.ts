@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import os from 'os';
 import * as p from '@clack/prompts';
+import pc from 'picocolors';
 import { getApiKey } from '../utils/config.js';
 import { fetchRawSkillFromUrl, fetchSkillRule } from '../utils/api.js';
 import { detectWorkspace } from '../utils/detector.js';

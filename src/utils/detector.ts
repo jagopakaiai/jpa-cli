@@ -111,7 +111,7 @@ export function detectWorkspace(dir: string): DetectedEnv {
     env.hermesrules = true;
   }
 
-  // Attempt to guess project type/framework
+  // Attempt to guess project type/framework — extended support
   if (fs.existsSync(path.join(dir, 'package.json'))) {
     env.projectType = 'NodeJS/JavaScript';
   } else if (fs.existsSync(path.join(dir, 'composer.json'))) {
@@ -122,6 +122,19 @@ export function detectWorkspace(dir: string): DetectedEnv {
     env.projectType = 'Rust';
   } else if (fs.existsSync(path.join(dir, 'go.mod'))) {
     env.projectType = 'Go';
+  } else if (fs.existsSync(path.join(dir, 'Gemfile'))) {
+    env.projectType = 'Ruby';
+  } else if (fs.existsSync(path.join(dir, 'pubspec.yaml'))) {
+    env.projectType = 'Flutter/Dart';
+  } else if (
+    fs.readdirSync(dir).some(f => f.endsWith('.csproj') || f.endsWith('.sln')) ||
+    fs.existsSync(path.join(dir, 'global.json'))
+  ) {
+    env.projectType = '.NET/C#';
+  } else if (fs.existsSync(path.join(dir, 'Package.swift')) || fs.readdirSync(dir).some(f => f.endsWith('.xcodeproj'))) {
+    env.projectType = 'Swift/iOS';
+  } else if (fs.existsSync(path.join(dir, 'deno.json')) || fs.existsSync(path.join(dir, 'deno.jsonc'))) {
+    env.projectType = 'Deno';
   }
 
   return env;
@@ -224,4 +237,3 @@ export function detectInstalledAgents(): InstalledAgents {
 
   return agents;
 }
-

@@ -18,7 +18,7 @@ export async function syncCommand(skillName: string | undefined, url?: string) {
     });
     if (p.isCancel(inputSkill)) {
       p.cancel('Sync cancelled.');
-      process.exit(0);
+      return;
     }
     skillName = inputSkill as string;
   }
@@ -71,7 +71,7 @@ export async function syncCommand(skillName: string | undefined, url?: string) {
     });
     if (p.isCancel(selection)) {
       p.cancel('Sync cancelled.');
-      process.exit(0);
+      return;
     }
     selectedTargets = selection as string[];
   }
@@ -95,7 +95,7 @@ export async function syncCommand(skillName: string | undefined, url?: string) {
   } catch (err: any) {
     s.stop('Fetch failed!');
     p.log.error(err.message || String(err));
-    process.exit(1);
+    return;
   }
 
   const writeSpinner = p.spinner();

@@ -4,7 +4,10 @@ import * as p from '@clack/prompts';
 import pc from 'picocolors';
 import { detectWorkspace } from '../utils/detector.js';
 
-const BACKUP_DIR = path.join(process.cwd(), '.jagopakaiai-backups');
+/** Lazily resolves backup directory based on current working directory */
+function getBackupDir(): string {
+  return path.join(process.cwd(), '.jagopakaiai-backups');
+}
 
 const RULE_FILE_NAMES: Record<string, string> = {
   '.cursorrules': 'Cursor Rules',
@@ -113,7 +116,8 @@ export async function rulesBackupCommand() {
   }
 
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-').substring(0, 19);
-  const backupPath = path.join(BACKUP_DIR, `backup-${timestamp}`);
+  const backupDir = getBackupDir();
+  const backupPath = path.join(backupDir, `backup-${timestamp}`);
 
   s.start('Creating backup...');
   if (!fs.existsSync(backupPath)) {
@@ -146,12 +150,13 @@ export async function rulesBackupCommand() {
 }
 
 export async function rulesRestoreCommand() {
-  if (!fs.existsSync(BACKUP_DIR)) {
+  const backupDir = getBackupDir();
+  if (!fs.existsSync(backupDir)) {
     p.log.warn('No backups found. Run backup first.');
     return;
   }
 
-  const backups = fs.readdirSync(BACKUP_DIR)
+  const backups = fs.readdirSync(backupDir)
     .filter(d => d.startsWith('backup-'))
     .sort()
     .reverse();
@@ -166,13 +171,13 @@ export async function rulesRestoreCommand() {
     options: backups.map(b => ({
       value: b,
       label: b.replace('backup-', '').replace(/-/g, ' ').substring(0, 19),
-      hint: `${fs.readdirSync(path.join(BACKUP_DIR, b)).length} files`
+      hint: `${fs.readdirSync(path.join(backupDir, b)).length} files`
     }))
   });
 
   if (p.isCancel(choice)) return;
 
-  const backupPath = path.join(BACKUP_DIR, choice as string);
+  const backupPath = path.join(backupDir, choice as string);
   const manifestPath = path.join(backupPath, 'manifest.json');
 
   if (!fs.existsSync(manifestPath)) {

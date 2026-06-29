@@ -10,14 +10,7 @@ import {
 import { detectInstalledAgents, detectWorkspace } from '../utils/detector.js';
 import { getRecommendedMcps, checkMcpInstalled } from '../utils/mcp.js';
 import { getDetectedRuleFiles } from './rules.js';
-
-let STATUS_VERSION = '1.1.3';
-try {
-  const pkgPath = path.resolve(__dirname, '..', '..', 'package.json');
-  if (fs.existsSync(pkgPath)) {
-    STATUS_VERSION = JSON.parse(fs.readFileSync(pkgPath, 'utf-8')).version || STATUS_VERSION;
-  }
-} catch {}
+import { CLI_VERSION } from '../version.js';
 
 export async function statusCommand() {
   p.intro('JagoPakaiAI CLI — System Status');
@@ -112,7 +105,7 @@ export async function statusCommand() {
   }
 
   p.note(
-    `Config file: ${pc.cyan(getConfigPath())}\nCLI Version: ${pc.bold(`v${STATUS_VERSION}`)}`,
+    `Config file: ${pc.cyan(getConfigPath())}\nCLI Version: ${pc.bold(`v${CLI_VERSION}`)}`,
     '⚙️ System'
   );
 

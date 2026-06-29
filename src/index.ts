@@ -11,18 +11,11 @@ import { rulesListCommand, rulesViewCommand, rulesBackupCommand, rulesRestoreCom
 import { statusCommand } from './commands/status.js';
 import { backupAllCommand, backupListCommand } from './commands/backup.js';
 import { updateCommand } from './commands/update.js';
+import { CLI_VERSION } from './version.js';
 import * as p from '@clack/prompts';
 import pc from 'picocolors';
 import fs from 'fs';
 import path from 'path';
-
-let CLI_VERSION = '1.1.3';
-try {
-  const pkgPath = path.resolve(__dirname, '..', 'package.json');
-  if (fs.existsSync(pkgPath)) {
-    CLI_VERSION = JSON.parse(fs.readFileSync(pkgPath, 'utf-8')).version || CLI_VERSION;
-  }
-} catch {}
 
 const program = new Command();
 

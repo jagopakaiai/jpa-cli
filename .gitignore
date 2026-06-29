@@ -26,3 +26,9 @@ pnpm-debug.log*
 
 # Graphify Outputs
 graphify-out/
+
+# Test coverage
+coverage/
+
+# Backups
+.jagopakaiai-backups/

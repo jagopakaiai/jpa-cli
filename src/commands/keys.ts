@@ -21,7 +21,7 @@ export async function keysCommand(providerArg?: string, keyArg?: string) {
     const provider = providerArg.toLowerCase();
     if (!VALID_PROVIDERS.includes(provider)) {
       p.log.error(`Invalid provider: "${providerArg}". Valid providers are: ${VALID_PROVIDERS.join(', ')}`);
-      process.exit(1);
+      return;
     }
 
     if (keyArg) {

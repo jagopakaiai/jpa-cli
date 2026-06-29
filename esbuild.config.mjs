@@ -7,13 +7,16 @@ esbuild.build({
   target: 'node18',
   format: 'cjs',
   outfile: 'dist/index.js',
+  sourcemap: false,
+  minify: true,
+  treeShaking: true,
   banner: {
     js: '#!/usr/bin/env node'
   },
-  // Make sure we resolve node imports correctly
+  // Keep node built-in modules external — they're available at runtime
   external: [],
 }).then(() => {
-  console.log('Build completed successfully!');
+  console.log('Build completed successfully! (minified + tree-shaken)');
 }).catch((err) => {
   console.error('Build failed:', err);
   process.exit(1);

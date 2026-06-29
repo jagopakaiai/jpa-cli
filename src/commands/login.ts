@@ -13,13 +13,14 @@ export async function loginCommand() {
 
   if (p.isCancel(apiKey)) {
     p.cancel('Operation cancelled.');
-    process.exit(0);
+    return;
   }
 
   const s = p.spinner();
   s.start('Validating API key...');
   try {
-    await axios.get('https://jagopakaiai.my.id/api/skills', {
+    const apiUrl = (process.env.JAGOPAKAIAI_API_URL || 'https://jagopakaiai.my.id/api').replace(/\/+$/, '');
+    await axios.get(`${apiUrl}/skills`, {
       headers: { 'Authorization': `Bearer ${apiKey}` },
       timeout: 10000
     });
@@ -32,7 +33,7 @@ export async function loginCommand() {
     });
     if (p.isCancel(shouldSave) || !shouldSave) {
       p.cancel('Login cancelled.');
-      process.exit(0);
+      return;
     }
   }
 

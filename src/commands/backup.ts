@@ -5,6 +5,7 @@ import * as p from '@clack/prompts';
 import pc from 'picocolors';
 import { readConfig } from '../utils/config.js';
 import { getDetectedRuleFiles } from './rules.js';
+import { CLI_VERSION } from '../version.js';
 
 const CONFIG_BACKUP_DIR = path.join(os.homedir(), '.config', 'jagopakaiai-cli', 'backups');
 
@@ -71,7 +72,7 @@ export async function backupAllCommand() {
   // Write manifest
   const manifest = {
     timestamp,
-    version: '1.1.3',
+    version: CLI_VERSION,
     files: totalFiles,
     contents: {
       config: true,
