@@ -77,14 +77,14 @@ You can install the JPA CLI using one of the following methods depending on your
 ### 1. Global Installation (via npm - Recommended)
 Make sure you have **Node.js** (version 18 or higher) installed. Run the following command to install the CLI globally:
 ```bash
-npm install -g jpa-cli
+npm install -g @jagopakaiai/jpa-cli
 ```
 Once installed, the `jpa-cli` command will be available globally in your terminal.
 
 ### 2. Run without Installation (via `npx`)
 If you want to try or run the CLI instantly without installing it globally on your system, use `npx`:
 ```bash
-npx jpa-cli
+npx @jagopakaiai/jpa-cli
 ```
 
 ### 3. Standalone Binary Installers (No Node.js Required)

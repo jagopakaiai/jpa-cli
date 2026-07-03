@@ -20,11 +20,11 @@ MCP allows JagoPakaiAI and other AI coding assistants (like Claude Code) to secu
 
 You can install these MCP servers automatically using the JagoPakaiAI CLI:
 ```bash
-jagopakaiai-cli mcp
+jpa-cli mcp
 ```
 Or choose a specific server to install directly:
 ```bash
-jagopakaiai-cli mcp <server-name>
+jpa-cli mcp <server-name>
 ```
 
 Alternatively, you can copy the contents of `config-template.json` in this directory into your Claude Code config file (`~/.claudecode/config.json`).

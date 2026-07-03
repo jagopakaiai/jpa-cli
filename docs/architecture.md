@@ -50,7 +50,7 @@ graph TD
 
 ## Compilation & Packaging Pipeline
 
-### 1. Bundling via ESBuild (`esbuild.config.js`)
+### 1. Bundling via ESBuild (`esbuild.config.mjs`)
 - TypeScript source code is compiled and bundled into a single JavaScript file (`dist/index.js`).
 - Uses CommonJS (CJS) targeting to ensure absolute compatibility with Node.js 18+ and `pkg` packing systems.
 
