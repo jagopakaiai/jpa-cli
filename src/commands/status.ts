@@ -13,7 +13,7 @@ import { getDetectedRuleFiles } from './rules.js';
 import { CLI_VERSION } from '../version.js';
 
 export async function statusCommand() {
-  p.intro('JagoPakaiAI CLI — System Status');
+  p.intro('JPA CLI — System Status');
 
   const s = p.spinner();
   s.start('Gathering system information...');
@@ -27,7 +27,7 @@ export async function statusCommand() {
   s.stop('Done!');
 
   const keyStatus = [
-    `${config.apiKey ? pc.green('● Active') : pc.red('○ Missing')} JagoPakaiAI API Key`,
+    `${config.apiKey ? pc.green('● Active') : pc.red('○ Missing')} JPA CLI API Key`,
     `${config.geminiApiKey ? pc.green('● Active') : pc.dim('○ Not set')} Gemini API Key`,
     `${config.openrouterApiKey ? pc.green('● Active') : pc.dim('○ Not set')} OpenRouter API Key`,
     `${config.groqApiKey ? pc.green('● Active') : pc.dim('○ Not set')} Groq API Key`,
@@ -52,7 +52,7 @@ export async function statusCommand() {
 
   const ruleFields = rules.map(r => {
     const stats = fs.statSync(r.path);
-    const hasJago = fs.readFileSync(r.path, 'utf-8').includes('JagoPakaiAI');
+    const hasJago = fs.readFileSync(r.path, 'utf-8').includes('JPA CLI');
     return `  ${hasJago ? pc.green('●') : pc.yellow('○')} ${r.name.padEnd(35)} ${pc.dim(r.label)}`;
   });
 
@@ -80,7 +80,7 @@ export async function statusCommand() {
   const skillDirs: string[] = [];
   try {
     const wsSkills = path.join(process.cwd(), '.agents', 'skills');
-    const glSkills = path.join(os.homedir(), '.config', 'jagopakaiai-cli', 'skills');
+    const glSkills = path.join(os.homedir(), '.config', 'jpa-cli', 'skills');
     if (fs.existsSync(wsSkills)) {
       for (const dir of fs.readdirSync(wsSkills)) {
         if (fs.existsSync(path.join(wsSkills, dir, 'SKILL.md'))) {
@@ -109,5 +109,5 @@ export async function statusCommand() {
     '⚙️ System'
   );
 
-  p.outro(`Run ${pc.cyan('jagopakaiai-cli --help')} to see all commands.`);
+  p.outro(`Run ${pc.cyan('jpa-cli --help')} to see all commands.`);
 }

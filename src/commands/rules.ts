@@ -6,12 +6,12 @@ import { detectWorkspace } from '../utils/detector.js';
 
 /** Lazily resolves backup directory based on current working directory */
 function getBackupDir(): string {
-  return path.join(process.cwd(), '.jagopakaiai-backups');
+  return path.join(process.cwd(), '.jpa-backups');
 }
 
 const RULE_FILE_NAMES: Record<string, string> = {
   '.cursorrules': 'Cursor Rules',
-  '.cursor/rules/jagopakaiai.md': 'Cursor Rules Dir',
+  '.cursor/rules/jpa-cli.md': 'Cursor Rules Dir',
   '.claudecoderc': 'Claude Code Config',
   'CLAUDE.md': 'Claude MD Instructions',
   '.github/copilot-instructions.md': 'GitHub Copilot Instructions',
@@ -50,7 +50,7 @@ export async function rulesListCommand() {
 
   if (rules.length === 0) {
     p.log.warn('No AI agent rule files detected in this workspace.');
-    p.outro(`Run ${pc.cyan('jagopakaiai-cli agent install')} to create rule files.`);
+    p.outro(`Run ${pc.cyan('jpa-cli agent install')} to create rule files.`);
     return;
   }
 
@@ -58,7 +58,7 @@ export async function rulesListCommand() {
     const stats = fs.statSync(r.path);
     const sizeKb = (stats.size / 1024).toFixed(1);
     const modified = stats.mtime.toLocaleDateString();
-    const hasJago = fs.readFileSync(r.path, 'utf-8').includes('JagoPakaiAI');
+    const hasJago = fs.readFileSync(r.path, 'utf-8').includes('JPA CLI');
     return `${hasJago ? pc.green('●') : pc.yellow('○')} ${pc.bold(r.name.padEnd(40))} ${pc.dim((sizeKb + ' KB').padStart(8))}  ${pc.dim(modified)}  ${r.label}`;
   }).join('\n');
 
@@ -69,7 +69,7 @@ export async function rulesListCommand() {
     options: [
       { value: 'view', label: '👁️ View a rule file' },
       { value: 'backup', label: '💾 Backup all rule files' },
-      { value: 'clean', label: '🧹 Remove JagoPakaiAI sections' },
+      { value: 'clean', label: '🧹 Remove JPA CLI sections' },
       { value: 'back', label: '🔙 Back' }
     ]
   });
@@ -222,8 +222,8 @@ export async function rulesRestoreCommand() {
 }
 
 export async function rulesCleanCommand() {
-  p.intro('Clean JagoPakaiAI Sections');
-  p.log.warn('This will scan all AI rule files and remove managed JagoPakaiAI sections.');
+  p.intro('Clean JPA CLI Sections');
+  p.log.warn('This will scan all AI rule files and remove managed JPA CLI sections.');
 
   const rules = getDetectedRuleFiles(process.cwd());
 
@@ -232,23 +232,23 @@ export async function rulesCleanCommand() {
     return;
   }
 
-  const JAGO_MARKER_START = /^<!\s*--\s*jagopakaiai:.*:start\s*-->$/m;
-  const JAGO_MARKER_END = /^<!\s*--\s*jagopakaiai:.*:end\s*-->$/m;
+  const JAGO_MARKER_START = /^<!\s*--\s*jpa-cli:.*:start\s*-->$/m;
+  const JAGO_MARKER_END = /^<!\s*--\s*jpa-cli:.*:end\s*-->$/m;
 
   const filesToClean: { name: string; path: string }[] = [];
   for (const rule of rules) {
     const content = fs.readFileSync(rule.path, 'utf-8');
-    if (JAGO_MARKER_START.test(content) || content.includes('managed by JagoPakaiAI') || content.includes('JagoPakaiAI')) {
+    if (JAGO_MARKER_START.test(content) || content.includes('managed by JPA CLI') || content.includes('JPA CLI')) {
       filesToClean.push(rule);
     }
   }
 
   if (filesToClean.length === 0) {
-    p.log.success('No JagoPakaiAI-managed content found in rule files.');
+    p.log.success('No JPA CLI-managed content found in rule files.');
     return;
   }
 
-  p.log.info(`Found JagoPakaiAI content in ${filesToClean.length} file(s).`);
+  p.log.info(`Found JPA CLI content in ${filesToClean.length} file(s).`);
 
   for (const file of filesToClean) {
     p.log.info(`  ${file.name}`);
@@ -257,8 +257,8 @@ export async function rulesCleanCommand() {
   const mode = await p.select({
     message: 'Select cleaning mode:',
     options: [
-      { value: 'sections', label: '🧹 Remove only JagoPakaiAI delimited sections' },
-      { value: 'all', label: '🗑️ Remove ALL JagoPakaiAI-managed files' },
+      { value: 'sections', label: '🧹 Remove only JPA CLI delimited sections' },
+      { value: 'all', label: '🗑️ Remove ALL JPA CLI-managed files' },
       { value: 'cancel', label: '🔙 Cancel' }
     ]
   });
@@ -273,7 +273,7 @@ export async function rulesCleanCommand() {
       const content = fs.readFileSync(file.path, 'utf-8');
       const cleaned = content
         .split('\n')
-        .filter(line => !line.includes('managed by JagoPakaiAI') && !line.includes('<!-- jagopakaiai:'))
+        .filter(line => !line.includes('managed by JPA CLI') && !line.includes('<!-- jpa-cli:'))
         .join('\n')
         .replace(/\n{3,}/g, '\n\n')
         .trim();
@@ -322,7 +322,7 @@ export async function rulesTemplateCommand(type?: string) {
 
   const contentMap: Record<string, string> = {
     '.cursorrules': `# Project Rules for AI Coding Agents
-# Managed by JagoPakaiAI CLI
+# Managed by JPA CLI
 
 ## Project Context
 - This file provides instructions for AI coding agents working on this project.
@@ -339,7 +339,7 @@ export async function rulesTemplateCommand(type?: string) {
 - Document complex logic with comments.
 `,
     'CLAUDE.md': `# CLAUDE.md — Project Guide for Claude Code
-# Managed by JagoPakaiAI CLI
+# Managed by JPA CLI
 
 ## Project Overview
 - Describe your project here.
@@ -355,14 +355,14 @@ export async function rulesTemplateCommand(type?: string) {
 - Follow existing patterns.
 `,
     '.claudecoderc': `{
-  // Claude Code configuration (managed by JagoPakaiAI CLI)
+  // Claude Code configuration (managed by JPA CLI)
   "model": "claude-sonnet-4-6",
   "allowedTools": ["Read", "Edit", "Bash", "Task"],
   "systemInstructions": "Follow the project guidelines in CLAUDE.md"
 }
 `,
     '.github/copilot-instructions.md': `# GitHub Copilot Instructions
-# Managed by JagoPakaiAI CLI
+# Managed by JPA CLI
 
 ## Language
 - TypeScript/JavaScript for this project.
@@ -376,7 +376,7 @@ export async function rulesTemplateCommand(type?: string) {
 - Aim for 80%+ code coverage.
 `,
     'AGENTS.md': `# AGENTS.md — Instructions for AI Coding Agents
-# Managed by JagoPakaiAI CLI
+# Managed by JPA CLI
 
 ## Supported Agents
 - Google Gemini CLI
@@ -395,7 +395,7 @@ export async function rulesTemplateCommand(type?: string) {
 4. Verify with tests before completing.
 `,
     '.windsurfrules': `# Windsurf AI Rules
-# Managed by JagoPakaiAI CLI
+# Managed by JPA CLI
 
 ## Development Guidelines
 - Write clean, maintainable code.
@@ -408,7 +408,7 @@ export async function rulesTemplateCommand(type?: string) {
 - Document public APIs.
 `,
     '.aider.instructions.md': `# Aider AI Instructions
-# Managed by JagoPakaiAI CLI
+# Managed by JPA CLI
 
 ## Project Setup
 - Build command: npm run build
@@ -423,7 +423,7 @@ export async function rulesTemplateCommand(type?: string) {
 - Describe your project's architecture here.
 `,
     '.traerules': `# Trae AI IDE Rules
-# Managed by JagoPakaiAI CLI
+# Managed by JPA CLI
 
 ## Project Information
 - Add your project description here.
@@ -436,7 +436,7 @@ export async function rulesTemplateCommand(type?: string) {
   };
 
   const content = contentMap[selected] || `# ${selected} — AI Agent Rules
-# Managed by JagoPakaiAI CLI
+# Managed by JPA CLI
 
 # Add your project-specific instructions here.
 `;

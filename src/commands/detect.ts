@@ -3,7 +3,7 @@ import { getApiKey, getGeminiApiKey, getOpenRouterApiKey, getGroqApiKey } from '
 import { detectWorkspace } from '../utils/detector.js';
 
 export async function detectCommand() {
-  p.intro('JagoPakaiAI Workspace Detector');
+  p.intro('JPA CLI Workspace Detector');
   
   const s = p.spinner();
   s.start('Scanning directory...');
@@ -12,7 +12,7 @@ export async function detectCommand() {
   s.stop('Scan complete!');
 
   const apiKey = getApiKey();
-  const apiKeyStatus = apiKey ? 'Active (Key Saved)' : 'Missing (Use "jagopakaiai-cli login" to authenticate)';
+  const apiKeyStatus = apiKey ? 'Active (Key Saved)' : 'Missing (Use "jpa-cli login" to authenticate)';
 
   const geminiKey = getGeminiApiKey();
   const geminiStatus = geminiKey ? 'Active (Key Saved)' : 'Not Configured';
@@ -25,7 +25,7 @@ export async function detectCommand() {
 
   const details = [
     `Workspace: ${currentDir}`,
-    `JagoPakaiAI API Key: ${apiKeyStatus}`,
+    `JPA CLI API Key: ${apiKeyStatus}`,
     `Gemini API Key: ${geminiStatus}`,
     `OpenRouter API Key: ${openrouterStatus}`,
     `Groq API Key: ${groqStatus}`,
@@ -52,5 +52,5 @@ export async function detectCommand() {
   ].join('\n');
 
   p.note(details, 'Audit Summary');
-  p.outro('To sync rules, run: jagopakaiai-cli sync <skill-name> or configure keys with: jagopakaiai-cli keys');
+  p.outro('To sync rules, run: jpa-cli sync <skill-name> or configure keys with: jpa-cli keys');
 }

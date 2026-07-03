@@ -7,7 +7,7 @@ import { readConfig } from '../utils/config.js';
 import { getDetectedRuleFiles } from './rules.js';
 import { CLI_VERSION } from '../version.js';
 
-const CONFIG_BACKUP_DIR = path.join(os.homedir(), '.config', 'jagopakaiai-cli', 'backups');
+const CONFIG_BACKUP_DIR = path.join(os.homedir(), '.config', 'jpa-cli', 'backups');
 
 export async function backupAllCommand() {
   p.intro('Create Full Backup');
@@ -24,9 +24,9 @@ export async function backupAllCommand() {
 
   let totalFiles = 0;
 
-  // 1. Backup JagoPakaiAI config
+  // 1. Backup JPA CLI config
   const config = readConfig();
-  fs.writeFileSync(path.join(backupDir, 'jagopakaiai-config.json'), JSON.stringify(config, null, 2));
+  fs.writeFileSync(path.join(backupDir, 'jpa-cli-config.json'), JSON.stringify(config, null, 2));
   totalFiles++;
 
   // 2. Backup workspace rule files
@@ -42,7 +42,7 @@ export async function backupAllCommand() {
   }
 
   // 3. Backup global skills
-  const globalSkillsDir = path.join(os.homedir(), '.config', 'jagopakaiai-cli', 'skills');
+  const globalSkillsDir = path.join(os.homedir(), '.config', 'jpa-cli', 'skills');
   const skillBackupDir = path.join(backupDir, 'global-skills');
   if (fs.existsSync(globalSkillsDir)) {
     if (!fs.existsSync(skillBackupDir)) {
@@ -118,7 +118,7 @@ export async function backupListCommand() {
     return `  ${pc.cyan(dateStr)} ${pc.dim(`— ${info}`)}`;
   }).join('\n');
   p.note(rows, `Backups (${backups.length})`);
-  p.outro(`To restore: ${pc.cyan('jagopakaiai-cli rules restore')}`);
+  p.outro(`To restore: ${pc.cyan('jpa-cli rules restore')}`);
 }
 
 export async function backupRestoreCommand(backupId?: string) {
@@ -178,13 +178,13 @@ export async function backupRestoreCommand(backupId?: string) {
   const s = p.spinner();
   s.start('Restoring...');
 
-  // Restore JagoPakaiAI config
-  const configBackup = path.join(backupDir, 'jagopakaiai-config.json');
+  // Restore JPA CLI config
+  const configBackup = path.join(backupDir, 'jpa-cli-config.json');
   if (fs.existsSync(configBackup)) {
     const data = JSON.parse(fs.readFileSync(configBackup, 'utf-8'));
     const { writeConfig } = await import('../utils/config.js');
     writeConfig(data);
-    p.log.success('Restored JagoPakaiAI config.');
+    p.log.success('Restored JPA CLI config.');
   }
 
   // Restore workspace rules
@@ -205,7 +205,7 @@ export async function backupRestoreCommand(backupId?: string) {
   // Restore global skills
   const skillBackupDir = path.join(backupDir, 'global-skills');
   if (fs.existsSync(skillBackupDir)) {
-    const skillsHome = path.join(os.homedir(), '.config', 'jagopakaiai-cli', 'skills');
+    const skillsHome = path.join(os.homedir(), '.config', 'jpa-cli', 'skills');
     for (const dir of fs.readdirSync(skillBackupDir)) {
       const srcFile = path.join(skillBackupDir, dir, 'SKILL.md');
       if (fs.existsSync(srcFile)) {

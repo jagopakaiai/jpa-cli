@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
-# JagoPakaiAI CLI - Sandbox Demo (Bash/Unix version)
+# JPA CLI - Sandbox Demo (Bash/Unix version)
 # Run this to see all CLI commands in action via Docker or direct node
 # Usage: bash sandbox/demo.sh
 
 set -e
 CLI="node $(dirname "$0")/../dist/index.js"
-SANDBOX="/tmp/jagopakaiai-sandbox"
+SANDBOX="/tmp/jpa-cli-sandbox"
 SEPARATOR="================================================================"
 
 echo -e "\033[36m$SEPARATOR\033[0m"
-echo -e "\033[36m  JagoPakaiAI CLI - Sandbox Demo\033[0m"
+echo -e "\033[36m  JPA CLI - Sandbox Demo\033[0m"
 echo -e "\033[36m  Running from dist/ - no global install required\033[0m"
 echo -e "\033[36m$SEPARATOR\033[0m"
 echo ""
@@ -120,5 +120,5 @@ echo -e "\033[36m$SEPARATOR\033[0m"
 echo ""
 echo -e "\033[33mTo run manually:\033[0m"
 echo -e "  \033[37mnode dist/index.js <command>\033[0m"
-echo -e "  \033[37mbin/jagopakaiai-cli-linux-x64 <command>\033[0m"
+echo -e "  \033[37mbin/jpa-cli-linux-x64 <command>\033[0m"
 echo ""

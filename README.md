@@ -1,14 +1,14 @@
-# JagoPakaiAI CLI (`jagopakaiai-cli`)
+# JPA CLI (`jpa-cli`)
 
-[![GitHub Release](https://img.shields.io/github/v/release/jagopakaiai/jagopakaiAI-cli?style=flat-square)](https://github.com/jagopakaiai/jagopakaiAI-cli/releases)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/jagopakaiai/jagopakaiAI-cli/release.yml?style=flat-square)](https://github.com/jagopakaiai/jagopakaiAI-cli/actions)
-[![License](https://img.shields.io/github/license/jagopakaiai/jagopakaiAI-cli?style=flat-square)](LICENSE)
-[![npm version](https://img.shields.io/npm/v/jagopakaiai-cli?color=brightgreen&style=flat-square)](https://www.npmjs.com/package/jagopakaiai-cli)
-[![npm downloads](https://img.shields.io/npm/dm/jagopakaiai-cli?color=brightgreen&style=flat-square)](https://www.npmjs.com/package/jagopakaiai-cli)
+[![GitHub Release](https://img.shields.io/github/v/release/jagopakaiai/jpa-cli?style=flat-square)](https://github.com/jagopakaiai/jpa-cli/releases)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/jagopakaiai/jpa-cli/release.yml?style=flat-square)](https://github.com/jagopakaiai/jpa-cli/actions)
+[![License](https://img.shields.io/github/license/jagopakaiai/jpa-cli?style=flat-square)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/jpa-cli?color=brightgreen&style=flat-square)](https://www.npmjs.com/package/jpa-cli)
+[![npm downloads](https://img.shields.io/npm/dm/jpa-cli?color=brightgreen&style=flat-square)](https://www.npmjs.com/package/jpa-cli)
 
-**JagoPakaiAI CLI** is a Command Line Interface utility designed to automatically detect, manage, and synchronize local AI Agent and Editor rule configurations (such as `.cursorrules`, `.claudecoderc`, and `.github/copilot-instructions.md`) directly in your workspace.
+**JPA CLI** is a Command Line Interface utility designed to automatically detect, manage, and synchronize local AI Agent and Editor rule configurations (such as `.cursorrules`, `.claudecoderc`, and `.github/copilot-instructions.md`) directly in your workspace.
 
-Synchronize custom and community-developed developer instructions (skills) directly from the JagoPakaiAI API, configure multi-provider AI keys, and automatically set up pre-packaged Model Context Protocol (MCP) servers locally to optimize your AI pair programming experience.
+Synchronize custom and community-developed developer instructions (skills) directly from the JPA CLI API, configure multi-provider AI keys, and automatically set up pre-packaged Model Context Protocol (MCP) servers locally to optimize your AI pair programming experience.
 
 ---
 
@@ -18,7 +18,7 @@ Synchronize custom and community-developed developer instructions (skills) direc
 - **Auto-Environment Auditing**: Intelligently scans the current workspace for Git repositories, active AI/Editor configuration files, and project stack languages (Node.js, Laravel/PHP, Python, Rust, Go).
 - **Multi-Target Synchronization**: Sync single skill configurations to one or more rules files simultaneously (`.cursorrules`, `.claudecoderc`, `.github/copilot-instructions.md`).
 - **Recommended MCP Directory**: Dynamic loading and installation of over 130+ pre-scraped and curated MCP server configurations (including `sqlite`, `postgres`, `filesystem`, `brave-search`, `gcalendar`, `gmail`, `docker`, and `upstash-context7`).
-- **AI Provider Keys Manager**: Securely stores and manages API credentials locally for multiple AI providers (Gemini, OpenRouter, Groq, and JagoPakaiAI) inside your user profile.
+- **AI Provider Keys Manager**: Securely stores and manages API credentials locally for multiple AI providers (Gemini, OpenRouter, Groq, and JPA CLI) inside your user profile.
 - **Project Initializer & PRD Generator**: Seamlessly scaffolds new projects, detects active AI environments, configures local agent rules, and creates a tailored `PRD.md` (Product Requirements Document).
 - **Secure Local Config**: Saves configuration files with restrictive file permissions (`0o600` on Unix-like systems) to prevent unauthorized token reading.
 - **Zero-Dependency Native Binaries**: Fully compiled standalone binaries packaged for Windows (x64), macOS (Intel/Apple Silicon), and Linux (x64).
@@ -28,7 +28,7 @@ Synchronize custom and community-developed developer instructions (skills) direc
 ## Project Directory Structure
 
 ```text
-jagopakaiAI-cli/
+jpa-cli/
 ├── .github/
 │   └── workflows/
 │       └── release.yml       # Release & cross-compilation GitHub Actions pipeline
@@ -49,13 +49,13 @@ jagopakaiAI-cli/
 │   │   ├── detect.ts         # 'detect' environment action
 │   │   ├── init.ts           # 'init' project setup & PRD generator action
 │   │   ├── keys.ts           # 'keys' AI provider credential manager action
-│   │   ├── login.ts          # 'login' JagoPakaiAI API key setup action
+│   │   ├── login.ts          # 'login' JPA CLI API key setup action
 │   │   ├── mcp.ts            # 'mcp' catalog and installation wizard action
 │   │   ├── skills.ts         # 'skills' listing & sync-check action
 │   │   └── sync.ts           # 'sync' API rules synchronization action
 │   │   index.ts              # Commander routing entrypoint & main menu
 │   └── utils/                # Utility helpers
-│       ├── api.ts            # JagoPakaiAI API HTTP client wrapper
+│       ├── api.ts            # JPA CLI API HTTP client wrapper
 │       ├── config.ts         # Secure local JSON configuration reader/writer
 │       ├── detector.ts       # Workspace environment auditing engine
 │       ├── mcp.ts            # MCP configuration utility & dynamic loader
@@ -72,19 +72,19 @@ jagopakaiAI-cli/
 
 ## Installation
 
-You can install the JagoPakaiAI CLI using one of the following methods depending on your environment requirements:
+You can install the JPA CLI using one of the following methods depending on your environment requirements:
 
 ### 1. Global Installation (via npm - Recommended)
 Make sure you have **Node.js** (version 18 or higher) installed. Run the following command to install the CLI globally:
 ```bash
-npm install -g jagopakaiai-cli
+npm install -g jpa-cli
 ```
-Once installed, the `jagopakaiai-cli` command will be available globally in your terminal.
+Once installed, the `jpa-cli` command will be available globally in your terminal.
 
 ### 2. Run without Installation (via `npx`)
 If you want to try or run the CLI instantly without installing it globally on your system, use `npx`:
 ```bash
-npx jagopakaiai-cli
+npx jpa-cli
 ```
 
 ### 3. Standalone Binary Installers (No Node.js Required)
@@ -93,50 +93,50 @@ If you do not have Node.js / npm installed on your machine, you can download a c
 #### macOS / Linux (via curl)
 Download the platform-specific compiled binary and move it to `/usr/local/bin` automatically with:
 ```bash
-curl -fsSL https://raw.githubusercontent.com/jagopakaiai/jagopakaiAI-cli/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/jagopakaiai/jpa-cli/main/install.sh | sh
 ```
 
 #### Windows (via PowerShell)
 Open PowerShell and run the following command to download the Windows executable and append it to your User Environment PATH:
 ```powershell
-irm https://raw.githubusercontent.com/jagopakaiai/jagopakaiAI-cli/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/jagopakaiai/jpa-cli/main/install.ps1 | iex
 ```
 
 ---
 
 ## CLI Commands
 
-When run without commands or arguments, `jagopakaiai-cli` launches an interactive main menu console displaying all available features. You can also run commands directly with options:
+When run without commands or arguments, `jpa-cli` launches an interactive main menu console displaying all available features. You can also run commands directly with options:
 
-### 1. `jagopakaiai-cli login`
-Authenticates with your JagoPakaiAI credentials. You will be prompted to enter your API Key.
+### 1. `jpa-cli login`
+Authenticates with your JPA CLI credentials. You will be prompted to enter your API Key.
 ```bash
-jagopakaiai-cli login
+jpa-cli login
 ```
 The key is securely written to your home directory:
-`~/.config/jagopakaiai-cli/config.json`
+`~/.config/jpa-cli/config.json`
 
 ---
 
-### 2. `jagopakaiai-cli keys [provider] [key]`
-Manages API keys for various AI providers (Gemini, OpenRouter, Groq, and JagoPakaiAI). 
+### 2. `jpa-cli keys [provider] [key]`
+Manages API keys for various AI providers (Gemini, OpenRouter, Groq, and JPA CLI). 
 ```bash
 # Start the interactive keys wizard
-jagopakaiai-cli keys
+jpa-cli keys
 
 # Save a specific provider's API key directly
-jagopakaiai-cli keys gemini <api-key>
-jagopakaiai-cli keys openrouter <api-key>
-jagopakaiai-cli keys groq <api-key>
-jagopakaiai-cli keys jagopakaiai <api-key>
+jpa-cli keys gemini <api-key>
+jpa-cli keys openrouter <api-key>
+jpa-cli keys groq <api-key>
+jpa-cli keys jpa <api-key>
 ```
 
 ---
 
-### 3. `jagopakaiai-cli detect`
+### 3. `jpa-cli detect`
 Scans the current workspace directory to audit the existing configurations and active project environment.
 ```bash
-jagopakaiai-cli detect
+jpa-cli detect
 ```
 It prints a detailed summary displaying:
 - Workspace absolute path.
@@ -147,45 +147,45 @@ It prints a detailed summary displaying:
 
 ---
 
-### 4. `jagopakaiai-cli init`
+### 4. `jpa-cli init`
 Guides you through setting up a new project workspace.
 ```bash
-jagopakaiai-cli init
+jpa-cli init
 ```
 - Scans and detects installed system AI agents (Claude Code, Cline/Roo-Code, Antigravity, etc.).
 - Prompt for project name, technology stack, goal, and workflow style (e.g. TDD, Feature-Driven).
 - Generates configured rule files (`.cursorrules`, `.claudecoderc`, `.github/copilot-instructions.md`) pre-populated with your chosen stack and workflow guidelines.
-- Prompts to sync a skill profile from the JagoPakaiAI API.
+- Prompts to sync a skill profile from the JPA CLI API.
 - Generates a tailored `PRD.md` (Product Requirements Document) inside the root directory.
 
 ---
 
-### 5. `jagopakaiai-cli skills`
+### 5. `jpa-cli skills`
 Lists all available local/custom instruction profiles and audits their synchronization status in the current project files.
 ```bash
-jagopakaiai-cli skills
+jpa-cli skills
 ```
 
 ---
 
-### 6. `jagopakaiai-cli sync [skill-name]`
-Synchronizes and writes custom editor instruction rules for the specified skill from the JagoPakaiAI API directly into your workspace.
+### 6. `jpa-cli sync [skill-name]`
+Synchronizes and writes custom editor instruction rules for the specified skill from the JPA CLI API directly into your workspace.
 ```bash
-jagopakaiai-cli sync laravel-clean-api
+jpa-cli sync laravel-clean-api
 ```
 - If multiple environments are detected (e.g. both Cursor and Claude Code settings are found), you will be interactively prompted to choose which rule files to write to.
 - It displays animated spinners and logs successful sync writes.
 
 ---
 
-### 7. `jagopakaiai-cli mcp [install-name]`
+### 7. `jpa-cli mcp [install-name]`
 Lists, views, and installs curated Model Context Protocol (MCP) servers to extend AI coding assistant capabilities.
 ```bash
 # Start the interactive recommended MCP list & installation wizard
-jagopakaiai-cli mcp
+jpa-cli mcp
 
 # Install a recommended MCP server directly (e.g., sqlite)
-jagopakaiai-cli mcp sqlite
+jpa-cli mcp sqlite
 ```
 - Supports installation scripts for standard servers, customizing execution arguments (e.g. allowed paths for `filesystem`, DB files for `sqlite`/`postgres`, API Keys for `brave-search` or `github`).
 - Directly registers the configuration inside the Claude Code configuration environment file (`~/.claudecode/config.json`).

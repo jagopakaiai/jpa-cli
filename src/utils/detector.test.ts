@@ -4,7 +4,7 @@ import path from 'path';
 import os from 'os';
 import { detectWorkspace, detectInstalledAgents } from './detector.js';
 
-const TEMP_TEST_DIR = path.join(os.tmpdir(), 'jagopakai-test-workspace');
+const TEMP_TEST_DIR = path.join(os.tmpdir(), 'jpa-test-workspace');
 
 describe('Workspace Detector Utility', () => {
   beforeEach(() => {

@@ -1,23 +1,23 @@
-# JagoPakaiAI CLI - System Architecture
+# JPA CLI - System Architecture
 
-This document describes the technical architecture, component design, compilation, and file resolution strategies used in the JagoPakaiAI CLI utility.
+This document describes the technical architecture, component design, compilation, and file resolution strategies used in the JPA CLI utility.
 
 ---
 
 ## System Overview
 
-The JagoPakaiAI CLI acts as a bridge between your local development workspace, AI coding agents (Claude Code, Cursor, Cline), and the JagoPakaiAI central rules API.
+The JPA CLI acts as a bridge between your local development workspace, AI coding agents (Claude Code, Cursor, Cline), and the JPA CLI central rules API.
 
 ```mermaid
 graph TD
-    CLI[JagoPakaiAI CLI] --> APIClient[API HTTP Client]
+    CLI[JPA CLI] --> APIClient[API HTTP Client]
     CLI --> Detector[Workspace Detector]
     CLI --> Config[Config File Manager]
     CLI --> MCPUtility[MCP Dynamic Loader]
     
-    APIClient -->|Fetch Skills| JagoAPI[JagoPakaiAI Web API]
+    APIClient -->|Fetch Skills| JagoAPI[JPA CLI Web API]
     Detector -->|Audit| Workspace[.cursorrules / .claudecoderc]
-    Config -->|Read/Write Credentials| GlobalStore[~/.config/jagopakaiai-cli/config.json]
+    Config -->|Read/Write Credentials| GlobalStore[~/.config/jpa-cli/config.json]
     MCPUtility -->|Register Server| ClaudeConfig[~/.claudecode/config.json]
 ```
 

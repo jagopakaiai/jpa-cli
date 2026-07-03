@@ -6,7 +6,7 @@ import { getApiKey } from '../utils/config.js';
 import { fetchSkillRule } from '../utils/api.js';
 
 export async function initCommand() {
-  p.intro('JagoPakaiAI Project Initializer & PRD Generator');
+  p.intro('JPA CLI Project Initializer & PRD Generator');
 
   // 1. Detect Installed AI Agents
   const s = p.spinner();
@@ -99,7 +99,7 @@ export async function initCommand() {
   // 3. Selection of AI configuration files to create
   const fileOptions = [
     { value: '.cursorrules', label: 'Cursor Rules (.cursorrules)' },
-    { value: '.cursor/rules/jagopakaiai.md', label: 'Cursor Rules Dir (.cursor/rules/)' },
+    { value: '.cursor/rules/jpa-cli.md', label: 'Cursor Rules Dir (.cursor/rules/)' },
     { value: '.claudecoderc', label: 'Claude Code (.claudecoderc)' },
     { value: 'CLAUDE.md', label: 'Claude MD (CLAUDE.md)' },
     { value: '.github/copilot-instructions.md', label: 'GitHub Copilot (.github/copilot-instructions.md)' },
@@ -129,7 +129,7 @@ export async function initCommand() {
 
   // 4. MCP & Skills integration
   const shouldSyncSkill = await p.confirm({
-    message: 'Do you want to fetch and synchronize rule instructions for a specific skill profile from the JagoPakaiAI API?',
+    message: 'Do you want to fetch and synchronize rule instructions for a specific skill profile from the JPA CLI API?',
     initialValue: false
   });
   if (p.isCancel(shouldSyncSkill)) {
@@ -142,7 +142,7 @@ export async function initCommand() {
   if (shouldSyncSkill) {
     const apiKey = getApiKey();
     if (!apiKey) {
-      p.log.warn('Authentication required to fetch custom skills. Please run "jagopakaiai-cli login" first. Skipping API sync...');
+      p.log.warn('Authentication required to fetch custom skills. Please run "jpa-cli login" first. Skipping API sync...');
     } else {
       const inputSkill = await p.text({
         message: 'Enter the skill name slug to sync (e.g. laravel-api-clean, typescript-esm):',

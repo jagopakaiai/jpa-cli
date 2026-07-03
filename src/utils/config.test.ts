@@ -37,13 +37,13 @@ describe('Config Utility', () => {
     fs.writeFileSync(configPath, '{}', { mode: 0o600 });
   });
 
-  it('should save and retrieve the JagoPakaiAI API key', () => {
+  it('should save and retrieve the JPA CLI API key', () => {
     const testKey = 'test-api-key-12345';
     saveApiKey(testKey);
     expect(getApiKey()).toBe(testKey);
   });
 
-  it('should return null when JagoPakaiAI key does not exist', () => {
+  it('should return null when JPA CLI key does not exist', () => {
     expect(getApiKey()).toBeNull();
   });
 
@@ -88,7 +88,7 @@ describe('Config Utility', () => {
     const configPath = getConfigPath();
     expect(configPath).toContain('config.json');
     expect(configPath).toContain('.config');
-    expect(configPath).toContain('jagopakaiai-cli');
+    expect(configPath).toContain('jpa-cli');
   });
 
   it('should return empty object for non-existent config file', () => {

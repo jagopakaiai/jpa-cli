@@ -7,7 +7,7 @@ import { detectWorkspace } from '../utils/detector.js';
 import { whiteLabelSkillContent } from '../utils/skills-parser.js';
 
 export async function syncCommand(skillName: string | undefined, url?: string) {
-  p.intro('JagoPakaiAI Config Synchronizer');
+  p.intro('JPA CLI Config Synchronizer');
 
   if (!skillName) {
     const inputSkill = await p.text({
@@ -28,7 +28,7 @@ export async function syncCommand(skillName: string | undefined, url?: string) {
 
   const availableConfigs = [];
   if (env.cursor) availableConfigs.push({ value: '.cursorrules', label: 'Cursor Rules (.cursorrules)' });
-  if (env.cursorDir) availableConfigs.push({ value: '.cursor/rules/jagopakaiai.md', label: 'Cursor Rules Dir (.cursor/rules/)' });
+  if (env.cursorDir) availableConfigs.push({ value: '.cursor/rules/jpa-cli.md', label: 'Cursor Rules Dir (.cursor/rules/)' });
   if (env.claude) availableConfigs.push({ value: '.claudecoderc', label: 'Claude Code (.claudecoderc)' });
   if (env.claudeMd) availableConfigs.push({ value: 'CLAUDE.md', label: 'Claude MD (CLAUDE.md)' });
   if (env.copilot) availableConfigs.push({ value: '.github/copilot-instructions.md', label: 'GitHub Copilot (.github/copilot-instructions.md)' });
@@ -86,7 +86,7 @@ export async function syncCommand(skillName: string | undefined, url?: string) {
     } else {
       const apiKey = getApiKey();
       if (!apiKey) {
-        throw new Error('Authentication required to sync remote API skills. Run "jagopakaiai-cli login" first.');
+        throw new Error('Authentication required to sync remote API skills. Run "jpa-cli login" first.');
       }
       const rawContent = await fetchSkillRule(apiKey, skillName);
       ruleContent = whiteLabelSkillContent(rawContent, skillName);
@@ -108,11 +108,11 @@ export async function syncCommand(skillName: string | undefined, url?: string) {
     }
     
     // Use delimited sections to preserve existing content
-    const START_MARKER = `<!-- jagopakaiai:${skillName}:start -->`;
-    const END_MARKER = `<!-- jagopakaiai:${skillName}:end -->`;
+    const START_MARKER = `<!-- jpa-cli:${skillName}:start -->`;
+    const END_MARKER = `<!-- jpa-cli:${skillName}:end -->`;
     const blockContent = [
       START_MARKER,
-      `# JagoPakaiAI Integrated Skill Rules: ${skillName}`,
+      `# JPA CLI Integrated Skill Rules: ${skillName}`,
       '',
       ruleContent,
       END_MARKER

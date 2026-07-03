@@ -1,18 +1,18 @@
-# JagoPakaiAI API Integration Guide
+# JPA CLI API Integration Guide
 
-This document outlines the API specifications that the `jagopakaiai-cli` CLI consumes from the JagoPakaiAI remote server.
+This document outlines the API specifications that the `jpa-cli` CLI consumes from the JPA CLI remote server.
 
 ---
 
 ## Base Endpoint URL
 ```text
-https://jagopakaiai.my.id/api
+https://jpa.my.id/api
 ```
 
 ---
 
 ## Authentication
-Every request made to JagoPakaiAI APIs requires HTTP Bearer Authentication. 
+Every request made to JPA CLI APIs requires HTTP Bearer Authentication. 
 Include your API Key in the `Authorization` request header:
 
 ```http
@@ -78,7 +78,7 @@ Returned when the `Authorization` header is missing, malformed, or contains an i
 ```
 
 ### 404 Not Found
-Returned when the requested skill name slug does not match any register on the JagoPakaiAI server.
+Returned when the requested skill name slug does not match any register on the JPA CLI server.
 ```json
 {
   "error": "Skill not found."

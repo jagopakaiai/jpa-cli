@@ -1,6 +1,6 @@
-# JagoPakaiAI CLI - Model Context Protocol (MCP) Guide
+# JPA CLI - Model Context Protocol (MCP) Guide
 
-This guide describes how the JagoPakaiAI CLI integrates with and configures Model Context Protocol (MCP) servers for your AI coding assistants (like Claude Code, Cursor, Cline, etc.).
+This guide describes how the JPA CLI integrates with and configures Model Context Protocol (MCP) servers for your AI coding assistants (like Claude Code, Cursor, Cline, etc.).
 
 ---
 
@@ -12,7 +12,7 @@ The Model Context Protocol (MCP) is an open standard designed to enable AI model
 
 ## Dynamic MCP Configuration Catalog
 
-JagoPakaiAI CLI maintains a library of over 130+ pre-scraped and configured MCP servers in the `mcp/` directory. Each server definition contains:
+JPA CLI maintains a library of over 130+ pre-scraped and configured MCP servers in the `mcp/` directory. Each server definition contains:
 - `README.md`: Explaining the tools provided, dependencies, and parameters.
 - `config.json`: Specifying the execution command, default arguments, and environment variables.
 
@@ -53,7 +53,7 @@ JagoPakaiAI CLI maintains a library of over 130+ pre-scraped and configured MCP 
 
 When you run the command:
 ```bash
-jagopakaiai-cli mcp
+jpa-cli mcp
 ```
 The CLI executes the following steps:
 1. **Catalog Parsing**: Scans the `mcp/` assets directory dynamically, loading the `config.json` configuration blocks.

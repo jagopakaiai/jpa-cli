@@ -16,7 +16,7 @@ describe('API Utility', () => {
     const content = await fetchSkillRule('dummy-key', 'laravel-clean-api');
     expect(content).toBe('test-rule-content-here');
     expect(axios.get).toHaveBeenCalledWith(
-      'https://jagopakaiai.my.id/api/skills/laravel-clean-api',
+      'https://jpa.my.id/api/skills/laravel-clean-api',
       {
         headers: { Authorization: 'Bearer dummy-key' },
         timeout: 15000
@@ -24,9 +24,9 @@ describe('API Utility', () => {
     );
   });
 
-  it('should use JAGOPAKAIAI_API_URL env var if set', async () => {
-    const originalEnv = process.env.JAGOPAKAIAI_API_URL;
-    process.env.JAGOPAKAIAI_API_URL = 'https://custom-api.example.com/v2';
+  it('should use JPA_API_URL env var if set', async () => {
+    const originalEnv = process.env.JPA_API_URL;
+    process.env.JPA_API_URL = 'https://custom-api.example.com/v2';
     
     vi.mocked(axios.get).mockResolvedValueOnce({ data: { content: 'custom-url-content' } });
     
@@ -38,7 +38,7 @@ describe('API Utility', () => {
     );
     
     // Properly clean up — delete the key instead of setting to undefined
-    delete process.env.JAGOPAKAIAI_API_URL;
+    delete process.env.JPA_API_URL;
     if (originalEnv !== undefined) {
       process.env.JAGOPAKAIAI_API_URL = originalEnv;
     }
@@ -71,7 +71,7 @@ describe('API Utility', () => {
     expect(content).toBe('fallback-content');
     expect(axios.get).toHaveBeenNthCalledWith(
       2,
-      'https://jagopakaiai.my.id/api/skills?name=test-skill',
+      'https://jpa.my.id/api/skills?name=test-skill',
       expect.any(Object)
     );
   });

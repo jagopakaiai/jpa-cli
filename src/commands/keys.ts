@@ -13,7 +13,7 @@ import {
   writeConfig
 } from '../utils/config.js';
 
-const VALID_PROVIDERS = ['gemini', 'openrouter', 'groq', 'jagopakaiai'];
+const VALID_PROVIDERS = ['gemini', 'openrouter', 'groq', 'jpa'];
 
 export async function keysCommand(providerArg?: string, keyArg?: string) {
   // If direct arguments are provided
@@ -51,7 +51,7 @@ export async function keysCommand(providerArg?: string, keyArg?: string) {
   }
 
   // Interactive menu mode
-  p.intro('JagoPakaiAI API Keys Manager');
+  p.intro('JPA CLI API Keys Manager');
 
   while (true) {
     // Show current keys status
@@ -62,7 +62,7 @@ export async function keysCommand(providerArg?: string, keyArg?: string) {
 
     p.log.info(
       `Current Status:\n` +
-      `  • JagoPakaiAI API : ${jagoStatus}\n` +
+      `  • JPA CLI API : ${jagoStatus}\n` +
       `  • Gemini API      : ${geminiStatus}\n` +
       `  • OpenRouter API  : ${openrouterStatus}\n` +
       `  • Groq API        : ${groqStatus}`
@@ -71,7 +71,7 @@ export async function keysCommand(providerArg?: string, keyArg?: string) {
     const action = await p.select({
       message: 'Select action:',
       options: [
-        { value: 'jagopakaiai', label: '🔑 Configure JagoPakaiAI API Key' },
+        { value: 'jpa', label: '🔑 Configure JPA CLI API Key' },
         { value: 'gemini', label: '🔑 Configure Gemini API Key' },
         { value: 'openrouter', label: '🔑 Configure OpenRouter API Key' },
         { value: 'groq', label: '🔑 Configure Groq API Key' },
@@ -88,7 +88,7 @@ export async function keysCommand(providerArg?: string, keyArg?: string) {
       const deleteTarget = await p.select({
         message: 'Select key to delete:',
         options: [
-          { value: 'jagopakaiai', label: 'JagoPakaiAI API Key' },
+          { value: 'jpa', label: 'JPA CLI API Key' },
           { value: 'gemini', label: 'Gemini API Key' },
           { value: 'openrouter', label: 'OpenRouter API Key' },
           { value: 'groq', label: 'Groq API Key' },
@@ -130,7 +130,7 @@ function getProviderLabel(provider: string): string {
     case 'gemini': return 'Gemini API';
     case 'openrouter': return 'OpenRouter API';
     case 'groq': return 'Groq API';
-    case 'jagopakaiai': return 'JagoPakaiAI API';
+    case 'jpa': return 'JPA CLI API';
     default: return provider;
   }
 }
@@ -146,7 +146,7 @@ function saveKeyForProvider(provider: string, key: string) {
     case 'groq':
       saveGroqApiKey(key);
       break;
-    case 'jagopakaiai':
+    case 'jpa':
       saveApiKey(key);
       break;
   }
@@ -164,7 +164,7 @@ function deleteKeyForProvider(provider: string) {
     case 'groq':
       delete config.groqApiKey;
       break;
-    case 'jagopakaiai':
+    case 'jpa':
       delete config.apiKey;
       break;
   }

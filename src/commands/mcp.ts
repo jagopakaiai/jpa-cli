@@ -6,7 +6,7 @@ import path from 'path';
 import { getRecommendedMcps, checkMcpInstalled, installMcpServer, getClaudeConfig, saveClaudeConfig } from '../utils/mcp.js';
 
 export async function mcpListCommand() {
-  p.intro('JagoPakaiAI Recommended MCP Servers');
+  p.intro('JPA CLI Recommended MCP Servers');
 
   const defs = getRecommendedMcps();
   const listRows = defs.map((m, idx) => {
@@ -138,7 +138,7 @@ export async function mcpStatusCommand() {
 
   if (installed.length === 0) {
     p.log.warn('No MCP servers are currently installed.');
-    p.outro(`Run ${pc.cyan('jagopakaiai-cli mcp list')} to see available servers.`);
+    p.outro(`Run ${pc.cyan('jpa-cli mcp list')} to see available servers.`);
     return;
   }
 
@@ -150,5 +150,5 @@ export async function mcpStatusCommand() {
   }).join('\n\n');
 
   p.note(rows, `Installed MCP Servers (${installed.length})`);
-  p.outro(`Use ${pc.cyan('jagopakaiai-cli mcp uninstall <name>')} to remove.`);
+  p.outro(`Use ${pc.cyan('jpa-cli mcp uninstall <name>')} to remove.`);
 }

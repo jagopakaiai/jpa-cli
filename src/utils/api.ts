@@ -2,7 +2,7 @@ import axios from 'axios';
 
 /** Lazy-get API base URL so tests can set env var before each call */
 function getApiBaseUrl(): string {
-  return process.env.JAGOPAKAIAI_API_URL || 'https://jagopakaiai.my.id/api';
+  return process.env.JPA_API_URL || process.env.JAGOPAKAIAI_API_URL || 'https://jpa.my.id/api';
 }
 
 export async function fetchSkillRule(apiKey: string, skillName: string): Promise<string> {

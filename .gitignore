@@ -7,6 +7,7 @@ playground/
 .agents/
 .npmrc
 .superpowers/
+docs/jpa-cli/
 docs/jagopakaiai/
 docs/superpowers/
 
@@ -31,4 +32,4 @@ graphify-out/
 coverage/
 
 # Backups
-.jagopakaiai-backups/
+.jpa-backups/

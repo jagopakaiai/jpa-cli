@@ -34,29 +34,28 @@ jobs:
       - name: Package standalone binaries
         run: |
           npx pkg . --out-path bin --no-bytecode
-          mv bin/jagopakaiai-cli-linux-x64 bin/jagopakaiai-cli-linux
-          mv bin/jagopakaiai-cli-win-x64.exe bin/jagopakaiai-cli.exe
+          mv bin/jpa-cli-linux-x64 bin/jpa-cli-linux
+          mv bin/jpa-cli-win-x64.exe bin/jpa-cli.exe
 
       - name: Release and Attach Assets
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            bin/jagopakaiai-cli-linux
-            bin/jagopakaiai-cli-macos-x64
-            bin/jagopakaiai-cli-macos-arm64
-            bin/jagopakaiai-cli.exe
+            bin/jpa-cli-linux
+            bin/jpa-cli-macos-x64
+            bin/jpa-cli-macos-arm64
+            bin/jpa-cli.exe
             install.sh
             install.ps1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish to npm
-        run: npm publish
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to GitHub Packages
         run: |
-          node -e "const fs = require('fs'); const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8')); pkg.name = '@jagopakaiai/' + pkg.name; fs.writeFileSync('./package.json', JSON.stringify(pkg, null, 2));"
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > .npmrc
           npm publish --registry=https://npm.pkg.github.com/

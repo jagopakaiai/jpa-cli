@@ -3,9 +3,9 @@ import axios from 'axios';
 import { saveApiKey } from '../utils/config.js';
 
 export async function loginCommand() {
-  p.intro('JagoPakaiAI Login');
+  p.intro('JPA CLI Login');
   const apiKey = await p.password({
-    message: 'Enter your JagoPakaiAI API Key:',
+    message: 'Enter your JPA CLI API Key:',
     validate: (value) => {
       if (!value || value.trim().length === 0) return 'API Key is required!';
     }
@@ -19,7 +19,7 @@ export async function loginCommand() {
   const s = p.spinner();
   s.start('Validating API key...');
   try {
-    const apiUrl = (process.env.JAGOPAKAIAI_API_URL || 'https://jagopakaiai.my.id/api').replace(/\/+$/, '');
+    const apiUrl = (process.env.JPA_API_URL || process.env.JAGOPAKAIAI_API_URL || 'https://jpa.my.id/api').replace(/\/+$/, '');
     await axios.get(`${apiUrl}/skills`, {
       headers: { 'Authorization': `Bearer ${apiKey}` },
       timeout: 10000

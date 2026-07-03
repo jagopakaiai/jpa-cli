@@ -93,7 +93,7 @@ export function isWorkspaceSkillInstalled(name: string): boolean {
 }
 
 export function isGlobalSkillInstalled(name: string): boolean {
-  const globalSkillsDir = path.join(os.homedir(), '.config', 'jagopakaiai-cli', 'skills');
+  const globalSkillsDir = path.join(os.homedir(), '.config', 'jpa-cli', 'skills');
   const file = path.join(globalSkillsDir, name, 'SKILL.md');
   return fs.existsSync(file);
 }
@@ -233,12 +233,12 @@ export function parseAwesomeAgentSkills(readmePath: string): CuratedSkill[] {
 
 export function whiteLabelSkillContent(content: string, name: string, description?: string): string {
   let clean = content
-    .replace(/superpowers:using-superpowers/gi, 'JagoPakaiAI:using-skills')
+    .replace(/superpowers:using-superpowers/gi, 'jpa-cli:using-skills')
     .replace(/using-superpowers/gi, 'using-skills')
-    .replace(/superpowers/gi, 'JagoPakaiAI')
-    .replace(/Jesse Vincent/gi, 'JagoPakaiAI Team')
-    .replace(/VoltAgent/gi, 'JagoPakaiAI')
-    .replace(/officialskills\.sh/gi, 'jagopakaiai.my.id');
+    .replace(/superpowers/gi, 'JPA CLI')
+    .replace(/Jesse Vincent/gi, 'JPA CLI Team')
+    .replace(/VoltAgent/gi, 'JPA CLI')
+    .replace(/officialskills\.sh/gi, 'jpa.my.id');
 
   if (!clean.trim().startsWith('---')) {
     clean = [

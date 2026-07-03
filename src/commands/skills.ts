@@ -40,10 +40,10 @@ const RECOMMENDED_SKILLS: SkillInfo[] = [
   { name: 'generic-clean-code', description: 'General software engineering guidelines focusing on DRY, SOLID, and TDD', scope: 'Remote' }
 ];
 
-const GLOBAL_SKILLS_DIR = path.join(os.homedir(), '.config', 'jagopakaiai-cli', 'skills');
+const GLOBAL_SKILLS_DIR = path.join(os.homedir(), '.config', 'jpa-cli', 'skills');
 
 export async function skillsListCommand() {
-  p.intro('JagoPakaiAI Skills Manager');
+  p.intro('JPA CLI Skills Manager');
 
   // Discover skills
   const discoveredMap = new Map<string, SkillInfo>();
@@ -73,7 +73,7 @@ export async function skillsListCommand() {
     } catch {}
   }
 
-  // 2. Global-scoped skills (~/.config/jagopakaiai-cli/skills/*)
+  // 2. Global-scoped skills (~/.config/jpa-cli/skills/*)
   let globalCount = 0;
   if (fs.existsSync(GLOBAL_SKILLS_DIR)) {
     try {
@@ -238,7 +238,7 @@ async function manageSkillMenu(sInfo: SkillInfo) {
     options: [
       { value: 'sync', label: '🔄 Synchronize rules to project editor configs' },
       { value: 'install_workspace', label: '💻 Save/Install locally to workspace (.agents/skills/)' },
-      { value: 'install_global', label: '🌍 Save/Install globally to home directory (~/.config/)' },
+      { value: 'install_global', label: '🌍 Save/Install globally to home directory (~/.config/jpa-cli/skills/)' },
       ...(isW || isG ? [{ value: 'validate', label: '🔍 Validate local file integrity' }] : []),
       { value: 'back', label: '🔙 Back' }
     ]
@@ -327,7 +327,7 @@ async function manageSkillMenu(sInfo: SkillInfo) {
 }
 
 export async function skillsCreateCommand() {
-  p.intro('JagoPakaiAI Skill Creator — Multi-Step Wizard');
+  p.intro('JPA CLI Skill Creator — Multi-Step Wizard');
 
   // ─── Step 1: Archetype / Category ──────────────────────────
   const category = await p.select({
@@ -520,7 +520,7 @@ export async function skillsCreateCommand() {
     message: 'Save to:',
     options: [
       { value: 'workspace', label: '📁 Workspace (.agents/skills/)' },
-      { value: 'global', label: '🌍 Global (~/.config/jagopakaiai-cli/skills/)' }
+      { value: 'global', label: '🌍 Global (~/.config/jpa-cli/skills/)' }
     ]
   });
   if (p.isCancel(targetScope)) return;
@@ -567,8 +567,8 @@ export async function skillsCreateCommand() {
   // ─── Next Steps ─────────────────────────────────────────────
   p.outro('What to do next:');
   p.log.info(`  • Edit:         ${file}`);
-  p.log.info(`  • Validate:     jagopakaiai-cli skills validate ${file}`);
-  p.log.info(`  • Sync to editor: jagopakaiai-cli sync ${name}`);
+  p.log.info(`  • Validate:     jpa-cli skills validate ${file}`);
+  p.log.info(`  • Sync to editor: jpa-cli sync ${name}`);
 }
 
 export async function skillsValidateCommand() {

@@ -13,7 +13,7 @@ import {
   generateRichSkillContent
 } from './skills-parser.js';
 
-const TEMP_TEST_DIR = path.join(os.tmpdir(), 'jagopakai-test-skills');
+const TEMP_TEST_DIR = path.join(os.tmpdir(), 'jpa-test-skills');
 
 describe('Skills Parser Utility', () => {
   beforeEach(() => {
@@ -196,10 +196,10 @@ describe('Skills Parser Utility', () => {
     
     expect(result).toContain('name: my-skill');
     expect(result).toContain('description: "my description"');
-    expect(result).toContain('JagoPakaiAI');
+    expect(result).toContain('JPA CLI');
     expect(result).toContain('using-skills');
-    expect(result).toContain('JagoPakaiAI Team');
-    expect(result).toContain('jagopakaiai.my.id');
+    expect(result).toContain('JPA CLI Team');
+    expect(result).toContain('jpa.my.id');
     expect(result).not.toContain('superpowers');
     expect(result).not.toContain('Jesse Vincent');
     expect(result).not.toContain('officialskills.sh');
@@ -213,13 +213,13 @@ describe('Skills Parser Utility', () => {
     expect(frontmatterMatches).toBe(2); // Only opening and closing ---
     expect(result).toContain('existing-skill');
     expect(result).not.toContain('superpowers');
-    expect(result).toContain('JagoPakaiAI'); // white-labeled
+    expect(result).toContain('JPA CLI'); // white-labeled
   });
 
   it('should white-label VoltAgent references', () => {
     const rawContent = 'Created by VoltAgent for testing';
     const result = whiteLabelSkillContent(rawContent, 'test', 'desc');
-    expect(result).toContain('JagoPakaiAI');
+    expect(result).toContain('JPA CLI');
     expect(result).not.toContain('VoltAgent');
   });
 

@@ -1,4 +1,4 @@
-# JagoPakaiAI CLI - Sandbox Demo
+# JPA CLI - Sandbox Demo
 # Run this to see all CLI commands in action
 # No global install needed - runs from node dist/index.js directly
 
@@ -7,7 +7,7 @@ $SANDBOX = "$PSScriptRoot\test-project"
 $SEPARATOR = "=" * 70
 
 Write-Host "======================================================" -ForegroundColor Cyan
-Write-Host "  JagoPakaiAI CLI - Sandbox Demo" -ForegroundColor Cyan
+Write-Host "  JPA CLI - Sandbox Demo" -ForegroundColor Cyan
 Write-Host "  Running from dist/ - no global install required" -ForegroundColor Cyan
 Write-Host "======================================================" -ForegroundColor Cyan
 Write-Host ""
@@ -130,19 +130,19 @@ Write-Host "  DEMO COMPLETE" -ForegroundColor Green
 Write-Host $SEPARATOR -ForegroundColor Cyan
 Write-Host ""
 Write-Host "Commands demonstrated:" -ForegroundColor Yellow
-Write-Host "  jagopakaiai-cli --version" -ForegroundColor White
-Write-Host "  jagopakaiai-cli --help" -ForegroundColor White
-Write-Host "  jagopakaiai-cli <command> --help  (agent, rules, mcp, skills)" -ForegroundColor White
-Write-Host "  jagopakaiai-cli detect" -ForegroundColor White
-Write-Host "  jagopakaiai-cli status" -ForegroundColor White
-Write-Host "  jagopakaiai-cli agent list" -ForegroundColor White
-Write-Host "  jagopakaiai-cli agent install <name>" -ForegroundColor White
-Write-Host "  jagopakaiai-cli rules list" -ForegroundColor White
-Write-Host "  jagopakaiai-cli rules view <file>" -ForegroundColor White
-Write-Host "  jagopakaiai-cli rules backup" -ForegroundColor White
-Write-Host "  jagopakaiai-cli keys" -ForegroundColor White
+Write-Host "  jpa-cli --version" -ForegroundColor White
+Write-Host "  jpa-cli --help" -ForegroundColor White
+Write-Host "  jpa-cli <command> --help  (agent, rules, mcp, skills)" -ForegroundColor White
+Write-Host "  jpa-cli detect" -ForegroundColor White
+Write-Host "  jpa-cli status" -ForegroundColor White
+Write-Host "  jpa-cli agent list" -ForegroundColor White
+Write-Host "  jpa-cli agent install <name>" -ForegroundColor White
+Write-Host "  jpa-cli rules list" -ForegroundColor White
+Write-Host "  jpa-cli rules view <file>" -ForegroundColor White
+Write-Host "  jpa-cli rules backup" -ForegroundColor White
+Write-Host "  jpa-cli keys" -ForegroundColor White
 Write-Host ""
 Write-Host "To run manually:" -ForegroundColor Yellow
 Write-Host "  node dist/index.js <command>" -ForegroundColor White
-Write-Host "  bin\jagopakaiai-cli-win-x64.exe <command>" -ForegroundColor White
+Write-Host "  bin\jpa-cli-win-x64.exe <command>" -ForegroundColor White
 Write-Host ""

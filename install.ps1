@@ -1,17 +1,17 @@
 $owner = "jagopakaiai"
-$repo = "jagopakaiAI-cli"
-$binary = "jagopakaiai-cli"
+$repo = "jpa-cli"
+$binary = "jpa-cli"
 $suffix = "win-x64.exe"
 
 $url = "https://github.com/$owner/$repo/releases/latest/download/${binary}-${suffix}"
-$installDir = Join-Path $env:USERPROFILE ".jagopakaiai-cli\bin"
+$installDir = Join-Path $env:USERPROFILE ".jpa-cli\bin"
 $dest = Join-Path $installDir "${binary}.exe"
 
 if (!(Test-Path $installDir)) {
     New-Item -ItemType Directory -Force -Path $installDir | Out-Null
 }
 
-Write-Host "Downloading JagoPakaiAI CLI from $url..."
+Write-Host "Downloading JPA CLI from $url..."
 Invoke-WebRequest -Uri $url -OutFile $dest
 
 Write-Host "Adding $installDir to User PATH..."
@@ -21,4 +21,4 @@ if ($currentPath -split ";" -notcontains $installDir) {
     $env:Path += ";$installDir"
 }
 
-Write-Host "JagoPakaiAI CLI installed successfully! Please restart your terminal."
+Write-Host "JPA CLI installed successfully! Please restart your terminal."

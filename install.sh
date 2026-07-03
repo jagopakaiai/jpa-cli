@@ -2,8 +2,8 @@
 set -e
 
 OWNER="jagopakaiai"
-REPO="jagopakaiAI-cli"
-BINARY="jagopakaiai-cli"
+REPO="jpa-cli"
+BINARY="jpa-cli"
 
 OS=$(uname -s | tr '[:upper:]' '[:lower:]')
 ARCH=$(uname -m)
@@ -34,4 +34,4 @@ chmod +x "$BINARY"
 
 echo "Installing to $DEST (requires sudo)..."
 sudo mv "$BINARY" "$DEST"
-echo "JagoPakaiAI CLI installed successfully!"
+echo "JPA CLI installed successfully!"

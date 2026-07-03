@@ -1,10 +1,10 @@
 {
-  "name": "jagopakaiai-cli",
-  "version": "1.1.4",
-  "description": "JagoPakaiAI CLI utility for managing AI agent rule configurations",
+  "name": "@jagopakaiai/jpa-cli",
+  "version": "1.2.0",
+  "description": "JPA CLI — AI agent rules synchronizer & workspace manager",
   "main": "dist/index.js",
   "bin": {
-    "jagopakaiai-cli": "dist/index.js"
+    "jpa-cli": "dist/index.js"
   },
   "files": [
     "dist",

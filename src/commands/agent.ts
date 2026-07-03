@@ -15,7 +15,7 @@ interface AgentDefinition {
 }
 
 const AGENT_DEFINITIONS: AgentDefinition[] = [
-  { name: 'cursor', label: 'Cursor', description: 'AI-powered code editor with rules file', files: ['.cursorrules', '.cursor/rules/jagopakaiai.md'], cliCommand: 'cursor', vscodeExtension: 'cursor', installGuide: 'Download from https://cursor.com' },
+  { name: 'cursor', label: 'Cursor', description: 'AI-powered code editor with rules file', files: ['.cursorrules', '.cursor/rules/jpa-cli.md'], cliCommand: 'cursor', vscodeExtension: 'cursor', installGuide: 'Download from https://cursor.com' },
   { name: 'claude-code', label: 'Claude Code', description: 'Anthropic CLI coding agent', files: ['.claudecoderc', 'CLAUDE.md'], cliCommand: 'claude', installGuide: 'npm install -g @anthropic-ai/claude-code' },
   { name: 'claude-md', label: 'Claude MD', description: 'CLAUDE.md project instructions', files: ['CLAUDE.md'], installGuide: 'Create CLAUDE.md in project root' },
   { name: 'copilot', label: 'GitHub Copilot', description: 'GitHub AI pair programmer', files: ['.github/copilot-instructions.md'], vscodeExtension: 'github.copilot', installGuide: 'Install from VS Code marketplace' },
@@ -49,7 +49,7 @@ export function getAllAgentDefinitions(): AgentDefinition[] {
 
 export function generateAgentRuleContent(agent: AgentDefinition, skillContent?: string): string {
   const lines: string[] = [];
-  lines.push(`# AI Rules for ${agent.label} (managed by JagoPakaiAI)`);
+  lines.push(`# AI Rules for ${agent.label} (managed by JPA CLI)`);
   lines.push(`# Agent: ${agent.label}`);
   lines.push(`# Description: ${agent.description}`);
   lines.push('');
@@ -60,8 +60,8 @@ export function generateAgentRuleContent(agent: AgentDefinition, skillContent?: 
     lines.push('');
   }
   lines.push('## Project Context');
-  lines.push('- This project uses JagoPakaiAI CLI to manage AI agent configurations.');
-  lines.push('- Edit this file manually or use `jagopakaiai-cli agent install <name>` to regenerate.');
+  lines.push('- This project uses JPA CLI to manage AI agent configurations.');
+  lines.push('- Edit this file manually or use `jpa-cli agent install <name>` to regenerate.');
   lines.push('');
   lines.push('## Rules');
   lines.push('- Write clean, maintainable code following project conventions.');
@@ -91,14 +91,14 @@ export async function agentListCommand() {
   }).join('\n');
 
   p.note(rows, `Agents (${AGENT_DEFINITIONS.length} supported)`);
-  p.outro(`Run ${pc.cyan('jagopakaiai-cli agent install <name>')} to set up rules for an agent`);
+  p.outro(`Run ${pc.cyan('jpa-cli agent install <name>')} to set up rules for an agent`);
 }
 
 export async function agentInstallCommand(name?: string) {
   if (name) {
     const agent = getAgentDefinition(name);
     if (!agent) {
-      p.log.error(`Unknown agent "${name}". Use ${pc.cyan('jagopakaiai-cli agent list')} to see all supported agents.`);
+      p.log.error(`Unknown agent "${name}". Use ${pc.cyan('jpa-cli agent list')} to see all supported agents.`);
       return;
     }
     await installSingleAgent(agent);
@@ -151,7 +151,7 @@ export async function agentInstallCommand(name?: string) {
 export async function agentUninstallCommand(name: string) {
   const agent = getAgentDefinition(name);
   if (!agent) {
-    p.log.error(`Unknown agent "${name}". Use ${pc.cyan('jagopakaiai-cli agent list')} to see supported agents.`);
+    p.log.error(`Unknown agent "${name}". Use ${pc.cyan('jpa-cli agent list')} to see supported agents.`);
     return;
   }
 
@@ -161,20 +161,20 @@ export async function agentUninstallCommand(name: string) {
   for (const file of agent.files) {
     const fullPath = path.join(process.cwd(), file);
     if (fs.existsSync(fullPath)) {
-      const content = fs.readFileSync(fullPath, 'utf-8');
-      if (content.includes('managed by JagoPakaiAI') || content.includes('JagoPakaiAI')) {
-        filesToRemove.push(fullPath);
-      }
+        const content = fs.readFileSync(fullPath, 'utf-8');
+        if (content.includes('managed by JPA CLI') || content.includes('JPA CLI')) {
+          filesToRemove.push(fullPath);
+        }
     }
   }
 
   if (filesToRemove.length === 0) {
-    p.log.warn(`No JagoPakaiAI-managed rule files found for ${agent.label}.`);
+    p.log.warn(`No JPA CLI-managed rule files found for ${agent.label}.`);
     p.outro('Nothing to uninstall.');
     return;
   }
 
-  p.log.info(`Found ${filesToRemove.length} JagoPakaiAI-managed file(s):`);
+  p.log.info(`Found ${filesToRemove.length} JPA CLI-managed file(s):`);
   filesToRemove.forEach(f => p.log.info(`  ${f}`));
 
   const confirm = await p.confirm({
@@ -200,7 +200,7 @@ export async function agentUninstallCommand(name: string) {
 export async function agentConfigCommand(name: string) {
   const agent = getAgentDefinition(name);
   if (!agent) {
-    p.log.error(`Unknown agent "${name}". Use ${pc.cyan('jagopakaiai-cli agent list')} to see supported agents.`);
+    p.log.error(`Unknown agent "${name}". Use ${pc.cyan('jpa-cli agent list')} to see supported agents.`);
     return;
   }
 
@@ -258,7 +258,7 @@ async function installSingleAgent(agent: AgentDefinition) {
       installed++;
     } else {
       const content = fs.readFileSync(fullPath, 'utf-8');
-      if (!content.includes('managed by JagoPakaiAI')) {
+      if (!content.includes('managed by JPA CLI')) {
         const appendContent = '\n\n' + generateAgentRuleContent(agent);
         fs.writeFileSync(fullPath, content + appendContent);
         installed++;

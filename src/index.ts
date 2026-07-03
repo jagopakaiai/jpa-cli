@@ -20,8 +20,8 @@ import path from 'path';
 const program = new Command();
 
 program
-  .name('jagopakaiai-cli')
-  .description('JagoPakaiAI CLI — AI agent rules synchronizer & workspace manager')
+  .name('jpa-cli')
+  .description('JPA CLI — AI agent rules synchronizer & workspace manager')
   .version(CLI_VERSION, '-v, --version', 'Display CLI version')
   .helpOption('-h, --help', 'Display help for command')
   .helpCommand(false);
@@ -66,7 +66,7 @@ agentCmd
 
 agentCmd
   .command('uninstall')
-  .description('Remove JagoPakaiAI-managed rule files')
+  .description('Remove JPA CLI-managed rule files')
   .argument('<name>', 'Agent name to uninstall (e.g. cursor, claude-code)')
   .action(agentUninstallCommand);
 
@@ -107,7 +107,7 @@ rulesCmd
 
 rulesCmd
   .command('clean')
-  .description('Remove JagoPakaiAI-managed sections from rule files')
+  .description('Remove JPA CLI-managed sections from rule files')
   .action(rulesCleanCommand);
 
 rulesCmd
@@ -184,7 +184,7 @@ program.addCommand(skillsCmd);
 // ─── Backup Command Group ─────────────────────────────────────
 const backupCmd = new Command('backup')
   .description('Create and manage full configuration backups')
-  .summary('Backup or list all JagoPakaiAI configurations')
+  .summary('Backup or list all JPA CLI configurations')
   .helpOption('-h, --help', 'Display help for backup command');
 
 backupCmd
@@ -203,12 +203,12 @@ program.addCommand(backupCmd);
 
 program
   .command('login')
-  .description('Authenticate with your JagoPakaiAI API Key')
+  .description('Authenticate with your JPA CLI API Key')
   .action(loginCommand);
 
 program
   .command('logout')
-  .description('Clear saved JagoPakaiAI API Key')
+  .description('Clear saved JPA CLI API Key')
   .action(async () => {
     const { deleteApiKey, readConfig, writeConfig } = await import('./utils/config.js');
     const config = readConfig();
@@ -219,8 +219,8 @@ program
 
 program
   .command('keys')
-  .description('Manage API keys for AI providers (Gemini, OpenRouter, Groq, JagoPakaiAI)')
-  .argument('[provider]', 'Provider name: gemini, openrouter, groq, jagopakaiai')
+  .description('Manage API keys for AI providers (Gemini, OpenRouter, Groq, JPA)')
+  .argument('[provider]', 'Provider name: gemini, openrouter, groq, jpa')
   .argument('[key]', 'API key value (omit for interactive prompt)')
   .action(keysCommand);
 
@@ -332,21 +332,21 @@ function printLogo() {
   for (let i = 0; i < 6; i++) console.log(getGoldColor(i, line1[i]));
   console.log('\n');
   for (let i = 0; i < 6; i++) console.log(getGoldColor(i + 6, line2[i]));
-  console.log(pc.bold(getGoldColor(0, `\n 🚀 JagoPakaiAI CLI - Smart Rules Synchronizer v${CLI_VERSION}\n`)));
+  console.log(pc.bold(getGoldColor(0, `\n 🚀 JPA CLI - Smart Rules Synchronizer v${CLI_VERSION}\n`)));
 }
 
 function printDetailedHelp() {
   printLogo();
   const help = [
     `${pc.bold('USAGE')}`,
-    `  jagopakaiai-cli <command> [options]`,
+    `  jpa-cli <command> [options]`,
     ``,
     `${pc.bold('COMMANDS')}`,
     ``,
-    `${pc.cyan('  login')}              Authenticate with JagoPakaiAI API Key`,
-    `${pc.cyan('  logout')}             Clear saved JagoPakaiAI API Key`,
-    `${pc.cyan('  keys')}               Manage API keys for Gemini, OpenRouter, Groq, JagoPakaiAI`,
-    `                       ${pc.dim('jagopakaiai-cli keys <provider> [key]')}`,
+    `${pc.cyan('  login')}              Authenticate with JPA CLI API Key`,
+    `${pc.cyan('  logout')}             Clear saved JPA CLI API Key`,
+    `${pc.cyan('  keys')}               Manage API keys for Gemini, OpenRouter, Groq, JPA`,
+    `                       ${pc.dim('jpa-cli keys <provider> [key]')}`,
     ``,
     `${pc.cyan('  status')}             Show comprehensive system status overview`,
     `${pc.cyan('  detect')}             Scan workspace for AI agent configurations`,
@@ -364,12 +364,12 @@ function printDetailedHelp() {
     `                       ${pc.dim('rules view <name>             — View rule file contents')}`,
     `                       ${pc.dim('rules backup                  — Backup all rule files')}`,
     `                       ${pc.dim('rules restore                 — Restore from backup')}`,
-    `                       ${pc.dim('rules clean                   — Remove JagoPakaiAI sections')}`,
+    `                       ${pc.dim('rules clean                   — Remove JPA CLI sections')}`,
     `                       ${pc.dim('rules template [type]         — Generate template')}`,
     ``,
     `${pc.cyan('  sync')}               Sync a skill into workspace AI rule files`,
-    `                       ${pc.dim('jagopakaiai-cli sync <skill-name>')}`,
-    `                       ${pc.dim('jagopakaiai-cli sync --list')}`,
+    `                       ${pc.dim('jpa-cli sync <skill-name>')}`,
+    `                       ${pc.dim('jpa-cli sync --list')}`,
     ``,
     `${pc.cyan('  mcp')}                Manage MCP (Model Context Protocol) servers`,
     `                       ${pc.dim('mcp list                      — List available MCPs')}`,
@@ -395,19 +395,19 @@ function printDetailedHelp() {
     `  -h, --help             Display help for any command`,
     ``,
     `${pc.bold('EXAMPLES')}`,
-    `  jagopakaiai-cli login                          # Authenticate with API key`,
-    `  jagopakaiai-cli keys gemini                    # Set Gemini API key`,
-    `  jagopakaiai-cli detect                         # Scan current workspace`,
-    `  jagopakaiai-cli status                         # Show full system status`,
-    `  jagopakaiai-cli agent install cursor           # Install .cursorrules`,
-    `  jagopakaiai-cli agent uninstall claude-code    # Remove Claude Code rules`,
-    `  jagopakaiai-cli rules backup                   # Backup all rule files`,
-    `  jagopakaiai-cli sync laravel-clean-api         # Sync skill from API`,
-    `  jagopakaiai-cli mcp install sqlite             # Install SQLite MCP`,
-    `  jagopakaiai-cli init                           # Initialize new project`,
-    `  jagopakaiai-cli update                         # Check for updates`,
+    `  jpa-cli login                          # Authenticate with API key`,
+    `  jpa-cli keys gemini                    # Set Gemini API key`,
+    `  jpa-cli detect                         # Scan current workspace`,
+    `  jpa-cli status                         # Show full system status`,
+    `  jpa-cli agent install cursor           # Install .cursorrules`,
+    `  jpa-cli agent uninstall claude-code    # Remove Claude Code rules`,
+    `  jpa-cli rules backup                   # Backup all rule files`,
+    `  jpa-cli sync laravel-clean-api         # Sync skill from API`,
+    `  jpa-cli mcp install sqlite             # Install SQLite MCP`,
+    `  jpa-cli init                           # Initialize new project`,
+    `  jpa-cli update                         # Check for updates`,
     ``,
-    `${pc.dim('Full documentation: https://jagopakaiai.my.id')}`
+    `${pc.dim('Full documentation: https://jpa.my.id')}`
   ].join('\n');
 
   console.log(pc.cyan(help));
@@ -420,7 +420,7 @@ async function showMainMenu() {
     message: 'What would you like to do?',
     options: [
       { value: 'status', label: '📊 System Status Overview' },
-      { value: 'login', label: '🔑 Login (JagoPakaiAI API Key)' },
+      { value: 'login', label: '🔑 Login (JPA CLI API Key)' },
       { value: 'keys', label: '🔑 Manage AI Provider Keys' },
       { value: 'detect', label: '🔍 Detect Workspace & Environment' },
       { value: 'init', label: '🚀 Initialize Project & Generate PRD' },
