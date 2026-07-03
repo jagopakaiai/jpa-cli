@@ -24,7 +24,7 @@ function getVersion(): string {
   } catch {
     // ignore
   }
-  _version = '1.2.0'; // fallback
+  _version = '1.2.1'; // fallback
   return _version;
 }
 
