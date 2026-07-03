@@ -2,8 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import * as p from '@clack/prompts';
 import { detectInstalledAgents } from '../utils/detector.js';
-import { getApiKey } from '../utils/config.js';
-import { fetchSkillRule } from '../utils/api.js';
+import { getLocalSkillContent, whiteLabelSkillContent } from '../utils/skills-parser.js';
 
 export async function initCommand() {
   p.intro('JPA CLI Project Initializer & PRD Generator');
@@ -129,7 +128,7 @@ export async function initCommand() {
 
   // 4. MCP & Skills integration
   const shouldSyncSkill = await p.confirm({
-    message: 'Do you want to fetch and synchronize rule instructions for a specific skill profile from the JPA CLI API?',
+    message: 'Do you want to load and synchronize rule instructions for a specific skill profile from the local catalog?',
     initialValue: false
   });
   if (p.isCancel(shouldSyncSkill)) {
@@ -140,27 +139,26 @@ export async function initCommand() {
   let skillName = '';
   let skillContent = '';
   if (shouldSyncSkill) {
-    const apiKey = getApiKey();
-    if (!apiKey) {
-      p.log.warn('Authentication required to fetch custom skills. Please run "jpa-cli login" first. Skipping API sync...');
-    } else {
-      const inputSkill = await p.text({
-        message: 'Enter the skill name slug to sync (e.g. laravel-api-clean, typescript-esm):',
-        validate: (value) => {
-          if (!value || value.trim().length === 0) return 'Skill name is required!';
+    const inputSkill = await p.text({
+      message: 'Enter the skill name slug to sync (e.g. laravel-api-clean, typescript-esm):',
+      validate: (value) => {
+        if (!value || value.trim().length === 0) return 'Skill name is required!';
+      }
+    });
+    if (!p.isCancel(inputSkill) && inputSkill.trim().length > 0) {
+      skillName = inputSkill as string;
+      const fetchSpinner = p.spinner();
+      fetchSpinner.start(`Loading skill "${skillName}" rules...`);
+      try {
+        const rawContent = getLocalSkillContent(skillName);
+        if (!rawContent) {
+          throw new Error(`Skill "${skillName}" not found in local workspace or catalog.`);
         }
-      });
-      if (!p.isCancel(inputSkill) && inputSkill.trim().length > 0) {
-        skillName = inputSkill as string;
-        const fetchSpinner = p.spinner();
-        fetchSpinner.start(`Fetching skill "${skillName}" rules...`);
-        try {
-          skillContent = await fetchSkillRule(apiKey, skillName);
-          fetchSpinner.stop(`Fetched skill "${skillName}"!`);
-        } catch (err: any) {
-          fetchSpinner.stop('Fetch failed!');
-          p.log.error(`API Error: ${err.message || String(err)}. Proceeding with fallback local configs.`);
-        }
+        skillContent = whiteLabelSkillContent(rawContent, skillName);
+        fetchSpinner.stop(`Loaded skill "${skillName}"!`);
+      } catch (err: any) {
+        fetchSpinner.stop('Load failed!');
+        p.log.error(`${err.message || String(err)}. Proceeding with fallback local configs.`);
       }
     }
   }

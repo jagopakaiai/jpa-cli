@@ -1,5 +1,4 @@
 import { Command } from 'commander';
-import { loginCommand } from './commands/login.js';
 import { detectCommand } from './commands/detect.js';
 import { syncCommand } from './commands/sync.js';
 import { initCommand } from './commands/init.js';
@@ -202,25 +201,9 @@ program.addCommand(backupCmd);
 // ─── Top-level Commands ───────────────────────────────────────
 
 program
-  .command('login')
-  .description('Authenticate with your JPA CLI API Key')
-  .action(loginCommand);
-
-program
-  .command('logout')
-  .description('Clear saved JPA CLI API Key')
-  .action(async () => {
-    const { deleteApiKey, readConfig, writeConfig } = await import('./utils/config.js');
-    const config = readConfig();
-    delete config.apiKey;
-    writeConfig(config);
-    p.log.success('Logged out. API key removed.');
-  });
-
-program
   .command('keys')
-  .description('Manage API keys for AI providers (Gemini, OpenRouter, Groq, JPA)')
-  .argument('[provider]', 'Provider name: gemini, openrouter, groq, jpa')
+  .description('Manage API keys for AI providers (Gemini, OpenRouter, Groq)')
+  .argument('[provider]', 'Provider name: gemini, openrouter, groq')
   .argument('[key]', 'API key value (omit for interactive prompt)')
   .action(keysCommand);
 
@@ -420,7 +403,6 @@ async function showMainMenu() {
     message: 'What would you like to do?',
     options: [
       { value: 'status', label: '📊 System Status Overview' },
-      { value: 'login', label: '🔑 Login (JPA CLI API Key)' },
       { value: 'keys', label: '🔑 Manage AI Provider Keys' },
       { value: 'detect', label: '🔍 Detect Workspace & Environment' },
       { value: 'init', label: '🚀 Initialize Project & Generate PRD' },
@@ -443,9 +425,6 @@ async function showMainMenu() {
   switch (choice) {
     case 'status':
       await statusCommand();
-      break;
-    case 'login':
-      await loginCommand();
       break;
     case 'keys':
       await keysCommand();

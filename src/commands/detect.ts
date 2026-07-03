@@ -1,5 +1,5 @@
 import * as p from '@clack/prompts';
-import { getApiKey, getGeminiApiKey, getOpenRouterApiKey, getGroqApiKey } from '../utils/config.js';
+import { getGeminiApiKey, getOpenRouterApiKey, getGroqApiKey } from '../utils/config.js';
 import { detectWorkspace } from '../utils/detector.js';
 
 export async function detectCommand() {
@@ -10,9 +10,6 @@ export async function detectCommand() {
   const currentDir = process.cwd();
   const env = detectWorkspace(currentDir);
   s.stop('Scan complete!');
-
-  const apiKey = getApiKey();
-  const apiKeyStatus = apiKey ? 'Active (Key Saved)' : 'Missing (Use "jpa-cli login" to authenticate)';
 
   const geminiKey = getGeminiApiKey();
   const geminiStatus = geminiKey ? 'Active (Key Saved)' : 'Not Configured';
@@ -25,7 +22,6 @@ export async function detectCommand() {
 
   const details = [
     `Workspace: ${currentDir}`,
-    `JPA CLI API Key: ${apiKeyStatus}`,
     `Gemini API Key: ${geminiStatus}`,
     `OpenRouter API Key: ${openrouterStatus}`,
     `Groq API Key: ${groqStatus}`,

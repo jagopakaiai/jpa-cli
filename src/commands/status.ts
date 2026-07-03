@@ -4,7 +4,7 @@ import os from 'os';
 import * as p from '@clack/prompts';
 import pc from 'picocolors';
 import {
-  getApiKey, getGeminiApiKey, getOpenRouterApiKey, getGroqApiKey,
+  getGeminiApiKey, getOpenRouterApiKey, getGroqApiKey,
   readConfig, getConfigPath
 } from '../utils/config.js';
 import { detectInstalledAgents, detectWorkspace } from '../utils/detector.js';
@@ -27,7 +27,6 @@ export async function statusCommand() {
   s.stop('Done!');
 
   const keyStatus = [
-    `${config.apiKey ? pc.green('● Active') : pc.red('○ Missing')} JPA CLI API Key`,
     `${config.geminiApiKey ? pc.green('● Active') : pc.dim('○ Not set')} Gemini API Key`,
     `${config.openrouterApiKey ? pc.green('● Active') : pc.dim('○ Not set')} OpenRouter API Key`,
     `${config.groqApiKey ? pc.green('● Active') : pc.dim('○ Not set')} Groq API Key`,

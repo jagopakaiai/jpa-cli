@@ -253,3 +253,35 @@ export function whiteLabelSkillContent(content: string, name: string, descriptio
   return clean;
 }
 
+export function getLocalSkillContent(name: string): string | null {
+  // 1. Check workspace
+  const currentDir = process.cwd();
+  const wsFile = path.join(currentDir, '.agents', 'skills', name, 'SKILL.md');
+  if (fs.existsSync(wsFile)) {
+    return fs.readFileSync(wsFile, 'utf-8');
+  }
+
+  // 2. Check global
+  const globalSkillsDir = path.join(os.homedir(), '.config', 'jpa-cli', 'skills');
+  const glFile = path.join(globalSkillsDir, name, 'SKILL.md');
+  if (fs.existsSync(glFile)) {
+    return fs.readFileSync(glFile, 'utf-8');
+  }
+
+  // 3. Check bundled skills directory
+  let skillsDir = path.join(__dirname, '..', '..', 'skills');
+  if ((process as any).pkg) {
+    skillsDir = path.join(__dirname, '..', 'skills');
+  } else if (!fs.existsSync(skillsDir)) {
+    skillsDir = path.join(__dirname, '..', 'skills');
+  }
+  
+  const normalizedFolderName = name.replace(/\//g, '-');
+  const bundledFile = path.join(skillsDir, normalizedFolderName, 'SKILL.md');
+  if (fs.existsSync(bundledFile)) {
+    return fs.readFileSync(bundledFile, 'utf-8');
+  }
+
+  return null;
+}
+

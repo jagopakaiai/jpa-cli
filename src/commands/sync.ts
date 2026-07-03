@@ -1,10 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import * as p from '@clack/prompts';
-import { getApiKey } from '../utils/config.js';
-import { fetchRawSkillFromUrl, fetchSkillRule } from '../utils/api.js';
 import { detectWorkspace } from '../utils/detector.js';
-import { whiteLabelSkillContent } from '../utils/skills-parser.js';
+import { whiteLabelSkillContent, getLocalSkillContent } from '../utils/skills-parser.js';
 
 export async function syncCommand(skillName: string | undefined, url?: string) {
   p.intro('JPA CLI Config Synchronizer');
@@ -77,23 +75,17 @@ export async function syncCommand(skillName: string | undefined, url?: string) {
   }
 
   const s = p.spinner();
-  s.start(`Fetching skill "${skillName}" rules...`);
+  s.start(`Loading skill "${skillName}" rules...`);
   let ruleContent = '';
   try {
-    if (url) {
-      const rawContent = await fetchRawSkillFromUrl(url);
-      ruleContent = whiteLabelSkillContent(rawContent, skillName);
-    } else {
-      const apiKey = getApiKey();
-      if (!apiKey) {
-        throw new Error('Authentication required to sync remote API skills. Run "jpa-cli login" first.');
-      }
-      const rawContent = await fetchSkillRule(apiKey, skillName);
-      ruleContent = whiteLabelSkillContent(rawContent, skillName);
+    const rawContent = getLocalSkillContent(skillName);
+    if (!rawContent) {
+      throw new Error(`Skill "${skillName}" not found in local workspace or catalog.`);
     }
-    s.stop(`Successfully fetched "${skillName}" rules!`);
+    ruleContent = whiteLabelSkillContent(rawContent, skillName);
+    s.stop(`Successfully loaded "${skillName}" rules!`);
   } catch (err: any) {
-    s.stop('Fetch failed!');
+    s.stop('Load failed!');
     p.log.error(err.message || String(err));
     return;
   }

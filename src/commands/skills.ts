@@ -4,7 +4,6 @@ import os from 'os';
 import * as p from '@clack/prompts';
 import pc from 'picocolors';
 import { getApiKey } from '../utils/config.js';
-import { fetchRawSkillFromUrl, fetchSkillRule } from '../utils/api.js';
 import { detectWorkspace } from '../utils/detector.js';
 import { syncCommand } from './sync.js';
 import { 
@@ -14,7 +13,8 @@ import {
   isGlobalSkillInstalled, 
   isSkillSynced,
   parseAwesomeAgentSkills,
-  whiteLabelSkillContent
+  whiteLabelSkillContent,
+  getLocalSkillContent
 } from '../utils/skills-parser.js';
 
 interface SkillInfo {
@@ -258,43 +258,13 @@ async function manageSkillMenu(sInfo: SkillInfo) {
     
     const file = path.join(targetDir, 'SKILL.md');
 
-    // Get content from local if exists, else remote
-    let content = '';
-    if (sInfo.filePath && fs.existsSync(sInfo.filePath)) {
-      content = fs.readFileSync(sInfo.filePath, 'utf-8');
-    } else if (sInfo.url) {
-      const fetchSpinner = p.spinner();
-      fetchSpinner.start(`Downloading skill from ${sInfo.url}...`);
-      try {
-        const rawContent = await fetchRawSkillFromUrl(sInfo.url);
-        fetchSpinner.stop('Downloaded successfully!');
-        content = rawContent;
-        // White-labeling content in case it has references to original sources
-        content = whiteLabelSkillContent(content, sInfo.name, sInfo.description);
-      } catch (err: any) {
-        fetchSpinner.stop('Download failed!');
-        p.log.error(`Error resolving URL: ${err.message || String(err)}`);
-        content = generateSkillTemplate(sInfo.name, sInfo.description);
-      }
+    // Get content from local if exists, else bundled, else fallback
+    let content = getLocalSkillContent(sInfo.name);
+    if (!content) {
+      p.log.warn(`Skill "${sInfo.name}" not found in local workspace or catalog. Generating template...`);
+      content = generateSkillTemplate(sInfo.name, sInfo.description);
     } else {
-      const apiKey = getApiKey();
-      if (!apiKey) {
-        p.log.warn('Authentication required to download remote skills. Running login flow or fallback template...');
-        content = generateSkillTemplate(sInfo.name, sInfo.description);
-      } else {
-        const fetchSpinner = p.spinner();
-        fetchSpinner.start(`Fetching skill "${sInfo.name}" rules from API...`);
-        try {
-          const apiRules = await fetchSkillRule(apiKey, sInfo.name);
-          fetchSpinner.stop('Fetched successfully!');
-          content = apiRules;
-          content = whiteLabelSkillContent(content, sInfo.name, sInfo.description);
-        } catch (err: any) {
-          fetchSpinner.stop('Fetch failed!');
-          p.log.error(`API Error: ${err.message || String(err)}`);
-          content = generateSkillTemplate(sInfo.name, sInfo.description);
-        }
-      }
+      content = whiteLabelSkillContent(content, sInfo.name, sInfo.description);
     }
 
     const s = p.spinner();
