@@ -1,10 +1,14 @@
 # JPA CLI (`jpa-cli`)
 
+[![npm version](https://img.shields.io/npm/v/@jagopakaiai/jpa-cli?style=flat-square&color=brightgreen)](https://www.npmjs.com/package/@jagopakaiai/jpa-cli)
+[![npm downloads](https://img.shields.io/npm/dm/@jagopakaiai/jpa-cli?style=flat-square&color=brightgreen)](https://www.npmjs.com/package/@jagopakaiai/jpa-cli)
 [![GitHub Release](https://img.shields.io/github/v/release/jagopakaiai/jpa-cli?style=flat-square)](https://github.com/jagopakaiai/jpa-cli/releases)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/jagopakaiai/jpa-cli/release.yml?style=flat-square)](https://github.com/jagopakaiai/jpa-cli/actions)
 [![License](https://img.shields.io/github/license/jagopakaiai/jpa-cli?style=flat-square)](LICENSE)
-[![npm version](https://img.shields.io/npm/v/jpa-cli?color=brightgreen&style=flat-square)](https://www.npmjs.com/package/jpa-cli)
-[![npm downloads](https://img.shields.io/npm/dm/jpa-cli?color=brightgreen&style=flat-square)](https://www.npmjs.com/package/jpa-cli)
+[![node version](https://img.shields.io/node/v/@jagopakaiai/jpa-cli?style=flat-square)](https://www.npmjs.com/package/@jagopakaiai/jpa-cli)
+[![GitHub stars](https://img.shields.io/github/stars/jagopakaiai/jpa-cli?style=flat-square)](https://github.com/jagopakaiai/jpa-cli/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/jagopakaiai/jpa-cli?style=flat-square)](https://github.com/jagopakaiai/jpa-cli/issues)
+[![GitHub PRs](https://img.shields.io/github/issues-pr/jagopakaiai/jpa-cli?style=flat-square)](https://github.com/jagopakaiai/jpa-cli/pulls)
 
 **JPA CLI** is a Command Line Interface utility designed to automatically detect, manage, and synchronize local AI Agent and Editor rule configurations (such as `.cursorrules`, `.claudecoderc`, and `.github/copilot-instructions.md`) directly in your workspace.
 
