@@ -53,7 +53,6 @@ jpa-cli/
 │   │   ├── detect.ts         # 'detect' environment action
 │   │   ├── init.ts           # 'init' project setup & PRD generator action
 │   │   ├── keys.ts           # 'keys' AI provider credential manager action
-│   │   ├── login.ts          # 'login' JPA CLI API key setup action
 │   │   ├── mcp.ts            # 'mcp' catalog and installation wizard action
 │   │   ├── skills.ts         # 'skills' listing & sync-check action
 │   │   └── sync.ts           # 'sync' API rules synchronization action
@@ -112,18 +111,8 @@ irm https://raw.githubusercontent.com/jagopakaiai/jpa-cli/main/install.ps1 | iex
 
 When run without commands or arguments, `jpa-cli` launches an interactive main menu console displaying all available features. You can also run commands directly with options:
 
-### 1. `jpa-cli login`
-Authenticates with your JPA CLI credentials. You will be prompted to enter your API Key.
-```bash
-jpa-cli login
-```
-The key is securely written to your home directory:
-`~/.config/jpa-cli/config.json`
-
----
-
-### 2. `jpa-cli keys [provider] [key]`
-Manages API keys for various AI providers (Gemini, OpenRouter, Groq, and JPA CLI). 
+### 1. `jpa-cli keys [provider] [key]`
+Manages API keys for various AI providers (Gemini, OpenRouter, and Groq). 
 ```bash
 # Start the interactive keys wizard
 jpa-cli keys
@@ -132,12 +121,11 @@ jpa-cli keys
 jpa-cli keys gemini <api-key>
 jpa-cli keys openrouter <api-key>
 jpa-cli keys groq <api-key>
-jpa-cli keys jpa <api-key>
 ```
 
 ---
 
-### 3. `jpa-cli detect`
+### 2. `jpa-cli detect`
 Scans the current workspace directory to audit the existing configurations and active project environment.
 ```bash
 jpa-cli detect
@@ -151,7 +139,7 @@ It prints a detailed summary displaying:
 
 ---
 
-### 4. `jpa-cli init`
+### 3. `jpa-cli init`
 Guides you through setting up a new project workspace.
 ```bash
 jpa-cli init
@@ -159,12 +147,12 @@ jpa-cli init
 - Scans and detects installed system AI agents (Claude Code, Cline/Roo-Code, Antigravity, etc.).
 - Prompt for project name, technology stack, goal, and workflow style (e.g. TDD, Feature-Driven).
 - Generates configured rule files (`.cursorrules`, `.claudecoderc`, `.github/copilot-instructions.md`) pre-populated with your chosen stack and workflow guidelines.
-- Prompts to sync a skill profile from the JPA CLI API.
+- Prompts to sync a skill profile from the local catalog.
 - Generates a tailored `PRD.md` (Product Requirements Document) inside the root directory.
 
 ---
 
-### 5. `jpa-cli skills`
+### 4. `jpa-cli skills`
 Lists all available local/custom instruction profiles and audits their synchronization status in the current project files.
 ```bash
 jpa-cli skills
@@ -172,8 +160,8 @@ jpa-cli skills
 
 ---
 
-### 6. `jpa-cli sync [skill-name]`
-Synchronizes and writes custom editor instruction rules for the specified skill from the JPA CLI API directly into your workspace.
+### 5. `jpa-cli sync [skill-name]`
+Synchronizes and writes custom editor instruction rules for the specified skill from the local catalog directly into your workspace.
 ```bash
 jpa-cli sync laravel-clean-api
 ```
@@ -182,7 +170,7 @@ jpa-cli sync laravel-clean-api
 
 ---
 
-### 7. `jpa-cli mcp [install-name]`
+### 6. `jpa-cli mcp [install-name]`
 Lists, views, and installs curated Model Context Protocol (MCP) servers to extend AI coding assistant capabilities.
 ```bash
 # Start the interactive recommended MCP list & installation wizard
